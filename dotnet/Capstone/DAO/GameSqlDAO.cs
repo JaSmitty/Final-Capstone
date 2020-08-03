@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Capstone.DAO
 {
-    public class GameDAO : IGameDAO
+    public class GameSqlDAO : IGameDAO
     {
         private string connectionString;
 
-        public GameDAO(string dbconnectionString)
+        public GameSqlDAO(string dbconnectionString)
         {
             this.connectionString = dbconnectionString;
         }
