@@ -35,27 +35,26 @@ namespace Capstone.DAO
             return userGame;
         }
 
-        public Game CreateGame(int creatorId, string gameName, DateTime endDate)
+        public int CreateGame(Game newGame)
         {
-            Game newGame = new Game();
+            int newGameID = 0;
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("INSERT into game(organizer, name, end_date, starting_balance) VALUES (@organizer, @name, @endDate, @startingBalance); Select @@identity;", conn);
+                    SqlCommand cmd = new SqlCommand("INSERT into game(organizer_id, name, end_date) VALUES (@organizer, @name, @endDate); Select @@identity;", conn);
                     cmd.Parameters.AddWithValue("@organizer", newGame.Organizer_ID);
                     cmd.Parameters.AddWithValue("@name", newGame.Name);
                     cmd.Parameters.AddWithValue("@endDate", newGame.End_Date);
-                    cmd.Parameters.AddWithValue("@startingBalance", newGame.End_Date);
-                    newGame.Game_ID = Convert.ToInt32(cmd.ExecuteScalar());
+                    newGameID= Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
             catch
             {
 
             }
-            return newGame;
+            return newGameID;
         }
 
         public List<Game> GetGamesByUserId(int userId)

@@ -9,7 +9,7 @@ namespace Capstone.DAO
     public interface IGameDAO
     {
         Game GetGameByUserId(int userId);
-        Game CreateGame(int creatorId, string gameName, DateTime endDate);
+        int CreateGame(Game newGame);
         UserGame AddUserToGame(int addedUserId, int gameId);
 
 

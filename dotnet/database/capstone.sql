@@ -30,7 +30,6 @@ Create table game (
 	name varchar(100) not null,
 	-- should we have a begin date?
 	end_date DateTime not null,
-	starting_balance decimal not null,
 	Constraint pk_game_id Primary Key (id),
 	Constraint fk_game_organizer_users_id Foreign Key (organizer_id) References users(id)
 );
@@ -71,8 +70,8 @@ Create table investment (
 INSERT INTO users (username, password_hash, salt, user_role) VALUES ('user','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user');
 INSERT INTO users (username, password_hash, salt, user_role) VALUES ('admin','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin');
 
-INSERT INTO game (organizer, name, end_date) VALUES (1, 'game1', 2020-08-10);
-INSERT INTO game (organizer, name, end_date) VALUES (2, 'game2', 2020-08-08);
+INSERT INTO game (organizer_id, name, end_date) VALUES (1, 'game1', 2020-08-10);
+INSERT INTO game (organizer_id, name, end_date) VALUES (2, 'game2', 2020-08-08);
 
 INSERT INTO company(ticker, open_price, high_price, low_price, current_price, previous_close_price) VALUES ('AAPL', 432.80, 446.55, 431.57, 437.70, 425.04);
 INSERT INTO company(ticker, open_price, high_price, low_price, current_price, previous_close_price) VALUES ('PGR', 90.70, 91.23, 90.15, 90.99, 90.34);
