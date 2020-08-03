@@ -26,7 +26,7 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("SELECT user_id, username, password_hash, salt, user_role FROM users WHERE username = @username", conn);
+                    SqlCommand cmd = new SqlCommand("SELECT id, username, password_hash, salt, user_role FROM users WHERE username = @username", conn);
                     cmd.Parameters.AddWithValue("@username", username);
                     SqlDataReader reader = cmd.ExecuteReader();
 
@@ -76,7 +76,7 @@ namespace Capstone.DAO
         {
             User u = new User()
             {
-                UserId = Convert.ToInt32(reader["user_id"]),
+                UserId = Convert.ToInt32(reader["id"]),
                 Username = Convert.ToString(reader["username"]),
                 PasswordHash = Convert.ToString(reader["password_hash"]),
                 Salt = Convert.ToString(reader["salt"]),
