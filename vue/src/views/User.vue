@@ -1,19 +1,21 @@
 <template>
   <div>
       <games-list />
-      <!-- add a button to create a game -->
-      <!-- <router-link>
-          <button>Create a new game</button>
-    </router-link> -->
+
+      <create-game />
+      
       
   </div>
 </template>
 
 <script>
 import GamesList from '@/components/GamesList.vue'
+import CreateGame from '@/components/CreateGame.vue'
 export default {
     components: {
-        GamesList
+        GamesList,
+        CreateGame
+
     }
 }
 </script>

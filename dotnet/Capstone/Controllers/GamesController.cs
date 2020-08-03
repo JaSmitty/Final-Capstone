@@ -32,5 +32,20 @@ namespace Capstone.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+        [HttpPost]
+        [Route("{userId}")]
+        public ActionResult<int> CreateGame(Game newGame, int userId)
+        {
+            try
+            {
+                string location = $"api/games/{userId}/{newGame.Game_ID}";
+                return Created( location, gameSqlDAO.CreateGame(newGame));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }
