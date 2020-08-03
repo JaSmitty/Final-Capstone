@@ -1,5 +1,4 @@
 C:\Users\Student\git\c-final-capstone-virtual-stock-market\dotnet\Capstone\obj\Debug\netcoreapp2.2\Capstone.csprojAssemblyReference.cache
-C:\Users\Student\git\c-final-capstone-virtual-stock-market\dotnet\Capstone\obj\Debug\netcoreapp2.2\Capstone.csproj.CoreCompileInputs.cache
 C:\Users\Student\git\c-final-capstone-virtual-stock-market\dotnet\Capstone\obj\Debug\netcoreapp2.2\Capstone.RazorAssemblyInfo.cache
 C:\Users\Student\git\c-final-capstone-virtual-stock-market\dotnet\Capstone\obj\Debug\netcoreapp2.2\Capstone.RazorAssemblyInfo.cs
 C:\Users\Student\git\c-final-capstone-virtual-stock-market\dotnet\Capstone\obj\Debug\netcoreapp2.2\Capstone.AssemblyInfoInputs.cache
@@ -15,4 +14,4 @@ C:\Users\Student\git\c-final-capstone-virtual-stock-market\dotnet\Capstone\bin\D
 C:\Users\Student\git\c-final-capstone-virtual-stock-market\dotnet\Capstone\obj\Debug\netcoreapp2.2\Capstone.RazorTargetAssemblyInfo.cache
 C:\Users\Student\git\c-final-capstone-virtual-stock-market\dotnet\Capstone\obj\Debug\netcoreapp2.2\Capstone.dll
 C:\Users\Student\git\c-final-capstone-virtual-stock-market\dotnet\Capstone\obj\Debug\netcoreapp2.2\Capstone.pdb
-C:\Users\Student\git\c-final-capstone-virtual-stock-market\dotnet\Capstone\obj\Debug\netcoreapp2.2\Capstone.genruntimeconfig.cache
+C:\Users\Student\git\c-final-capstone-virtual-stock-market\dotnet\Capstone\obj\Debug\netcoreapp2.2\Capstone.csproj.CoreCompileInputs.cache
