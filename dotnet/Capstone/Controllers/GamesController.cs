@@ -39,7 +39,7 @@ namespace Capstone.Controllers
         {
             try
             {
-                string location = $"api/games/{userId}/{newGame.Game_ID}";
+                string location = $"api/games/{userId}/{newGame.GameId}";
                 return Created( location, gameSqlDAO.CreateGame(newGame));
             }
             catch (Exception ex)

@@ -1,8 +1,8 @@
 <template>
   <div>
-      <h2>Organizer Name: {{game.organizer_Name}}</h2>
+      <h2>Organizer Name: {{game.organizerName}}</h2>
       <h2>Game Name: {{game.name}}</h2>
-      <h2>End Date: {{game.end_Date}}</h2>
+      <h2>End Date: {{game.endDate}}</h2>
   </div>
 </template>
 

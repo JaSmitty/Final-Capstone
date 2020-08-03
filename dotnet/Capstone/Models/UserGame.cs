@@ -9,10 +9,10 @@ namespace Capstone.Models
     {
         public int UserId { get; set; }
         public int GameId { get; set; }
-        public UserGame(int userId, int gameId)
-        {
-            this.UserId = userId;
-            this.GameId = gameId;
-        }
+        //public UserGame(int userId, int gameId)
+        //{
+        //    this.UserId = userId;
+        //    this.GameId = gameId;
+        //}
     }
 }
