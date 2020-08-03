@@ -26,12 +26,13 @@ Create table users (
 
 Create table game (
 	id int identity not null,
-	organizer int not null,
+	organizer_id int not null,
 	name varchar(100) not null,
 	-- should we have a begin date?
 	end_date DateTime not null,
+	starting_balance decimal not null,
 	Constraint pk_game_id Primary Key (id),
-	Constraint fk_game_organizer_users_id Foreign Key (organizer) References users(id)
+	Constraint fk_game_organizer_users_id Foreign Key (organizer_id) References users(id)
 );
 
 Create table users_game (
