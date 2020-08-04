@@ -75,4 +75,3 @@ cypress/screenshots
 cypress/videos
 /tests/e2e/videos/
 /tests/e2e/screenshots/
-dotnet/Capstone/bin/Debug/netcoreapp2.2/Capstone.dll
