@@ -13,9 +13,9 @@ namespace Capstone.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly UserSqlDAO userSqlDAO;
+        private readonly IUserDAO userSqlDAO;
 
-        public UsersController(UserSqlDAO userSqlDAO)
+        public UsersController(IUserDAO userSqlDAO)
         {
             this.userSqlDAO = userSqlDAO;
         }

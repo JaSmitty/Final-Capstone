@@ -63,7 +63,7 @@ namespace Capstone
             // Dependency Injection configuration
             services.AddSingleton<ITokenGenerator>(tk => new JwtGenerator(Configuration["JwtSecret"]));
             services.AddSingleton<IPasswordHasher>(ph => new PasswordHasher());
-            services.AddTransient<UserSqlDAO>(m => new UserSqlDAO(connectionString));
+            services.AddTransient<IUserDAO>(m => new UserSqlDAO(connectionString));
             services.AddTransient<GameSqlDAO>(m => new GameSqlDAO(connectionString));
             services.AddTransient<CompanySqlDAO>(m => new CompanySqlDAO(connectionString));
         }

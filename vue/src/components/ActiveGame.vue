@@ -2,13 +2,11 @@
   <div>
       <h2 id="game-name">{{game.name}}</h2>
       <h2 class="info">Organizer: {{game.organizerName}}</h2>
-      <h2 class="info">End Date: {{game.endDate}}</h2>
+      <h2 class="info">End Date: {{game.dateAsString}}</h2>
   </div>
 </template>
 
 <script>
-
-
 export default {
     props: {
         game: Object

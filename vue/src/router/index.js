@@ -5,7 +5,7 @@ import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import store from '../store/index'
-import User from '@/views/User.vue'
+import CreateGame from '@/views/CreateGame'
 
 Vue.use(Router)
 
@@ -55,9 +55,9 @@ const router = new Router({
       }
     },
     {
-      path: "/:id",
-      name: "user",
-      component: User
+      path: "/create",
+      name: "CreateGame",
+      component: CreateGame
     }
   ]
 })

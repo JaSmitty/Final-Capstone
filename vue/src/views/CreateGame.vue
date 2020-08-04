@@ -9,13 +9,14 @@
           <input type="submit" value="Create Game!">
           
       </form>
-      <invite-friends :gameId="gameId"/>
+      <invite-friends :gameId="gameId" />
   </div>
 </template>
 
 <script>
 import gamesService from '@/services/GamesService'
 import InviteFriends from '@/components/InviteFriends.vue'
+
 export default {
   components: {
         InviteFriends
