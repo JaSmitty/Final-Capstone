@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <h1>List of Games</h1>
-    <active-game v-for="game in games" :key="game.gameID" :game="game" />
+  <div id="games-list">
+    <h1 id="title">List of Games</h1>
+    <active-game v-for="game in games" :key="game.gameID" :game="game" id="game"/>
   </div>
 </template>
 
@@ -29,5 +29,10 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+#game{
+  border-left: solid rgb(51, 51, 255) 6px;
+  padding-left: 5px;
+  background-color:rgb(51, 241, 255)
+}
 </style>
