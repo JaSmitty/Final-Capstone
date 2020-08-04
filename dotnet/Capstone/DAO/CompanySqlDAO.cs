@@ -44,21 +44,37 @@ namespace Capstone.DAO
 
         public Company GetCurrentStockByName(string stockTick)
         {
+            Company company = new Company();
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("SELECT * from company where company_ticker = @stockTick && ", conn);
-                    
+                    SqlCommand cmd = new SqlCommand("SELECT TOP 1 * FROM company where ticker = @stockTick ORDER BY time_updated DESC ", conn);
+                    cmd.Parameters.AddWithValue("@stockTick", stockTick.ToUpper());
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    rdr.Read();
+                    company = HelperCompany(rdr);
                 }
             }
             catch
             {
 
             }
-            Company company = new Company();
             return company;
+        }
+
+        private Company HelperCompany(SqlDataReader rdr)
+        {
+            Company newCompany = new Company();
+            newCompany.Ticker = Convert.ToString(rdr["ticker"]);
+            newCompany.OpenPrice = Convert.ToDecimal(rdr["open_price"]);
+            newCompany.HighPrice = Convert.ToDecimal(rdr["high_price"]);
+            newCompany.LowPrice = Convert.ToDecimal(rdr["low_price"]);
+            newCompany.CurrentPrice = Convert.ToDecimal(rdr["current_price"]);
+            newCompany.PreviousClosePrice = Convert.ToDecimal(rdr["previous_close_price"]);
+            newCompany.TimeLastUpdated = Convert.ToDateTime(rdr["time_updated"]);
+            return newCompany;
         }
     }
 }
