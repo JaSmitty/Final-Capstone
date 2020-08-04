@@ -33,7 +33,7 @@ namespace Capstone.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-        [HttpPost]
-        [Route]
+        //[HttpPost]
+        //[Route]
     }
 }
