@@ -9,18 +9,25 @@
           <input type="submit" value="Create Game!">
           
       </form>
+      <invite-friends :gameId="gameId"/>
   </div>
 </template>
 
 <script>
 import gamesService from '@/services/GamesService'
+import InviteFriends from '@/components/InviteFriends.vue'
 export default {
+  components: {
+        InviteFriends
+  },
   data() {
     return {
       game: {
         // TODO remove hardcoded value
         organizer_id: 1
-      }
+        
+      },
+      gameId: 0
     }
   },
   methods: {
@@ -28,6 +35,7 @@ export default {
       gamesService.createGame(this.game).then(response => {
       if (response.status === 201) {
         this.game = {};
+        this.gameId = response.data
       }
     })
     }

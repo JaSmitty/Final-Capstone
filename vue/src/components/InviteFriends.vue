@@ -1,19 +1,29 @@
 <template>
   <div>
-    <table>
-      <tr>
-        <td>&nbsp;</td>
-        <td>
-          <input type="text" id="usernameFilter" v-model="filter.username" />
-        </td>
-      </tr>
-      <tr v-for="user in filteredList" :key="user.userId">
-        <td>
-          <input type="checkbox" v-bind:id="user.userId" v-bind:value="user.userId" v-model="selectedUserIds"/>
-        </td>
-        <td>{{user.username}}</td>
-      </tr>
-    </table>
+    <form @submit.prevent="inviteUsers">
+      <table>
+        <tr>
+          <td>&nbsp;</td>
+          <td>
+            <input type="text" id="usernameFilter" v-model="filter.username" />
+          </td>
+        </tr>
+        <tr v-for="user in filteredList" :key="user.userId">
+          <td>
+            <input
+              type="checkbox"
+              v-bind:id="user.userId"
+              v-bind:value="user.userId"
+              v-model="selectedUserIds"
+            />
+          </td>
+          <td>{{user.username}}</td>
+        </tr>
+        <tr>
+            <input type="submit" value="Invite">
+        </tr>
+      </table>
+    </form>
   </div>
 </template>
 
@@ -23,13 +33,21 @@ export default {
   data() {
     return {
       users: [],
-      selectedUsersIds: [],
+      selectedUserIds: [],
       filter: {
         username: "",
       },
     };
   },
-  methods: {},
+  props: {
+      gameId: Number
+  },
+  methods: {
+      inviteUsers() {
+          usersService.inviteUsers(this.selectedUserIds)
+          // navigate to the game
+      }
+  },
   computed: {
     filteredList() {
       let filteredUsers = this.users;
