@@ -1,22 +1,15 @@
 <template>
   <div>
-    <table v-for="user in users" :key="user.userId">
+    <table>
       <tr>
-        <td>
-          <input
-            type="checkbox"
-            id="selectAll"
-          />
-        </td>
         <td>&nbsp;</td>
-      </tr>
-      <tr>
         <td>
-          <input
-            type="checkbox"
-            v-bind:id="user.userId"
-            v-bind:value="user.userId"
-          />
+          <input type="text" id="usernameFilter" v-model="filter.username" />
+        </td>
+      </tr>
+      <tr v-for="user in filteredList" :key="user.userId">
+        <td>
+          <input type="checkbox" v-bind:id="user.userId" v-bind:value="user.userId" v-model="selectedUserIds"/>
         </td>
         <td>{{user.username}}</td>
       </tr>
@@ -30,7 +23,25 @@ export default {
   data() {
     return {
       users: [],
+      selectedUsersIds: [],
+      filter: {
+        username: "",
+      },
     };
+  },
+  methods: {},
+  computed: {
+    filteredList() {
+      let filteredUsers = this.users;
+      if (this.filter.username != "") {
+        filteredUsers = filteredUsers.filter((user) =>
+          user.username
+            .toLowerCase()
+            .includes(this.filter.username.toLowerCase())
+        );
+      }
+      return filteredUsers;
+    },
   },
   created() {
     usersService.getAllOtherUsers().then((response) => {
