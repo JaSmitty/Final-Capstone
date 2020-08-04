@@ -35,12 +35,12 @@ namespace Capstone.DAO
             }
             catch
             {
-
+                throw;
             }
             return true;
         }
 
-        public int CreateGame(Game newGame)
+        public int CreateGame(Game game)
         {
             int newGameID = 0;
             try
@@ -48,16 +48,19 @@ namespace Capstone.DAO
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("INSERT into game(organizer_id, name, end_date) VALUES (@organizer, @name, @endDate); Select @@identity;", conn);
-                    cmd.Parameters.AddWithValue("@organizer", newGame.OrganizerId);
-                    cmd.Parameters.AddWithValue("@name", newGame.Name);
-                    cmd.Parameters.AddWithValue("@endDate", newGame.EndDate);
-                    newGameID= Convert.ToInt32(cmd.ExecuteScalar());
+                    const string QUERY = @"Begin Transaction INSERT into game(organizer_id, name, end_date) VALUES (@organizer_id, @name, @endDate); Select @@identity
+INSERT into users_game(users_id, game_id, balance) VALUES (@organizer_id, @@identity, @balance) Commit Transaction";
+                    SqlCommand cmd = new SqlCommand(QUERY, conn);
+                    cmd.Parameters.AddWithValue("@organizer_id", game.OrganizerId);
+                    cmd.Parameters.AddWithValue("@name", game.Name);
+                    cmd.Parameters.AddWithValue("@endDate", game.EndDate);
+                    cmd.Parameters.AddWithValue("@balance", game.Balance);
+                    newGameID = Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
             catch
             {
-
+                throw;
             }
             return newGameID;
         }
