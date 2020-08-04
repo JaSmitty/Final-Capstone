@@ -8,8 +8,8 @@ namespace Capstone.DAO
 {
     public interface ICompanyDAO
     {
-        Company GetStockByName(string stockTick);
-        Company AddStock(string stockTick, decimal openPrice, decimal highPrice, decimal lowPrice, decimal currentPrice, decimal previousClosePrice);
+        Company GetCurrentStockByName(string stockTick);
+        int AddStock(Company company);
 
 
     }
