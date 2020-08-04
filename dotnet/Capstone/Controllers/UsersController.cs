@@ -9,15 +9,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Capstone.Controllers
 {
-    [Route("users/[controller]")]
+    [Route("[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UsersController : ControllerBase
     {
-        private readonly UserSqlDAO UserDAO;
+        private readonly UserSqlDAO userSqlDAO;
 
-        public UserController(UserSqlDAO userDAO)
+        public UsersController(UserSqlDAO userSqlDAO)
         {
-            this.UserDAO = userDAO;
+            this.userSqlDAO = userSqlDAO;
         }
 
         [HttpGet]
@@ -26,7 +26,7 @@ namespace Capstone.Controllers
         {
             try
             {
-                return Ok(UserDAO.GetAllOtherUsers(userId));
+                return Ok(userSqlDAO.GetAllOtherUsers(userId));
             }
             catch (Exception ex)
             {
