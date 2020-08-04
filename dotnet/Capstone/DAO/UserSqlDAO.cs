@@ -95,7 +95,7 @@ namespace Capstone.DAO
             {
                 conn.Open();
 
-                SqlCommand cmd = new SqlCommand("SELECT id, username FROM users WHERE username != @userid", conn);
+                SqlCommand cmd = new SqlCommand("SELECT id, username FROM users WHERE id != @userid", conn);
                 cmd.Parameters.AddWithValue("@userid", idOfWhoIsSearching);
                 SqlDataReader reader = cmd.ExecuteReader();
 

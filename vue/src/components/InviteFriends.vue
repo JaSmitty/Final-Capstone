@@ -1,6 +1,6 @@
 <template>
   <div>
-    <table>
+    <table v-for="user in users" :key="user.userId">
       <tr>
         <td>
           <input
