@@ -99,7 +99,7 @@ namespace Capstone.DAO
                 cmd.Parameters.AddWithValue("@userid", idOfWhoIsSearching);
                 SqlDataReader reader = cmd.ExecuteReader();
 
-                if (reader.Read())
+                while (reader.Read())
                 {
                     userList.Add(HelperUserInfo(reader));
                 }
