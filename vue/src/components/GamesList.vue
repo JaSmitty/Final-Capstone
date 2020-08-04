@@ -1,7 +1,7 @@
 <template>
-  <div id="games-list">
-    <h1 id="title">List of Games</h1>
-    <active-game v-for="game in games" :key="game.gameID" :game="game" id="game"/>
+  <div class="games-list">
+    <h1 id="title">Active Games</h1>
+    <active-game id="game" v-for="game in games" :key="game.gameID" :game="game" />
   </div>
 </template>
 
@@ -30,9 +30,28 @@ export default {
 </script>
 
 <style scoped>
+.games-list{
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  background: #f0f7ff;
+  
+}
 #game{
-  border-left: solid rgb(51, 51, 255) 6px;
-  padding-left: 5px;
-  background-color:rgb(51, 241, 255)
+  border-left: solid #0059b3 7px;
+  padding-left: 15px;
+  padding-bottom: 5px;
+  padding-top: 1px;
+  margin-bottom: 25px;
+  background: linear-gradient(to right, #66b3ff, #cce6ff);
+  border-radius: 8px;
+  width: 50%;
+  
+}
+#title {
+  background: #0080ff;
+  color: white;
+  padding-left: 15px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  
 }
 </style>
