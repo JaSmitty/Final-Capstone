@@ -1,8 +1,8 @@
 <template>
   <div>
-      <h2>Organizer Name: {{game.organizerName}}</h2>
-      <h2>Game Name: {{game.name}}</h2>
-      <h2>End Date: {{game.endDate}}</h2>
+      <h2 id="game-name">{{game.name}}</h2>
+      <h2 class="info">Organizer: {{game.organizerName}}</h2>
+      <h2 class="info">End Date: {{game.endDate}}</h2>
   </div>
 </template>
 
@@ -17,5 +17,16 @@ export default {
 </script>
 
 <style>
+#game-name{
+    font-size: 30px;
+    margin-top: 10px;
+    margin-bottom: 0px;
 
+}
+
+.info {
+    font-size: 20px;
+    margin-top: 15px;
+    color: rgb(43, 66, 66);
+}
 </style>
