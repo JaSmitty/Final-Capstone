@@ -1,7 +1,9 @@
 <template>
   <div class="games-list">
     <h1 id="title">Active Games</h1>
+    <div class="game-card-display">
     <active-game id="game" v-for="game in games" :key="game.gameID" :game="game" />
+    </div>
   </div>
 </template>
 
@@ -52,6 +54,12 @@ export default {
   padding-left: 15px;
   padding-top: 20px;
   padding-bottom: 20px;
+}
+
+.game-card-display{
+  display: flex;
+  
+  
   
 }
 </style>

@@ -19,14 +19,15 @@ export default {
 <style scoped>
 
 #welcome {
-  background: #004080;
+  background: #004d99;
   color: white;
-  padding-left: 15px;
-  padding-bottom: 5px;
-  padding-top: 5px;
+  text-align: center;
+  padding-bottom: 8px;
+  padding-top: 8px;
   margin-top: 8px;
   margin-bottom: -22px;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 25px;
 
 }
 </style>
