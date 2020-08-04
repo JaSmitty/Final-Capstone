@@ -72,6 +72,8 @@ namespace Capstone.DAO
             return GetUser(username);
         }
 
+
+
         private User GetUserFromReader(SqlDataReader reader)
         {
             User u = new User()
@@ -84,6 +86,36 @@ namespace Capstone.DAO
             };
 
             return u;
+        }
+
+        public List<UserInfo> GetAllOtherUsers(int idOfWhoIsSearching)
+        {
+            List<UserInfo> userList = new List<UserInfo>();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand("SELECT id, username FROM users WHERE username != @userid", conn);
+                cmd.Parameters.AddWithValue("@userid", idOfWhoIsSearching);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    userList.Add(HelperUserInfo(reader));
+                }
+            }
+            return userList;
+        }
+
+
+        private UserInfo HelperUserInfo(SqlDataReader rdr)
+        {
+            UserInfo user = new UserInfo();
+
+            user.UserId = Convert.ToInt32(rdr["id"]);
+            user.Username = Convert.ToString(rdr["username"]);
+
+            return user;
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Capstone.Models
+﻿using Microsoft.AspNetCore.SignalR;
+
+namespace Capstone.Models
 {
     public class User
     {
@@ -7,6 +9,12 @@
         public string PasswordHash { get; set; }
         public string Salt { get; set; }
         public string Role { get; set; }
+    }
+
+    public class UserInfo
+    {
+        public int UserId { get; set; }
+        public string Username { get; set; }
     }
 
     /// <summary>
