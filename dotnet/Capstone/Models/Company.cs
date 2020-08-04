@@ -13,6 +13,7 @@ namespace Capstone.Models
         public decimal LowPrice { get; set; }
         public decimal CurrentPrice { get; set; }
         public decimal PreviousClosePrice { get; set; }
+        public DateTime TimeLastUpdated { get; set; }
 
         //public Company(string ticker, decimal open_price, decimal high_price, decimal low_price, decimal current_price, decimal previous)
         //{
