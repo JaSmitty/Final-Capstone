@@ -44,13 +44,15 @@ Create table users_game (
 );
 
 Create table company (
+	stock_id int identity not null,
 	ticker varchar(50) not null,
 	open_price money not null,
 	high_price money not null,
 	low_price money not null,
 	current_price money not null,
-	previous_close_price money not null
-	Constraint pk_ticker Primary Key (ticker)
+	previous_close_price money not null,
+	time_updated datetime --not null,
+	Constraint pk_stock_id Primary Key (stock_id)
 );
 
 Create table investment (
@@ -62,7 +64,7 @@ Create table investment (
 	amount money not null,
 	Constraint pk_id Primary Key (id),
 	Constraint fk_investment_id_users_id Foreign Key (users_id) References users(id),
-	Constraint fk_investment_company_ticker_company_ticker Foreign Key (company_ticker) References company(ticker),
+	--Constraint fk_investment_company_ticker_company_ticker Foreign Key (company_ticker) References company(ticker),
 	Constraint fk_investment_id_game_id Foreign Key (game_id) References game(id)
 );
 
