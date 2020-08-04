@@ -17,23 +17,28 @@ namespace Capstone.DAO
         }
 
 
-        //public UserGame AddUserToGame(int addedUserId, int gameId)
-        //{
-        //    UserGame userGame = new UserGame(addedUserId, gameId);
-        //    try
-        //    {
-        //        using (SqlConnection conn = new SqlConnection(connectionString))
-        //        {
-        //            conn.Open();
-        //            SqlCommand cmd = new SqlCommand("INSERT into users_game(user_id, game_id, balance) VALUES (@organizer, @name, @endDate); Select @@identity;", conn);
-        //        }
-        //    }
-        //    catch
-        //    {
+        public bool AddUserToGame(UserGame userGame)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("INSERT into users_game(users_id, game_id, balance) VALUES (@userId, @gameId, @balance);", conn);
+                    cmd.Parameters.AddWithValue("@userId", userGame.UserId);
+                    cmd.Parameters.AddWithValue("@gameId", userGame.GameId);
 
-        //    }
-        //    return userGame;
-        //}
+                    /******* Do we have balance be set or hard code it here?*******/
+                    cmd.Parameters.AddWithValue("@balance", (decimal)100000);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch
+            {
+
+            }
+            return true;
+        }
 
         public int CreateGame(Game newGame)
         {
