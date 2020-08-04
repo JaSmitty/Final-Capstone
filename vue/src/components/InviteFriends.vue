@@ -6,8 +6,6 @@
           <input
             type="checkbox"
             id="selectAll"
-            v-bind:checked="isSelectAll"
-            v-on:change="selectAll"
           />
         </td>
         <td>&nbsp;</td>
@@ -16,20 +14,31 @@
         <td>
           <input
             type="checkbox"
-            v-bind:id="user.id"
-            v-bind:value="user.id"
-            v-model="selectedUserIDs"
+            v-bind:id="user.userId"
+            v-bind:value="user.userId"
           />
         </td>
-        <td>test</td>
+        <td>{{user.username}}</td>
       </tr>
     </table>
   </div>
 </template>
 
 <script>
+import usersService from "@/services/UsersService.js";
 export default {
-    
+  data() {
+    return {
+      users: [],
+    };
+  },
+  created() {
+    usersService.getAllOtherUsers().then((response) => {
+      if (response.status === 200) {
+        this.users = response.data;
+      }
+    });
+  },
 };
 </script>
 
