@@ -12,6 +12,13 @@ namespace Capstone.Models
         public string OrganizerName { get; set; }
         public string Name { get; set; }
         public DateTime EndDate { get; set; }
+        public string DateAsString
+        {
+            get
+            {
+                return this.EndDate.ToString("MM/dd/yyyy");
+            }
+        }
         public decimal Balance { get; set; }
 
         //public Game(int organizer_id, string name, DateTime end_date, decimal balance)
