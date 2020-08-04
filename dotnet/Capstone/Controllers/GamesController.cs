@@ -34,11 +34,12 @@ namespace Capstone.Controllers
         }
 
         [HttpPost]
-        public ActionResult<int> CreateGame(Game game)
+        [Route("{userId}")]
+        public ActionResult<int> CreateGame(Game game, int userId)
         {
             try
             {
-                string location = $"api/games/{game.GameId}";
+                string location = $"api/games/{userId}/{game.GameId}";
                 return Created(location, gameSqlDAO.CreateGame(game));
             }
             catch (Exception ex)
@@ -46,7 +47,7 @@ namespace Capstone.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-
+        // TODO Write a controller method to receive a user ID and game ID to add to the users_game table
 
     }
 }
