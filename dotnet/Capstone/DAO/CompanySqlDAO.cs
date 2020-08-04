@@ -57,6 +57,8 @@ namespace Capstone.DAO
             {
 
             }
+            Company company = new Company();
+            return company;
         }
     }
 }
