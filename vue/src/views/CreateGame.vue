@@ -25,7 +25,7 @@ export default {
     return {
       game: {
         // TODO remove hardcoded value
-        organizer_id: 1
+        organizerId: 1
         
       },
       gameId: 0
