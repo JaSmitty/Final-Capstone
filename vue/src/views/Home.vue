@@ -2,7 +2,9 @@
   <div class="home">
     <h1 id="welcome">Welcome, {{$store.state.user.username}}!</h1>
     <games-list />
-    <router-link :to="{name: 'CreateGame'}">Create Game!</router-link>
+    <div class="footer">
+    <router-link :to="{name: 'CreateGame'}" ><button class="button">Create Game!</button></router-link>
+    </div>
   </div>
 </template>
 
@@ -21,7 +23,8 @@ export default {
 #welcome {
   background: #004d99;
   color: white;
-  text-align: center;
+  /* text-align: center; */
+  padding-left: 10px;
   padding-bottom: 8px;
   padding-top: 8px;
   margin-top: 8px;
@@ -30,4 +33,14 @@ export default {
   font-size: 25px;
 
 }
+
+.footer{
+  background: #004d99;
+  padding-bottom: 8px;
+  padding-top: 8px;
+  display: flex;
+  justify-content: center;
+}
+
+
 </style>

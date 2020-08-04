@@ -36,6 +36,8 @@ export default {
   font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   background: #f0f7ff;
   
+ 
+  
 }
 #game{
   border-left: solid #0059b3 7px;
@@ -54,10 +56,14 @@ export default {
   padding-left: 15px;
   padding-top: 20px;
   padding-bottom: 20px;
+  grid-area: title;
+  text-align: center;
 }
 
 .game-card-display{
+  
   display: flex;
+
   
   
   
