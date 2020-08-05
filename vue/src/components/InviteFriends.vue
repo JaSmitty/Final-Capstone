@@ -14,9 +14,9 @@
           <td>
             <input
               type="checkbox"
-              v-bind:id="user.userId"
-              v-bind:value="user.userId"
-              v-model="selectedUserIds"
+              v-bind:id="user"
+              v-bind:value="user"
+              v-model="selectedUsers"
             />
           </td>
           <td>{{user.username}}</td>
@@ -26,6 +26,9 @@
         </tr>
       </table>
     </form>
+    <div v-if="inviteSuccessful">
+      The following users were invited: <span v-for="selectedUser in selectedUsers" :key="selectedUser.userId">{{selectedUser.username}} &nbsp;</span>
+    </div>
   </div>
 </template>
 
@@ -37,12 +40,13 @@ export default {
   data() {
     return {
       users: [],
-      selectedUserIds: [],
+      selectedUsers: [],
       usersGames: [],
       filter: {
         username: "",
       },
-      userId: this.$store.state.user.userId
+      userId: this.$store.state.user.userId,
+      inviteSuccessful: false
     };
   },
   props: {
@@ -50,13 +54,17 @@ export default {
   },
   methods: {
       inviteUsers() {
-          this.selectedUserIds.forEach(userId => {
+          this.selectedUsers.forEach(user => {
             let userGame = {};
-            userGame.userId = userId;
+            userGame.userId = user.userId;
             userGame.gameId = this.gameId;
             this.usersGames.push(userGame);
           })
-          gamesService.inviteUsers(this.usersGames, this.userId);
+          gamesService.inviteUsers(this.usersGames, this.userId).then(response => {
+            if (response.status === 201) {
+              this.inviteSuccessful = true;
+            }
+          });
           this.usersGames = [];
           // navigate to the game
       }
