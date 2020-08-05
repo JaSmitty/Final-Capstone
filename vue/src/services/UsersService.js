@@ -5,8 +5,8 @@ export default {
     getAllOtherUsers() {
         return axios.get('/api/users/1')
     },
-    inviteUsers(selectedUserIds) {
-        return axios.post('/api/users/1/invite', selectedUserIds)
+    inviteUsers(usersGames) {
+        return axios.post('/api/users/1/invite', usersGames)
     }
   }
   

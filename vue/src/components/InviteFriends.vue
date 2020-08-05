@@ -34,6 +34,7 @@ export default {
     return {
       users: [],
       selectedUserIds: [],
+      usersGames: [],
       filter: {
         username: "",
       },
@@ -44,7 +45,13 @@ export default {
   },
   methods: {
       inviteUsers() {
-          usersService.inviteUsers(this.selectedUserIds)
+          this.selectedUserIds.forEach(userId => {
+            let userGame = {};
+            userGame.userId = userId;
+            userGame.gameId = this.gameId;
+            this.usersGames.push(userGame);
+          })
+          usersService.inviteUsers(this.usersGames)
           // navigate to the game
       }
   },
