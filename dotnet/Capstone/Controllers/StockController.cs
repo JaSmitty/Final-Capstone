@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Capstone.API;
 using Capstone.DAO;
 using Capstone.Models;
 using Microsoft.AspNetCore.Http;
@@ -14,9 +15,11 @@ namespace Capstone.Controllers
     public class CompanyController : ControllerBase
     {
         private readonly CompanySqlDAO CompanySqlDao;
-        public CompanyController(CompanySqlDAO companySqlDAO)
+        private readonly StockAPI StockAPI;
+        public CompanyController(CompanySqlDAO companySqlDAO, StockAPI stockAPI)
         {
             this.CompanySqlDao = companySqlDAO;
+            this.StockAPI = stockAPI;
         }
 
 
@@ -26,7 +29,7 @@ namespace Capstone.Controllers
         {
             try
             {
-                return Ok(CompanySqlDao.GetCurrentStockByName(stockTicker));
+                return Ok(StockAPI.GetCompanyStockInfo(stockTicker));
             }
             catch (Exception ex)
             {
