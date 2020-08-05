@@ -1,4 +1,10 @@
 <template>
+<html>
+<div id="main-page">
+  <div id="game-title">
+    <h1>Virtual Stock Market</h1>
+    </div>
+    
   <div id="login" class="text-center">
     <form class="form-signin" @submit.prevent="login">
       <h1 class="h3 mb-3 font-weight-normal">Please Sign In</h1>
@@ -35,6 +41,8 @@
       <button type="submit">Sign in</button>
     </form>
   </div>
+  </div>
+  </html>
 </template>
 
 <script>
@@ -74,3 +82,21 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+html{
+  min-height:100%;
+  margin: 0;
+  background: url("../../images/4057028.jpg") no-repeat center center fixed;
+  background-size: cover;
+}
+.image{
+  height: 300px;
+  width: 50%;
+}
+
+#game-title{
+  
+}
+
+</style>
