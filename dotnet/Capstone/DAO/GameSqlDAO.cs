@@ -17,20 +17,23 @@ namespace Capstone.DAO
         }
 
 
-        public bool AddUserToGame(UserGame userGame)
+        public bool AddUserToGame(List<UserGame> userGame)
         {
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("INSERT into users_game(users_id, game_id, balance) VALUES (@userId, @gameId, @balance);", conn);
-                    cmd.Parameters.AddWithValue("@userId", userGame.UserId);
-                    cmd.Parameters.AddWithValue("@gameId", userGame.GameId);
+                    foreach (UserGame user in userGame)
+                    {
+                        SqlCommand cmd = new SqlCommand("INSERT into users_game(users_id, game_id, balance) VALUES (@userId, @gameId, @balance);", conn);
+                        cmd.Parameters.AddWithValue("@userId", user.UserId);
+                        cmd.Parameters.AddWithValue("@gameId", user.GameId);
 
-                    /******* Do we have balance be set or hard code it here?*******/
-                    cmd.Parameters.AddWithValue("@balance", (decimal)100000);
-                    cmd.ExecuteNonQuery();
+                        /******* Do we have balance be set or hard code it here?*******/
+                        cmd.Parameters.AddWithValue("@balance", (decimal)100000);
+                        cmd.ExecuteNonQuery();
+                    }
                 }
             }
             catch
@@ -49,7 +52,7 @@ namespace Capstone.DAO
                 {
                     conn.Open();
                     const string QUERY = @"Begin Transaction INSERT into game(organizer_id, name, end_date) VALUES (@organizer_id, @name, @endDate); Select @@identity
-INSERT into users_game(users_id, game_id, balance) VALUES (@organizer_id, @@identity, @balance) Commit Transaction";
+                    INSERT into users_game(users_id, game_id, balance) VALUES (@organizer_id, @@identity, @balance) Commit Transaction";
                     SqlCommand cmd = new SqlCommand(QUERY, conn);
                     cmd.Parameters.AddWithValue("@organizer_id", game.OrganizerId);
                     cmd.Parameters.AddWithValue("@name", game.Name);
