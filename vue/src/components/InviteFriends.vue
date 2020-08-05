@@ -1,13 +1,15 @@
 <template>
   <div>
+    <h1>Invite Friends</h1>
     <form @submit.prevent="inviteUsers">
       <table>
         <tr>
-          <td>&nbsp;</td>
+          <td>Search</td>
           <td>
             <input type="text" id="usernameFilter" v-model="filter.username" />
           </td>
         </tr>
+        <br />
         <tr v-for="user in filteredList" :key="user.userId">
           <td>
             <input
@@ -29,6 +31,8 @@
 
 <script>
 import usersService from "@/services/UsersService.js";
+import gamesService from "@/services/GamesService.js";
+
 export default {
   data() {
     return {
@@ -38,6 +42,7 @@ export default {
       filter: {
         username: "",
       },
+      userId: this.$store.state.user.userId
     };
   },
   props: {
@@ -51,7 +56,8 @@ export default {
             userGame.gameId = this.gameId;
             this.usersGames.push(userGame);
           })
-          usersService.inviteUsers(this.usersGames)
+          gamesService.inviteUsers(this.usersGames, this.userId);
+          this.usersGames = [];
           // navigate to the game
       }
   },
@@ -69,7 +75,7 @@ export default {
     },
   },
   created() {
-    usersService.getAllOtherUsers().then((response) => {
+    usersService.getAllOtherUsers(this.userId).then((response) => {
       if (response.status === 200) {
         this.users = response.data;
       }
