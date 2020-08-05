@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using Capstone.DAO;
 using Capstone.Security;
 using Capstone.Models;
+using Capstone.API;
 
 namespace Capstone
 {
@@ -66,6 +67,7 @@ namespace Capstone
             services.AddTransient<IUserDAO>(m => new UserSqlDAO(connectionString));
             services.AddTransient<GameSqlDAO>(m => new GameSqlDAO(connectionString));
             services.AddTransient<CompanySqlDAO>(m => new CompanySqlDAO(connectionString));
+            services.AddTransient<StockAPI>(m => new StockAPI());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -23,6 +23,7 @@ namespace Capstone.API
 
             IRestResponse<Company> stockResponse = client.Get<Company>(request);
             CheckResponse(stockResponse);
+            stockResponse.Data.Ticker = ticker;
             return stockResponse.Data;
         }
 

@@ -26,11 +26,11 @@ namespace Capstone.DAO
                     conn.Open();
                     SqlCommand cmd = new SqlCommand("INSERT into company(ticker, open_price, high_price, low_price, current_price, previous_close_price, time_updated) VALUES (@ticker, @openPrice, @highPrice, @lowPrice, @currentPrice, @previousClosePrice, @timeUpdated); SELECT @@IDENTITY", conn);
                     cmd.Parameters.AddWithValue("@ticker", company.Ticker);
-                    cmd.Parameters.AddWithValue("@openPrice", company.OpenPrice);
-                    cmd.Parameters.AddWithValue("@highPrice", company.HighPrice);
-                    cmd.Parameters.AddWithValue("@lowPrice", company.LowPrice);
-                    cmd.Parameters.AddWithValue("@currentPrice", company.CurrentPrice);
-                    cmd.Parameters.AddWithValue("@previousClosePrice", company.PreviousClosePrice);
+                    cmd.Parameters.AddWithValue("@openPrice", company.O);
+                    cmd.Parameters.AddWithValue("@highPrice", company.H);
+                    cmd.Parameters.AddWithValue("@lowPrice", company.L);
+                    cmd.Parameters.AddWithValue("@currentPrice", company.C);
+                    cmd.Parameters.AddWithValue("@previousClosePrice", company.PC);
                     cmd.Parameters.AddWithValue("@timeUpdated", DateTime.Now);
                     stockId = Convert.ToInt32(cmd.ExecuteScalar());
                 }
@@ -68,12 +68,12 @@ namespace Capstone.DAO
         {
             Company newCompany = new Company();
             newCompany.Ticker = Convert.ToString(rdr["ticker"]);
-            newCompany.OpenPrice = Convert.ToDecimal(rdr["open_price"]);
-            newCompany.HighPrice = Convert.ToDecimal(rdr["high_price"]);
-            newCompany.LowPrice = Convert.ToDecimal(rdr["low_price"]);
-            newCompany.CurrentPrice = Convert.ToDecimal(rdr["current_price"]);
-            newCompany.PreviousClosePrice = Convert.ToDecimal(rdr["previous_close_price"]);
-            newCompany.TimeLastUpdated = Convert.ToDateTime(rdr["time_updated"]);
+            newCompany.O = Convert.ToDecimal(rdr["open_price"]);
+            newCompany.H = Convert.ToDecimal(rdr["high_price"]);
+            newCompany.L = Convert.ToDecimal(rdr["low_price"]);
+            newCompany.C = Convert.ToDecimal(rdr["current_price"]);
+            newCompany.PC = Convert.ToDecimal(rdr["previous_close_price"]);
+            //newCompany.TimeLastUpdated = Convert.ToDateTime(rdr["time_updated"]);
             return newCompany;
         }
     }
