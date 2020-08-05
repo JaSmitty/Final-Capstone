@@ -34,8 +34,9 @@ export default {
 
 <style scoped>
 .games-list{
-  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  background: #f0f7ff;
+  /* font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
+  /* background: #f0f7ff; */
+  /* background: url('../../images/4057028.jpg') */
   
  
   

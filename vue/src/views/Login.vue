@@ -1,5 +1,5 @@
 <template>
-<html>
+
 <div id="main-page">
   <div id="game-title">
     <h1>Virtual Stock Market</h1>
@@ -42,7 +42,7 @@
     </form>
   </div>
   </div>
-  </html>
+  
 </template>
 
 <script>
@@ -84,12 +84,7 @@ export default {
 </script>
 
 <style scoped>
-html{
-  min-height:100%;
-  margin: 0;
-  background: url("../../images/4057028.jpg") no-repeat center center fixed;
-  background-size: cover;
-}
+
 .image{
   height: 300px;
   width: 50%;
