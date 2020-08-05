@@ -57,7 +57,7 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@organizer_id", game.OrganizerId);
                     cmd.Parameters.AddWithValue("@name", game.Name);
                     cmd.Parameters.AddWithValue("@endDate", game.EndDate);
-                    cmd.Parameters.AddWithValue("@balance", game.Balance);
+                    cmd.Parameters.AddWithValue("@balance", 100000M);
                     newGameID = Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
