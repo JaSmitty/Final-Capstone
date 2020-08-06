@@ -1,6 +1,6 @@
 <template>
   <div>
-      <invite-friends />
+      <invite-friends :game="game"/>
   </div>
 </template>
 
