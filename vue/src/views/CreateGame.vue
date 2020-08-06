@@ -13,7 +13,7 @@
       <div v-if="isCreated">
         <p>Your game {{game.name}} has been created. It will end on {{game.endDate}}</p>
         <label for=""></label>
-        <invite-friends :gameId="gameId" />
+        <invite-friends :gameId="$store.state.currentGame.gameId" />
       </div>
       
   </div>
@@ -31,9 +31,9 @@ export default {
     return {
       game: {
         // TODO remove hardcoded value
+        balance: 100000,
         organizerId: this.$store.state.user.userId
       },
-      gameId: 0,
       isCreated: false,
     }
   },
@@ -42,7 +42,7 @@ export default {
       gamesService.createGame(this.game).then(response => {
       if (response.status === 201) {
         // this.game = {};
-        this.gameId = response.data
+        this.$store.commit("SET_CURRENT_GAME", response.data);
         this.isCreated = true;
       }
     })

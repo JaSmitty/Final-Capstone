@@ -35,12 +35,13 @@ namespace Capstone.Controllers
 
         [HttpPost]
         [Route("{userId}")]
-        public ActionResult<int> CreateGame(Game game, int userId)
+        public ActionResult<Game> CreateGame(Game game, int userId)
         {
             try
             {
+                game = gameSqlDAO.CreateGame(game);
                 string location = $"api/games/{userId}/{game.GameId}";
-                return Created(location, gameSqlDAO.CreateGame(game));
+                return Created(location, game);
             }
             catch (Exception ex)
             {
