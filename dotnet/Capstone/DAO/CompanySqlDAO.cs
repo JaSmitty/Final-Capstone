@@ -24,7 +24,7 @@ namespace Capstone.DAO
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("INSERT into company(ticker, open_price, high_price, low_price, current_price, previous_close_price, time_updated) VALUES (@ticker, @openPrice, @highPrice, @lowPrice, @currentPrice, @previousClosePrice, @timeUpdated); SELECT @@IDENTITY", conn);
+                    SqlCommand cmd = new SqlCommand("INSERT into company(ticker, open_price, high_price, low_price, current_price, previous_close_price, time_updated, company_name) VALUES (@ticker, @openPrice, @highPrice, @lowPrice, @currentPrice, @previousClosePrice, @timeUpdated, @companyName); SELECT @@IDENTITY", conn);
                     cmd.Parameters.AddWithValue("@ticker", company.Ticker);
                     cmd.Parameters.AddWithValue("@openPrice", company.O);
                     cmd.Parameters.AddWithValue("@highPrice", company.H);
@@ -32,6 +32,7 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@currentPrice", company.C);
                     cmd.Parameters.AddWithValue("@previousClosePrice", company.PC);
                     cmd.Parameters.AddWithValue("@timeUpdated", company.T);
+                    cmd.Parameters.AddWithValue("@companyName", company.CompanyName);
                     stockId = Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }

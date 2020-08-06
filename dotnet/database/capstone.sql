@@ -46,6 +46,7 @@ Create table users_game (
 Create table company (
 	stock_id int identity not null,
 	ticker varchar(50) not null,
+	company_name varchar(50),
 	open_price money not null,
 	high_price money not null,
 	low_price money not null,

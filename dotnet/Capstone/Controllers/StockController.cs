@@ -23,19 +23,19 @@ namespace Capstone.Controllers
         }
 
 
-        [HttpGet]
-        [Route("{stockTicker}")]
-        public ActionResult<Company> GetStockByTickerName(string stockTicker)
-        {
-            try
-            {
-                return Ok(StockAPI.GetCompanyStockInfo(stockTicker));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
-        }
+        //[HttpGet]
+        //[Route("{stockTicker}")]
+        //public ActionResult<Company> GetStockByTickerName(string stockTicker)
+        //{
+        //    try
+        //    {
+        //        return Ok(StockAPI.GetCompanyStockInfo(stockTicker));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, ex.Message);
+        //    }
+        //}
         //[HttpPost]
         //[Route]
     }
