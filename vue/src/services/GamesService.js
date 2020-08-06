@@ -13,6 +13,9 @@ export default {
     },
     getUsersToInvite(gameId) {
         return axios.get(`/api/games/${gameId}/invite`)
+    },
+    getPlayersInGame(gameId) {
+        return axios.get(`/api/games/${gameId}/players`)
     }
   }
   

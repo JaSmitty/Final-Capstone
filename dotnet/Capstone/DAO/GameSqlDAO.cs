@@ -115,6 +115,27 @@ WHERE game_id = @gameId)", conn);
             }
             return userList;
         }
+        public List<UserInfo> GetPlayersInGame(int gameId)
+        {
+            List<UserInfo> userList = new List<UserInfo>();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand(@"SELECT id, username FROM users WHERE users.id IN
+(SELECT u.id FROM users u
+LEFT JOIN users_game ug ON u.id = ug.users_id
+WHERE game_id = @gameId)", conn);
+                cmd.Parameters.AddWithValue("@gameId", gameId);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    userList.Add(ReadToUserInfo(reader));
+                }
+            }
+            return userList;
+        }
         private Game ReadToGame(SqlDataReader rdr)
         {
             Game game = new Game();

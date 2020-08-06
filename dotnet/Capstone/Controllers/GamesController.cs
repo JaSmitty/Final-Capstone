@@ -83,5 +83,18 @@ namespace Capstone.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+        [HttpGet]
+        [Route("{gameId}/players")]
+        public ActionResult<List<UserInfo>> GetPlayersInGame(int gameId)
+        {
+            try
+            {
+                return Ok(gameSqlDAO.GetPlayersInGame(gameId));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }
