@@ -45,7 +45,6 @@ export default {
       filter: {
         username: "",
       },
-      userId: this.$store.state.user.userId,
       inviteSuccessful: false
     };
   },

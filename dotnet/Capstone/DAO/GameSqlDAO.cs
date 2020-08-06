@@ -50,11 +50,12 @@ namespace Capstone.DAO
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    const string QUERY = @"Begin Transaction INSERT into game(organizer_id, name, end_date) VALUES (@organizer_id, @name, @endDate); Select @@identity
+                    const string QUERY = @"Begin Transaction INSERT into game(organizer_id, name, start_date, end_date) VALUES (@organizer_id, @name, @startDate, @endDate); Select @@identity
                     INSERT into users_game(users_id, game_id, balance) VALUES (@organizer_id, @@identity, @balance) Commit Transaction";
                     SqlCommand cmd = new SqlCommand(QUERY, conn);
                     cmd.Parameters.AddWithValue("@organizer_id", game.OrganizerId);
                     cmd.Parameters.AddWithValue("@name", game.Name);
+                    cmd.Parameters.AddWithValue("@startDate", game.StartDate);
                     cmd.Parameters.AddWithValue("@endDate", game.EndDate);
                     cmd.Parameters.AddWithValue("@balance", game.Balance);
                     game.GameId = Convert.ToInt32(cmd.ExecuteScalar());
@@ -75,7 +76,7 @@ namespace Capstone.DAO
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand(@"SELECT game.id, game.name, organizer_id, end_date, balance, uORGANIZER.username FROM game
+                    SqlCommand cmd = new SqlCommand(@"SELECT game.id, game.name, organizer_id, start_date, end_date, balance, uORGANIZER.username FROM game
 JOIN users_game ON game.id = users_game.game_id
 JOIN users uPLAY ON uPLAY.id = users_game.users_id
 JOIN users uORGANIZER ON game.organizer_id = uORGANIZER.id
@@ -143,6 +144,7 @@ WHERE game_id = @gameId)", conn);
             game.Name = Convert.ToString(rdr["name"]);
             game.OrganizerName = Convert.ToString(rdr["username"]);
             game.OrganizerId = Convert.ToInt32(rdr["organizer_id"]);
+            game.StartDate = Convert.ToDateTime(rdr["start_date"]);
             game.EndDate = Convert.ToDateTime(rdr["end_date"]);
             game.Balance = Convert.ToDecimal(rdr["balance"]);
             return game;
