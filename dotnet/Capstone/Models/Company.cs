@@ -8,6 +8,9 @@ namespace Capstone.Models
 {
     public class Company
     {
+        public string CompanyName { get; set; }
+
+
         public string Ticker { get; set; }
 
 

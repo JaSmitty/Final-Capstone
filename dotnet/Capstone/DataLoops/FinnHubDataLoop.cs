@@ -2,6 +2,7 @@
 using Capstone.DAO;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ namespace Capstone.DataLoops
 
         public void Run()
         {
+            FileReadingMethod();
             while (true)
             {
                 companySql.AddStock(stockAPI.GetCompanyStockInfo("AAPL"));
@@ -26,6 +28,24 @@ namespace Capstone.DataLoops
             }
         }
 
-        
+
+        private Dictionary<string, string> FileReadingMethod()
+        {
+            Dictionary<string, string> stockInfo = new Dictionary<string, string>();
+            string directory = @"..";
+            string filename = @"database\Top50Stock.csv";
+
+            string fullPath = Path.Combine(directory, filename);
+            using (StreamReader rdr = new StreamReader(fullPath))
+            {
+                while (!rdr.EndOfStream)
+                {
+                    string line = rdr.ReadLine();
+                    string[] itemsInfo = line.Split(",");
+                    stockInfo.Add(itemsInfo[0], itemsInfo[1]);
+                }
+            }
+            return stockInfo;
+        }
     }
 }

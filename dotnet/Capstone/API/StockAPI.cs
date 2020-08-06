@@ -14,7 +14,7 @@ namespace Capstone.API
     {
         //string API_URL = "https://finnhub.io/api/v1/quote?symbol=AAPL&token=bskkcjvrh5rdcdh7faa0";
 
-        public Company GetCompanyStockInfo(string ticker)
+        public Company GetCompanyStockInfo(string ticker, string companyName)
         {
             string API_URL = "https://finnhub.io/api/v1";
             RestClient client = new RestClient(API_URL);
