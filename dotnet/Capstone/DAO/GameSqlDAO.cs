@@ -17,7 +17,7 @@ namespace Capstone.DAO
         }
 
 
-        public bool AddUserToGame(List<UserGame> userGame)
+        public bool AddUsersToGame(List<UserGame> userGame)
         {
             try
             {
@@ -84,18 +84,38 @@ WHERE uPLAY.username = @username", conn);
                     SqlDataReader rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
-                        games.Add(ConvertReaderToGame(rdr));
+                        games.Add(ReadToGame(rdr));
                     }
                 }
             }
             catch
             {
-
+                throw;
             }
             return games;
         }
+        public List<UserInfo> GetUsersToInviteToGame(int gameId)
+        {
+            List<UserInfo> userList = new List<UserInfo>();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
 
-        private Game ConvertReaderToGame(SqlDataReader rdr)
+                SqlCommand cmd = new SqlCommand(@"SELECT id, username FROM users WHERE users.id NOT IN
+(SELECT u.id FROM users u
+LEFT JOIN users_game ug ON u.id = ug.users_id
+WHERE game_id = @gameId)", conn);
+                cmd.Parameters.AddWithValue("@gameId", gameId);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    userList.Add(ReadToUserInfo(reader));
+                }
+            }
+            return userList;
+        }
+        private Game ReadToGame(SqlDataReader rdr)
         {
             Game game = new Game();
             game.GameId = Convert.ToInt32(rdr["id"]);
@@ -105,6 +125,15 @@ WHERE uPLAY.username = @username", conn);
             game.EndDate = Convert.ToDateTime(rdr["end_date"]);
             game.Balance = Convert.ToDecimal(rdr["balance"]);
             return game;
+        }
+        private UserInfo ReadToUserInfo(SqlDataReader rdr)
+        {
+            UserInfo user = new UserInfo();
+
+            user.UserId = Convert.ToInt32(rdr["id"]);
+            user.Username = Convert.ToString(rdr["username"]);
+
+            return user;
         }
     }
 }

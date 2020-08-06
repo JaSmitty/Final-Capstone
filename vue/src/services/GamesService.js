@@ -6,10 +6,13 @@ export default {
         return axios.get('/api/games')
     },
     createGame(newGame){
-        return axios.post(`/api/games/${newGame.organizerId}`, newGame)
+        return axios.post('/api/games', newGame)
     },
-    inviteUsers(usersGames, userId) {
-        return axios.post(`/api/games/${userId}/invite`, usersGames)
+    inviteUsers(usersGames) {
+        return axios.post('/api/games/invite', usersGames)
+    },
+    getUsersToInvite(gameId) {
+        return axios.get(`/api/games/${gameId}/invite`)
     }
   }
   

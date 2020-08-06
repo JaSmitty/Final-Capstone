@@ -68,27 +68,7 @@ namespace Capstone.DAO
 
             return GetUser(username);
         }
-        public List<UserInfo> GetUsersToInvite(int gameId)
-        {
-            List<UserInfo> userList = new List<UserInfo>();
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                conn.Open();
-
-                SqlCommand cmd = new SqlCommand(@"SELECT id, username FROM users WHERE users.id NOT IN
-(SELECT u.id FROM users u
-LEFT JOIN users_game ug ON u.id = ug.users_id
-WHERE game_id = @gameId)", conn);
-                cmd.Parameters.AddWithValue("@gameId", gameId);
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    userList.Add(HelperUserInfo(reader));
-                }
-            }
-            return userList;
-        }
+        
         private User GetUserFromReader(SqlDataReader reader)
         {
             User u = new User()
@@ -102,14 +82,6 @@ WHERE game_id = @gameId)", conn);
 
             return u;
         }
-        private UserInfo HelperUserInfo(SqlDataReader rdr)
-        {
-            UserInfo user = new UserInfo();
-
-            user.UserId = Convert.ToInt32(rdr["id"]);
-            user.Username = Convert.ToString(rdr["username"]);
-
-            return user;
-        }
+        
     }
 }

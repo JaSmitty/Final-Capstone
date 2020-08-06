@@ -40,13 +40,12 @@ namespace Capstone.Controllers
         }
 
         [HttpPost]
-        [Route("{userId}")]
-        public ActionResult<Game> CreateGame(Game game, int userId)
+        public ActionResult<Game> CreateGame(Game game)
         {
             try
             {
                 game = gameSqlDAO.CreateGame(game);
-                string location = $"api/games/{userId}/{game.GameId}";
+                string location = $"api/games/{game.GameId}";
                 return Created(location, game);
             }
             catch (Exception ex)
@@ -58,13 +57,26 @@ namespace Capstone.Controllers
         // {userId}/ invite
 
         [HttpPost]
-        [Route("{userId}/invite")]
-        public ActionResult<bool> AddUsersToGame(List<UserGame> userGames, int userId)
+        [Route("invite")]
+        public ActionResult<bool> AddUsersToGame(List<UserGame> userGames)
         {
             try
             {
-                string location = $"api/games/{userId}/invite";
-                return Created(location, gameSqlDAO.AddUserToGame(userGames));
+                string location = $"api/games/invite/success";
+                return Created(location, gameSqlDAO.AddUsersToGame(userGames));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        [HttpGet]
+        [Route("{gameId}/invite")]
+        public ActionResult<List<UserInfo>> GetUsersToInvite(int gameId)
+        {
+            try
+            {
+                return Ok(gameSqlDAO.GetUsersToInviteToGame(gameId));
             }
             catch (Exception ex)
             {

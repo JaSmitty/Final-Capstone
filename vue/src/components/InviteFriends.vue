@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import usersService from "@/services/UsersService.js";
+// import usersService from "@/services/UsersService.js";
 import gamesService from "@/services/GamesService.js";
 
 export default {
@@ -57,7 +57,7 @@ export default {
             userGame.gameId = this.gameId;
             this.usersGames.push(userGame);
           })
-          gamesService.inviteUsers(this.usersGames, this.userId).then(response => {
+          gamesService.inviteUsers(this.usersGames).then(response => {
             if (response.status === 201) {
               this.inviteSuccessful = true;
             }
@@ -83,7 +83,7 @@ export default {
     }
   },
   created() {
-    usersService.getUsersToInvite(this.gameId).then((response) => {
+    gamesService.getUsersToInvite(this.gameId).then((response) => {
       if (response.status === 200) {
         this.users = response.data;
       }

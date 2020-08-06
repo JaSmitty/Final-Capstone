@@ -20,18 +20,6 @@ namespace Capstone.Controllers
             this.userSqlDAO = userSqlDAO;
         }
 
-        [HttpGet]
-        [Route("invite/{gameId}")]
-        public ActionResult<List<UserInfo>> GetUsersToInvite(int gameId)
-        {
-            try
-            {
-                return Ok(userSqlDAO.GetUsersToInvite(gameId));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
-        }
+        
     }
 }
