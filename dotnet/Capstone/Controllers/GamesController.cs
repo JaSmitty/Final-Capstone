@@ -109,5 +109,18 @@ namespace Capstone.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+        [HttpPut]
+        [Route("{gameId}/accept")]
+        public ActionResult<bool> AcceptInvitation(UserGame userGame)
+        {
+            try
+            {
+                return Ok(gameSqlDAO.AcceptInvitation(userGame));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }
