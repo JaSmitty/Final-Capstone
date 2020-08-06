@@ -38,6 +38,7 @@ Create table game (
 Create table users_game (
 	users_id int not null,
 	game_id int not null,
+	status varchar(10) default 'pending',
 	balance money not null,
 	Constraint pk_users_id_game_id Primary Key (users_id, game_id),
 	Constraint fk_users_game_users_id_users_id Foreign Key (users_id) References users(id),
