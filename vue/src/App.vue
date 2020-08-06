@@ -12,13 +12,11 @@
 body{
   background-image: url('https://bitcoinist.com/wp-content/uploads/2018/10/shutterstock_732185581.jpg');
  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; 
+ color: white;
+ text-align: center;
+ align-content: center;
+ justify-content: center;
 }
 
-#nav{
-  color: white;
-}
 
-#nav:active{
-  color: blue;
-}
 </style> 
