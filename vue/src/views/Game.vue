@@ -4,6 +4,12 @@
       <p>Your balance: {{game.balance}}</p>
       <p>Start date: {{game.startDateAsString}}</p>
       <p>End date: {{game.endDateAsString}}</p>
+      <div>
+          <p>You are competing against the following users:</p>
+          <ul>
+              <li v-for="friend in friends" :key=friend.id>{{friend.username}}</li>
+          </ul>
+      </div>
       <invite-friends />
   </div>
 </template>
@@ -28,7 +34,7 @@ export default {
     created() {
         gamesService.getPlayersInGame(this.game.gameId).then(response => {
             if (response.status === 200) {
-                this.friends = response.data;
+                this.friends = response.data.filter(friend => friend.userId !== this.$store.state.user.userId);
             }
         })
     }
