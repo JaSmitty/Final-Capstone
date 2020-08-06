@@ -88,15 +88,18 @@ namespace Capstone.DAO
             return u;
         }
 
-        public List<UserInfo> GetAllOtherUsers(int idOfWhoIsSearching)
+        public List<UserInfo> GetUsersToInvite(int gameId)
         {
             List<UserInfo> userList = new List<UserInfo>();
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
 
-                SqlCommand cmd = new SqlCommand("SELECT id, username FROM users WHERE id != @userid", conn);
-                cmd.Parameters.AddWithValue("@userid", idOfWhoIsSearching);
+                SqlCommand cmd = new SqlCommand(@"SELECT id, username FROM users WHERE users.id NOT IN
+(SELECT u.id FROM users u
+LEFT JOIN users_game ug ON u.id = ug.users_id
+WHERE game_id = @gameId)", conn);
+                cmd.Parameters.AddWithValue("@gameId", gameId);
                 SqlDataReader reader = cmd.ExecuteReader();
 
                 while (reader.Read())

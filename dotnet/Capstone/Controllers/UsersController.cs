@@ -21,12 +21,12 @@ namespace Capstone.Controllers
         }
 
         [HttpGet]
-        [Route("{userId}")]
-        public ActionResult<List<UserInfo>> GetAllOtherUsers(int userId)
+        [Route("invite/{gameId}")]
+        public ActionResult<List<UserInfo>> GetUsersToInvite(int gameId)
         {
             try
             {
-                return Ok(userSqlDAO.GetAllOtherUsers(userId));
+                return Ok(userSqlDAO.GetUsersToInvite(gameId));
             }
             catch (Exception ex)
             {
