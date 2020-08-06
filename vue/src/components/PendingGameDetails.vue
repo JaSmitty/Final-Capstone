@@ -4,18 +4,20 @@
     <h2 class="info">Organizer: {{game.organizerName}}</h2>
     <h2 class="info">Start Date: {{game.startDateAsString}}</h2>
     <h2 class="info">End Date: {{game.endDateAsString}}</h2>
-    <button>Accept Invitation</button>
+    <button @click="acceptInvitation">Accept Invitation</button>
   </div>
 </template>
 
 <script>
+import gamesService from '@/services/GamesService'
 export default {
   props: {
     game: Object,
   },
   methods: {
       acceptInvitation() {
-          
+        let userGame = {userId: this.$store.state.user.userId, gameId: this.game.gameId};
+        gamesService.acceptInvitation(userGame);
       }
   }
 };

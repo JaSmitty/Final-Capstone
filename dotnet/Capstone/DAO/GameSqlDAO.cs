@@ -31,7 +31,7 @@ namespace Capstone.DAO
                         cmd.Parameters.AddWithValue("@gameId", user.GameId);
 
                         /******* Do we have balance be set or hard code it here?*******/
-                        //cmd.Parameters.AddWithValue("@balance", (decimal)100000);
+                        cmd.Parameters.AddWithValue("@balance", 0M);
                         cmd.ExecuteNonQuery();
                     }
                 }
