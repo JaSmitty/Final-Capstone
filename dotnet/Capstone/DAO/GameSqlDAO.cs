@@ -68,7 +68,7 @@ namespace Capstone.DAO
             return game;
         }
 
-        public List<Game> GetGamesByUserName(string username)
+        public List<Game> GetActiveGamesByUserName(string username)
         {
             List<Game> games = new List<Game>();
             try
@@ -80,7 +80,7 @@ namespace Capstone.DAO
 JOIN users_game ON game.id = users_game.game_id
 JOIN users uPLAY ON uPLAY.id = users_game.users_id
 JOIN users uORGANIZER ON game.organizer_id = uORGANIZER.id
-WHERE uPLAY.username = @username", conn);
+WHERE uPLAY.username = @username AND users_game.status = 'approved'", conn);
                     cmd.Parameters.AddWithValue("@username", username);
                     SqlDataReader rdr = cmd.ExecuteReader();
                     while (rdr.Read())

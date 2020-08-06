@@ -27,11 +27,11 @@ namespace Capstone.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Game>> GetGamesByUserName()
+        public ActionResult<List<Game>> GetActiveGamesByUserName()
         {
             try
             {
-                return Ok(gameSqlDAO.GetGamesByUserName(UserName));
+                return Ok(gameSqlDAO.GetActiveGamesByUserName(UserName));
             }
             catch (Exception ex)
             {
