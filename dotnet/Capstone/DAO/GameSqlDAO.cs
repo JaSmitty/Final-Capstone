@@ -68,7 +68,7 @@ namespace Capstone.DAO
             return game;
         }
 
-        public List<Game> GetActiveGamesByUserName(string username)
+        public List<Game> GetActiveGames(string username)
         {
             List<Game> games = new List<Game>();
             try
@@ -136,6 +136,33 @@ WHERE game_id = @gameId AND ug.status = 'approved')", conn);
                 }
             }
             return userList;
+        }
+        public List<Game> GetPendingGames(string username)
+        {
+            List<Game> games = new List<Game>();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand(@"SELECT game.id, game.name, organizer_id, start_date, end_date, balance, uORGANIZER.username FROM game
+JOIN users_game ON game.id = users_game.game_id
+JOIN users uPLAY ON uPLAY.id = users_game.users_id
+JOIN users uORGANIZER ON game.organizer_id = uORGANIZER.id
+WHERE uPLAY.username = @username AND users_game.status = 'pending'", conn);
+                    cmd.Parameters.AddWithValue("@username", username);
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        games.Add(ReadToGame(rdr));
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            return games;
         }
         private Game ReadToGame(SqlDataReader rdr)
         {

@@ -1,30 +1,42 @@
 <template>
   <div class="games-list">
-    <h1 id="title">Active Games</h1>
+    <h1 class="title">Active Games</h1>
     <div class="game-card-display">
-    <game-details id="game" v-for="game in games" :key="game.gameID" :game="game" />
+      <active-game-details id="game" v-for="game in activeGames" :key="game.gameID" :game="game" />
+    </div>
+    <h1 class="title">Pending Games</h1>
+    <div class="game-card-display">
+      <pending-game-details id="game" v-for="game in pendingGames" :key="game.gameID" :game="game" />
     </div>
   </div>
 </template>
 
 <script>
-import GameDetails from "./GameDetails.vue";
+import ActiveGameDetails from "./ActiveGameDetails.vue";
+import PendingGameDetails from "./PendingGameDetails.vue";
 import gamesService from "@/services/GamesService";
 
 export default {
   name: "GamesList",
   components: {
-    GameDetails
+    ActiveGameDetails,
+    PendingGameDetails
   },
   data() {
     return {
-      games: []
+      activeGames: [],
+      pendingGames: []
     };
   },
   created() {
-    gamesService.getAllGames().then((response) => {
+    gamesService.getActiveGames().then((response) => {
       if (response.status === 200) {
-        this.games = response.data;
+        this.activeGames = response.data;
+      }
+    });
+    gamesService.getPendingGames().then((response) => {
+      if (response.status === 200) {
+        this.pendingGames = response.data;
       }
     });
   },
@@ -32,15 +44,12 @@ export default {
 </script>
 
 <style scoped>
-.games-list{
+.games-list {
   /* font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
   /* background: #f0f7ff; */
   /* background: url('../../images/4057028.jpg') */
-  
- 
-  
 }
-#game{
+#game {
   border-left: solid #0059b3 7px;
   padding-left: 15px;
   padding-bottom: 5px;
@@ -49,9 +58,8 @@ export default {
   background: linear-gradient(to right, #66b3ff, #cce6ff);
   border-radius: 8px;
   width: 50%;
-  
 }
-#title {
+.title {
   background: #0080ff;
   color: white;
   padding-left: 15px;
@@ -61,12 +69,7 @@ export default {
   text-align: center;
 }
 
-.game-card-display{
-  
+.game-card-display {
   display: flex;
-
-  
-  
-  
 }
 </style>

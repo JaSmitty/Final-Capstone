@@ -14,7 +14,7 @@ namespace Capstone.Controllers
     public class GamesController : ControllerBase
     {
         private readonly GameSqlDAO gameSqlDAO;
-        private string UserName
+        private string Username
         {
             get
             {
@@ -27,11 +27,11 @@ namespace Capstone.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Game>> GetActiveGamesByUserName()
+        public ActionResult<List<Game>> GetActiveGames()
         {
             try
             {
-                return Ok(gameSqlDAO.GetActiveGamesByUserName(UserName));
+                return Ok(gameSqlDAO.GetActiveGames(Username));
             }
             catch (Exception ex)
             {
@@ -90,6 +90,19 @@ namespace Capstone.Controllers
             try
             {
                 return Ok(gameSqlDAO.GetActivePlayersInGame(gameId));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        [HttpGet]
+        [Route("pending")]
+        public ActionResult<List<Game>> GetPendingGames()
+        {
+            try
+            {
+                return Ok(gameSqlDAO.GetPendingGames(Username));
             }
             catch (Exception ex)
             {

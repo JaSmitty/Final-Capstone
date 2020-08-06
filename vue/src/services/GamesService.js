@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export default {
     // TODO remove hard-coded value
-    getAllGames() {
+    getActiveGames() {
         return axios.get('/api/games')
     },
     createGame(newGame){
@@ -16,6 +16,9 @@ export default {
     },
     getPlayersInGame(gameId) {
         return axios.get(`/api/games/${gameId}/players`)
+    },
+    getPendingGames() {
+        return axios.get('/api/games/pending')
     }
   }
   
