@@ -31,7 +31,7 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@lowPrice", company.L);
                     cmd.Parameters.AddWithValue("@currentPrice", company.C);
                     cmd.Parameters.AddWithValue("@previousClosePrice", company.PC);
-                    cmd.Parameters.AddWithValue("@timeUpdated", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@timeUpdated", company.T);
                     stockId = Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
@@ -73,7 +73,7 @@ namespace Capstone.DAO
             newCompany.L = Convert.ToDecimal(rdr["low_price"]);
             newCompany.C = Convert.ToDecimal(rdr["current_price"]);
             newCompany.PC = Convert.ToDecimal(rdr["previous_close_price"]);
-            //newCompany.TimeLastUpdated = Convert.ToDateTime(rdr["time_updated"]);
+            newCompany.T = Convert.ToInt64(rdr["time_updated"]);
             return newCompany;
         }
     }

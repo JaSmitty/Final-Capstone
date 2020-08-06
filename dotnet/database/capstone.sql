@@ -51,7 +51,7 @@ Create table company (
 	low_price money not null,
 	current_price money not null,
 	previous_close_price money not null,
-	time_updated datetime --not null,
+	time_updated int --not null,
 	Constraint pk_stock_id Primary Key (stock_id)
 );
 
