@@ -1,4 +1,13 @@
 <template>
+
+<div id="main-page">
+  <div id="game-title">
+    <h1>Virtual Stock Market</h1>
+    </div>
+    <div id="description">
+      <h2>Invest virtual money in the stock market and compete against your friends! The player with the highest net-worth at the end of the game, wins!</h2>
+      </div>
+    
   <div id="login" class="text-center">
     <form class="form-signin" @submit.prevent="login">
       <h1 class="h3 mb-3 font-weight-normal">Please Sign In</h1>
@@ -35,6 +44,8 @@
       <button type="submit">Sign in</button>
     </form>
   </div>
+  </div>
+  
 </template>
 
 <script>
@@ -74,3 +85,24 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+
+.image{
+  height: 300px;
+  width: 50%;
+}
+
+#main-page {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  grid-template-areas: "login ."
+                       "login title";
+
+}
+
+#login {
+  grid-area: login;
+}
+
+</style>

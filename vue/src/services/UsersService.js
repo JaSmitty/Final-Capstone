@@ -2,11 +2,9 @@ import axios from 'axios'
 
 export default {
     // TODO remove hard-coded value
-    getAllOtherUsers() {
-        return axios.get('/api/users/1')
+    getAllOtherUsers(userId) {
+        return axios.get(`/api/users/${userId}`)
     },
-    inviteUsers(selectedUserIds) {
-        return axios.post('/api/users/1/invite', selectedUserIds)
-    }
+    
   }
   

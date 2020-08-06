@@ -2,27 +2,28 @@
   <div class="games-list">
     <h1 id="title">Active Games</h1>
     <div class="game-card-display">
-    <active-game id="game" v-for="game in games" :key="game.gameID" :game="game" />
+    <game-details id="game" v-for="game in games" :key="game.gameID" :game="game" />
     </div>
   </div>
 </template>
 
 <script>
-import ActiveGame from "./ActiveGame.vue";
+import GameDetails from "./GameDetails.vue";
 import gamesService from "@/services/GamesService";
 
 export default {
   name: "GamesList",
   components: {
-    ActiveGame,
+    GameDetails
   },
   data() {
     return {
       games: [],
+      userId: this.$store.state.user.userId
     };
   },
   created() {
-    gamesService.getGamesByUserId().then((response) => {
+    gamesService.getGamesByUserId(this.userId).then((response) => {
       if (response.status === 200) {
         this.games = response.data;
       }
@@ -33,8 +34,9 @@ export default {
 
 <style scoped>
 .games-list{
-  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  background: #f0f7ff;
+  /* font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
+  /* background: #f0f7ff; */
+  /* background: url('../../images/4057028.jpg') */
   
  
   
