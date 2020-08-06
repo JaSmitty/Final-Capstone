@@ -4,6 +4,9 @@
   <div id="game-title">
     <h1>Virtual Stock Market</h1>
     </div>
+    <div id="description">
+      <h2>Invest virtual money in the stock market and compete against your friends! The player with the highest net-worth at the end of the game, wins!</h2>
+      </div>
     
   <div id="login" class="text-center">
     <form class="form-signin" @submit.prevent="login">
@@ -90,8 +93,16 @@ export default {
   width: 50%;
 }
 
-#game-title{
-  
+#main-page {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  grid-template-areas: "login ."
+                       "login title";
+
+}
+
+#login {
+  grid-area: login;
 }
 
 </style>
