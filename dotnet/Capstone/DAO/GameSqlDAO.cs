@@ -43,9 +43,8 @@ namespace Capstone.DAO
             return true;
         }
 
-        public int CreateGame(Game game)
+        public Game CreateGame(Game game)
         {
-            int newGameID = 0;
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -57,18 +56,18 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@organizer_id", game.OrganizerId);
                     cmd.Parameters.AddWithValue("@name", game.Name);
                     cmd.Parameters.AddWithValue("@endDate", game.EndDate);
-                    cmd.Parameters.AddWithValue("@balance", 100000M);
-                    newGameID = Convert.ToInt32(cmd.ExecuteScalar());
+                    cmd.Parameters.AddWithValue("@balance", game.Balance);
+                    game.GameId = Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
             catch
             {
                 throw;
             }
-            return newGameID;
+            return game;
         }
 
-        public List<Game> GetGamesByUserId(int userId)
+        public List<Game> GetGamesByUserName(string username)
         {
             List<Game> games = new List<Game>();
             try
@@ -76,8 +75,12 @@ namespace Capstone.DAO
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand(@"SELECT game.id, game.name, organizer_id, end_date, balance, users.username from game join users_game on users_game.game_id = game.id join users on users.id = game.organizer_id where users_game.users_id = @userId", conn);
-                    cmd.Parameters.AddWithValue("@userId", userId);
+                    SqlCommand cmd = new SqlCommand(@"SELECT game.id, game.name, organizer_id, end_date, balance, uORGANIZER.username FROM game
+JOIN users_game ON game.id = users_game.game_id
+JOIN users uPLAY ON uPLAY.id = users_game.users_id
+JOIN users uORGANIZER ON game.organizer_id = uORGANIZER.id
+WHERE uPLAY.username = @username", conn);
+                    cmd.Parameters.AddWithValue("@username", username);
                     SqlDataReader rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {

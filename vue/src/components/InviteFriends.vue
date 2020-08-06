@@ -49,9 +49,6 @@ export default {
       inviteSuccessful: false
     };
   },
-  props: {
-      gameId: Number
-  },
   methods: {
       inviteUsers() {
           this.selectedUsers.forEach(user => {
@@ -81,9 +78,12 @@ export default {
       }
       return filteredUsers;
     },
+    gameId() {
+      return this.$store.state.currentGame.gameId
+    }
   },
   created() {
-    usersService.getAllOtherUsers(this.userId).then((response) => {
+    usersService.getUsersToInvite(this.gameId).then((response) => {
       if (response.status === 200) {
         this.users = response.data;
       }
