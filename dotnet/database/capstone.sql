@@ -90,9 +90,9 @@ INSERT INTO investment(users_id, company_ticker, game_id, shares, amount) VALUES
 INSERT INTO investment(users_id, company_ticker, game_id, shares, amount) VALUES (2, 'AAPL', 2, 4, 1726.28);
 INSERT INTO investment(users_id, company_ticker, game_id, shares, amount) VALUES (2, 'PGR', 2, 3, 272.97);
 
-INSERT INTO users_game(users_id, game_id, balance) VALUES (1, 1, 100000);
-INSERT INTO users_game(users_id, game_id, balance) VALUES (1, 2, 100000);
-INSERT INTO users_game(users_id, game_id, balance) VALUES (2, 1, 100000);
-INSERT INTO users_game(users_id, game_id, balance) VALUES (2, 2, 100000);
+INSERT INTO users_game(users_id, game_id, status, balance) VALUES (1, 1, 'approved', 100000);
+INSERT INTO users_game(users_id, game_id, status, balance) VALUES (1, 2, 'pending', 100000);
+INSERT INTO users_game(users_id, game_id, status, balance) VALUES (2, 1, 'approved', 100000);
+INSERT INTO users_game(users_id, game_id, status, balance) VALUES (2, 2, 'pending', 100000);
 
 GO

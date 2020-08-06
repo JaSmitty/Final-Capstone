@@ -17,7 +17,7 @@ namespace Capstone.DAO
         }
 
 
-        public bool AddUsersToGame(List<UserGame> userGame)
+        public bool InviteUsersToGame(List<UserGame> userGame)
         {
             try
             {
@@ -104,7 +104,7 @@ WHERE uPLAY.username = @username AND users_game.status = 'approved'", conn);
 
                 SqlCommand cmd = new SqlCommand(@"SELECT id, username FROM users WHERE users.id NOT IN
 (SELECT u.id FROM users u
-LEFT JOIN users_game ug ON u.id = ug.users_id
+JOIN users_game ug ON u.id = ug.users_id
 WHERE game_id = @gameId)", conn);
                 cmd.Parameters.AddWithValue("@gameId", gameId);
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -116,7 +116,7 @@ WHERE game_id = @gameId)", conn);
             }
             return userList;
         }
-        public List<UserInfo> GetPlayersInGame(int gameId)
+        public List<UserInfo> GetActivePlayersInGame(int gameId)
         {
             List<UserInfo> userList = new List<UserInfo>();
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -125,8 +125,8 @@ WHERE game_id = @gameId)", conn);
 
                 SqlCommand cmd = new SqlCommand(@"SELECT id, username FROM users WHERE users.id IN
 (SELECT u.id FROM users u
-LEFT JOIN users_game ug ON u.id = ug.users_id
-WHERE game_id = @gameId)", conn);
+JOIN users_game ug ON u.id = ug.users_id
+WHERE game_id = @gameId AND ug.status = 'approved')", conn);
                 cmd.Parameters.AddWithValue("@gameId", gameId);
                 SqlDataReader reader = cmd.ExecuteReader();
 

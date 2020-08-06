@@ -58,12 +58,12 @@ namespace Capstone.Controllers
 
         [HttpPost]
         [Route("invite")]
-        public ActionResult<bool> AddUsersToGame(List<UserGame> userGames)
+        public ActionResult<bool> InviteUsersToGame(List<UserGame> userGames)
         {
             try
             {
                 string location = $"api/games/invite/success";
-                return Created(location, gameSqlDAO.AddUsersToGame(userGames));
+                return Created(location, gameSqlDAO.InviteUsersToGame(userGames));
             }
             catch (Exception ex)
             {
@@ -72,7 +72,7 @@ namespace Capstone.Controllers
         }
         [HttpGet]
         [Route("{gameId}/invite")]
-        public ActionResult<List<UserInfo>> GetUsersToInvite(int gameId)
+        public ActionResult<List<UserInfo>> GetUsersToInviteToGame(int gameId)
         {
             try
             {
@@ -85,11 +85,11 @@ namespace Capstone.Controllers
         }
         [HttpGet]
         [Route("{gameId}/players")]
-        public ActionResult<List<UserInfo>> GetPlayersInGame(int gameId)
+        public ActionResult<List<UserInfo>> GetActivePlayersInGame(int gameId)
         {
             try
             {
-                return Ok(gameSqlDAO.GetPlayersInGame(gameId));
+                return Ok(gameSqlDAO.GetActivePlayersInGame(gameId));
             }
             catch (Exception ex)
             {
