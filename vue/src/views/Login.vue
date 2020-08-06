@@ -95,14 +95,33 @@ export default {
 
 #main-page {
   display: grid;
-  grid-template-columns: 200px 1fr;
-  grid-template-areas: "login ."
-                       "login title";
+  grid-template-columns: 100px 1fr;
+  grid-template-rows: 1fr 3fr 1fr;
+  grid-template-areas: ". ."
+                       "login title"
+                       "login description";
 
 }
 
 #login {
   grid-area: login;
+  background:  #003366;
+  width: 200px;
+  height: 100%;
+  
+}
+
+#game-title {
+  grid-area: title;
+}
+
+#description{
+  grid-area: description;
+  background: #003366;
+  border-radius: 7px;
+  width: 1000px;
+  justify-self: center;
+  padding: 20px 20px;
 }
 
 </style>
