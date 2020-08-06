@@ -4,6 +4,7 @@
     <h2 class="info">Organizer: {{game.organizerName}}</h2>
     <h2 class="info">Start Date: {{game.startDateAsString}}</h2>
     <h2 class="info">End Date: {{game.endDateAsString}}</h2>
+    <button>Accept Invitation</button>
   </div>
 </template>
 
@@ -12,6 +13,11 @@ export default {
   props: {
     game: Object,
   },
+  methods: {
+      acceptInvitation() {
+          
+      }
+  }
 };
 </script>
 

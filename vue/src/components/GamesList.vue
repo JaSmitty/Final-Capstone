@@ -4,7 +4,7 @@
     <div class="game-card-display">
       <active-game-details id="game" v-for="game in activeGames" :key="game.gameID" :game="game" />
     </div>
-    <h1 class="title">Pending Games</h1>
+    <h1 class="title">Invitations</h1>
     <div class="game-card-display">
       <pending-game-details id="game" v-for="game in pendingGames" :key="game.gameID" :game="game" />
     </div>
