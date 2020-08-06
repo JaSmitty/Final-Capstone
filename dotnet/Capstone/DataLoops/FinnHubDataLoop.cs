@@ -11,17 +11,17 @@ namespace Capstone.DataLoops
     public class FinnHubDataLoop
     {
         StockAPI stockAPI = new StockAPI();
-        private readonly CompanySqlDAO companySqlDAO;
-        public FinnHubDataLoop(CompanySqlDAO companySql)
-        {
-            this.companySqlDAO = companySql;
-        }
+        CompanySqlDAO companySql = new CompanySqlDAO("Server=.\\SQLEXPRESS;Database=final_capstone;Trusted_Connection=True;");
+        //public FinnHubDataLoop()
+        //{
+        //    this.companySqlDAO = companySql;
+        //}
 
         public void Run()
         {
             while (true)
             {
-                companySqlDAO.AddStock(stockAPI.GetCompanyStockInfo("AAPL"));
+                companySql.AddStock(stockAPI.GetCompanyStockInfo("AAPL"));
                 Thread.Sleep(60000);
             }
         }
