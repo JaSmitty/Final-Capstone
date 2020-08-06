@@ -31,7 +31,7 @@ namespace Capstone.DAO
                         cmd.Parameters.AddWithValue("@gameId", user.GameId);
 
                         /******* Do we have balance be set or hard code it here?*******/
-                        cmd.Parameters.AddWithValue("@balance", (decimal)100000);
+                        //cmd.Parameters.AddWithValue("@balance", (decimal)100000);
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -163,6 +163,29 @@ WHERE uPLAY.username = @username AND users_game.status = 'pending'", conn);
                 throw;
             }
             return games;
+        }
+        public bool AcceptInvitation(UserGame userGame)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    const string QUERY = @"UPDATE users_game
+SET users_id = @userId, game_id = @gameId, status = 'approved', balance = @balance
+WHERE users_id = @userId AND game_id = @gameId";
+                    SqlCommand cmd = new SqlCommand(QUERY, conn);
+                    cmd.Parameters.AddWithValue("@userId", userGame.UserId);
+                    cmd.Parameters.AddWithValue("@gameId", userGame.GameId);
+                    cmd.Parameters.AddWithValue("@balance", (decimal)100000);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            return true;
         }
         private Game ReadToGame(SqlDataReader rdr)
         {
