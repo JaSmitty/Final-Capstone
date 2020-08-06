@@ -15,7 +15,6 @@ namespace Capstone.DAO
         {
             connectionString = dbConnectionString;
         }
-
         public User GetUser(string username)
         {
             User returnUser = null;
@@ -43,8 +42,6 @@ namespace Capstone.DAO
 
             return returnUser;
         }
-
-
         public User AddUser(string username, string password, string role)
         {
             IPasswordHasher passwordHasher = new PasswordHasher();
@@ -71,23 +68,6 @@ namespace Capstone.DAO
 
             return GetUser(username);
         }
-
-
-
-        private User GetUserFromReader(SqlDataReader reader)
-        {
-            User u = new User()
-            {
-                UserId = Convert.ToInt32(reader["id"]),
-                Username = Convert.ToString(reader["username"]),
-                PasswordHash = Convert.ToString(reader["password_hash"]),
-                Salt = Convert.ToString(reader["salt"]),
-                Role = Convert.ToString(reader["user_role"]),
-            };
-
-            return u;
-        }
-
         public List<UserInfo> GetUsersToInvite(int gameId)
         {
             List<UserInfo> userList = new List<UserInfo>();
@@ -109,8 +89,19 @@ WHERE game_id = @gameId)", conn);
             }
             return userList;
         }
+        private User GetUserFromReader(SqlDataReader reader)
+        {
+            User u = new User()
+            {
+                UserId = Convert.ToInt32(reader["id"]),
+                Username = Convert.ToString(reader["username"]),
+                PasswordHash = Convert.ToString(reader["password_hash"]),
+                Salt = Convert.ToString(reader["salt"]),
+                Role = Convert.ToString(reader["user_role"]),
+            };
 
-
+            return u;
+        }
         private UserInfo HelperUserInfo(SqlDataReader rdr)
         {
             UserInfo user = new UserInfo();

@@ -14,18 +14,24 @@ namespace Capstone.Controllers
     public class GamesController : ControllerBase
     {
         private readonly GameSqlDAO gameSqlDAO;
+        private string UserName
+        {
+            get
+            {
+                return User?.Identity?.Name;
+            }
+        }
         public GamesController(GameSqlDAO gameSqlDAO)
         {
             this.gameSqlDAO = gameSqlDAO;
         }
 
         [HttpGet]
-        [Route("{userId}")]
-        public ActionResult<List<Game>> GetGamesByUserId(int userId)
+        public ActionResult<List<Game>> GetGamesByUserName()
         {
             try
             {
-                return Ok(gameSqlDAO.GetGamesByUserId(userId));
+                return Ok(gameSqlDAO.GetGamesByUserName(UserName));
             }
             catch (Exception ex)
             {

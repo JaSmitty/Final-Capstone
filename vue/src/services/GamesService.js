@@ -2,8 +2,8 @@ import axios from 'axios'
 
 export default {
     // TODO remove hard-coded value
-    getGamesByUserId(userId) {
-        return axios.get(`/api/games/${userId}`)
+    getAllGames() {
+        return axios.get('/api/games')
     },
     createGame(newGame){
         return axios.post(`/api/games/${newGame.organizerId}`, newGame)

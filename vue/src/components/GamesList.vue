@@ -18,12 +18,11 @@ export default {
   },
   data() {
     return {
-      games: [],
-      userId: this.$store.state.user.userId
+      games: []
     };
   },
   created() {
-    gamesService.getGamesByUserId(this.userId).then((response) => {
+    gamesService.getAllGames().then((response) => {
       if (response.status === 200) {
         this.games = response.data;
       }
