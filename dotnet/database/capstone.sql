@@ -58,17 +58,45 @@ Create table company (
 	Constraint pk_stock_id Primary Key (stock_id)
 );
 
-Create table investment (
+--Create table investment (
+--	id int identity not null,
+--	users_id int not null,
+--	company_ticker varchar(50) not null,
+--	game_id int not null,
+--	shares float not null,
+--	amount money not null,
+--	Constraint pk_id Primary Key (id),
+--	Constraint fk_investment_id_users_id Foreign Key (users_id) References users(id),
+--	--Constraint fk_investment_company_ticker_company_ticker Foreign Key (company_ticker) References company(ticker),
+--	Constraint fk_investment_id_game_id Foreign Key (game_id) References game(id)
+--);
+
+Create table buy_table (
 	id int identity not null,
 	users_id int not null,
-	company_ticker varchar(50) not null,
+	stock_at_buy_id int not null,
 	game_id int not null,
-	shares float not null,
-	amount money not null,
-	Constraint pk_id Primary Key (id),
+	initial_shares_purchased float not null,
+	shares_currently_owned float not null,
+	amount_per_share money not null,
+	time_purchased bigint not null,
+	Constraint pk_buy_id Primary Key (id),
 	Constraint fk_investment_id_users_id Foreign Key (users_id) References users(id),
-	--Constraint fk_investment_company_ticker_company_ticker Foreign Key (company_ticker) References company(ticker),
-	Constraint fk_investment_id_game_id Foreign Key (game_id) References game(id)
+	Constraint fk_investment_id_game_id Foreign Key (game_id) References game(id),
+	Constraint fk_stock_buy_stock_id Foreign Key (stock_at_buy_id) References company(stock_id)
+);
+
+Create table sell_table (
+	id int identity not null,
+	stock_at_sell_id int not null,
+	buy_reference_id int not null,
+	shares_sold float not null,
+	amount_per_share money not null,
+	profit money not null,
+	time_sold bigint not null,
+	Constraint pk_sell_id Primary Key (id),
+	Constraint fk_stock_sell_stock_id Foreign Key (stock_at_sell_id) References company(stock_id),
+	Constraint fk_buy_reference_buy_table_id Foreign Key (buy_reference_id) References buy_table(id)
 );
 
 --populate default data
@@ -81,14 +109,14 @@ INSERT INTO game (organizer_id, name, start_date, end_date) VALUES (2, 'game2', 
 INSERT INTO company(ticker, open_price, high_price, low_price, current_price, previous_close_price) VALUES ('AAPL', 432.80, 446.55, 431.57, 437.70, 425.04);
 INSERT INTO company(ticker, open_price, high_price, low_price, current_price, previous_close_price) VALUES ('PGR', 90.70, 91.23, 90.15, 90.99, 90.34);
 
-INSERT INTO investment(users_id, company_ticker, game_id, shares, amount) VALUES (1, 'AAPL', 1, 1, 90.70);
-INSERT INTO investment(users_id, company_ticker, game_id, shares, amount) VALUES (1, 'PGR', 1, 0.50, 45.60);
-INSERT INTO investment(users_id, company_ticker, game_id, shares, amount) VALUES (2, 'AAPL', 1, 2, 863.14);
-INSERT INTO investment(users_id, company_ticker, game_id, shares, amount) VALUES (2, 'PGR', 2, 6, 545.94);
-INSERT INTO investment(users_id, company_ticker, game_id, shares, amount) VALUES (1, 'AAPL', 2, 5.5, 2373.64);
-INSERT INTO investment(users_id, company_ticker, game_id, shares, amount) VALUES (1, 'PGR', 2, 3.3, 1424.18);
-INSERT INTO investment(users_id, company_ticker, game_id, shares, amount) VALUES (2, 'AAPL', 2, 4, 1726.28);
-INSERT INTO investment(users_id, company_ticker, game_id, shares, amount) VALUES (2, 'PGR', 2, 3, 272.97);
+--INSERT INTO investment(users_id, company_ticker, game_id, shares, amount) VALUES (1, 'AAPL', 1, 1, 90.70);
+--INSERT INTO investment(users_id, company_ticker, game_id, shares, amount) VALUES (1, 'PGR', 1, 0.50, 45.60);
+--INSERT INTO investment(users_id, company_ticker, game_id, shares, amount) VALUES (2, 'AAPL', 1, 2, 863.14);
+--INSERT INTO investment(users_id, company_ticker, game_id, shares, amount) VALUES (2, 'PGR', 2, 6, 545.94);
+--INSERT INTO investment(users_id, company_ticker, game_id, shares, amount) VALUES (1, 'AAPL', 2, 5.5, 2373.64);
+--INSERT INTO investment(users_id, company_ticker, game_id, shares, amount) VALUES (1, 'PGR', 2, 3.3, 1424.18);
+--INSERT INTO investment(users_id, company_ticker, game_id, shares, amount) VALUES (2, 'AAPL', 2, 4, 1726.28);
+--INSERT INTO investment(users_id, company_ticker, game_id, shares, amount) VALUES (2, 'PGR', 2, 3, 272.97);
 
 INSERT INTO users_game(users_id, game_id, status, balance) VALUES (1, 1, 'approved', 100000);
 INSERT INTO users_game(users_id, game_id, status, balance) VALUES (1, 2, 'pending', 100000);
