@@ -20,7 +20,8 @@ export default new Vuex.Store({
   state: {
     token: currentToken || '',
     user: currentUser || {},
-    currentGame: {}
+    currentGame: {},
+    currentStockMarket: []
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -42,5 +43,8 @@ export default new Vuex.Store({
     SET_CURRENT_GAME(state, game) {
       state.currentGame = game
     },
+    SET_CURRENT_STOCKS(state, currentStockMarket) {
+      state.currentStockMarket = currentStockMarket
+    }
   }
 })

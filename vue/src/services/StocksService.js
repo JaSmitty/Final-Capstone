@@ -6,5 +6,8 @@ export default {
     },
     getInvestments() {
         return axios.get('api/investments')
+    },
+    submitSell(investmentToSell) {
+        return axios.post('/', investmentToSell)
     }
 }

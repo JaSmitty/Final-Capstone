@@ -1,5 +1,6 @@
 <template>
   <div>
+      <h1>Stocks Summary</h1>
       <ul>
           <li v-for="stock in stocks" :key="stock.id">
               <p>{{stock.ticker}}</p>
@@ -11,28 +12,15 @@
 </template>
 
 <script>
-// comment this line
-import stocksService from '@/services/StocksService'
 export default {
     data() {
         return {
             //comment this line
-            stocks: []
+            stocks: this.$store.state.currentStockMarket
             // stocks: [
             //     {id: 1, ticker: 'AAPL', o: 441.62, h: 454.72, l: 439.50, c: 454.296, pc: 440.25, performance: 0.13 + '%'}
             // ]
         }
-    },
-    methods: {
-        
-    },
-    //comment this method
-    created() {
-        stocksService.getStocks().then(response => {
-            if (response.status === 200) {
-                this.stocks = response.data
-            }
-        })
     }
 }
 </script>

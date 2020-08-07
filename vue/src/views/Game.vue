@@ -17,8 +17,9 @@
 </template>
 
 <script>
-import InviteFriends from '@/components/InviteFriends'
 import gamesService from '@/services/GamesService'
+import stocksService from '@/services/StocksService'
+import InviteFriends from '@/components/InviteFriends'
 import StocksSummary from '@/components/StocksSummary'
 import CurrentInvestments from '@/components/CurrentInvestments'
 export default {
@@ -45,7 +46,7 @@ export default {
         }),
         stocksService.getStocks().then(response => {
             if (response.status === 200) {
-                
+                this.$store.commit("SET_CURRENT_STOCKS", response.data)
             }
         })
     }
