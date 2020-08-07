@@ -11,26 +11,29 @@
 </template>
 
 <script>
-// import stocksService from '@/services/StockService'
+// comment this line
+import stocksService from '@/services/StocksService'
 export default {
     data() {
         return {
-            // stocks: []
-            stocks: [
-                {id: 1, ticker: 'AAPL', o: 441.62, h: 454.72, l: 439.50, c: 454.296, pc: 440.25, performance: 0.13 + '%'}
-            ]
+            //comment this line
+            stocks: []
+            // stocks: [
+            //     {id: 1, ticker: 'AAPL', o: 441.62, h: 454.72, l: 439.50, c: 454.296, pc: 440.25, performance: 0.13 + '%'}
+            // ]
         }
     },
     methods: {
         
     },
-    // created() {
-    //     stocksService.getStocks().then(response => {
-    //         if (response.status === 200) {
-    //             this.stocks = response.data
-    //         }
-    //     })
-    // }
+    //comment this method
+    created() {
+        stocksService.getStocks().then(response => {
+            if (response.status === 200) {
+                this.stocks = response.data
+            }
+        })
+    }
 }
 </script>
 
