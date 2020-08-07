@@ -11,6 +11,8 @@ using Capstone.DAO;
 using Capstone.Security;
 using Capstone.Models;
 using Capstone.API;
+using Hangfire;
+using Capstone.DataLoops;
 
 namespace Capstone
 {
@@ -26,6 +28,7 @@ namespace Capstone
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Server
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddCors(options =>
@@ -68,6 +71,12 @@ namespace Capstone
             services.AddTransient<GameSqlDAO>(m => new GameSqlDAO(connectionString));
             services.AddTransient<CompanySqlDAO>(m => new CompanySqlDAO(connectionString));
             services.AddTransient<StockAPI>(m => new StockAPI());
+            services.AddTransient<FinnHubDataLoop>(m => new FinnHubDataLoop());
+
+
+            //HangFire
+            services.AddHangfire(x => x.UseSqlServerStorage(connectionString));
+            services.AddHangfireServer();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -86,6 +95,8 @@ namespace Capstone
             app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
+            //HangFire
+            app.UseHangfireDashboard();
         }
     }
 }

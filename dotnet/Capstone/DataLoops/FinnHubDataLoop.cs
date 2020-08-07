@@ -20,17 +20,13 @@ namespace Capstone.DataLoops
 
         public void Run()
         {
-            
-            while (true)
-            {
                 Dictionary<string, string> stockList = FileReadingMethod();
                 foreach (KeyValuePair<string, string> keyValuePair in stockList)
                 {
                     companySql.AddStock(stockAPI.GetCompanyStockInfo(keyValuePair.Key, keyValuePair.Value));
                     
                 }
-                Thread.Sleep(60000);
-            }
+                
         }
 
 

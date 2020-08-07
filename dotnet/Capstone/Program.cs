@@ -6,8 +6,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Capstone.DAO;
 using Capstone.DataLoops;
+using Hangfire;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
@@ -18,11 +20,9 @@ namespace Capstone
         
         public static void Main(string[] args)
         {
-            FinnHubDataLoop dataLoop = new FinnHubDataLoop();
-            Thread newThread = new Thread(
-            new ThreadStart(dataLoop.Run));
+            //FinnHubDataLoop dataLoop = new FinnHubDataLoop();
 
-            newThread.Start();
+            //RecurringJob.AddOrUpdate(recurringJobId: "Database-Populating", methodCall: () => dataLoop.Run(), Cron.Minutely);
 
             //CompanySqlDAO companySql = new CompanySqlDAO("Server=.\\SQLEXPRESS;Database=final_capstone;Trusted_Connection=True;");
             //FinnHubDataLoop dataLoop = new FinnHubDataLoop();
