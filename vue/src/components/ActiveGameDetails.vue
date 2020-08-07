@@ -30,9 +30,7 @@ export default {
   text-decoration: none;
 }
 
-.game-card:hover{
-transform: translateY(4px);
-}
+
 
 #game-name {
   font-size: 30px;

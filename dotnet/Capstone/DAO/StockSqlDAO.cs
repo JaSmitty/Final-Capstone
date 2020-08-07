@@ -77,8 +77,8 @@ namespace Capstone.DAO
                     {
                         Stock stock = new Stock();
                         const string QUERY = @"SELECT TOP 1 * FROM company
-WHERE ticker = @ticker
-ORDER BY time_updated DESC";
+                                               WHERE ticker = @ticker
+                                               ORDER BY time_updated DESC";
                         SqlCommand cmd = new SqlCommand(QUERY, conn);
                         cmd.Parameters.AddWithValue("@ticker", ticker);
                         SqlDataReader rdr = cmd.ExecuteReader();

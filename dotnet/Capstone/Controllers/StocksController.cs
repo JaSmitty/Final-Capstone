@@ -5,7 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Capstone.API;
 using Capstone.DAO;
+using Capstone.DataLoops;
 using Capstone.Models;
+using Hangfire;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGeneration;
@@ -19,11 +21,13 @@ namespace Capstone.Controllers
         private readonly StockSqlDAO stockSqlDAO;
         private readonly StockAPI stockAPI;
         private List<string> stockTickers;
-        public StocksController(StockSqlDAO stockSqlDAO, StockAPI stockAPI)
+        private FinnHubDataLoop DataLoop;
+        public StocksController(StockSqlDAO stockSqlDAO, StockAPI stockAPI, FinnHubDataLoop dataLoop)
         {
             this.stockSqlDAO = stockSqlDAO;
             this.stockAPI = stockAPI;
             this.stockTickers = ReadToStocks();
+            this.DataLoop = dataLoop;
         }
         [HttpGet]
         public ActionResult<List<Stock>> GetCurrentStocks()
@@ -38,6 +42,12 @@ namespace Capstone.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("sendit")]
+        public void HangfireSetup()
+        {
+            RecurringJob.AddOrUpdate(recurringJobId: "Dataloop", methodCall: () => DataLoop.Run(), Cron.Minutely);
+        }
         //[HttpGet]
         //[Route("{stockTicker}")]
         //public ActionResult<Company> GetStockByTickerName(string stockTicker)
