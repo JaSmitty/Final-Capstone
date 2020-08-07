@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-link :to="{name: 'Game', params: {gameId: game.gameId}}">
+    <router-link class="game-card" :to="{name: 'Game', params: {gameId: game.gameId}}">
         <div @click="setGameObject">
             <h2 id="game-name">{{game.name}}</h2>
       <h2 class="info">Organizer: {{game.organizerName}}</h2>
@@ -25,10 +25,22 @@ export default {
 </script>
 
 <style>
+
+.game-card{
+  text-decoration: none;
+}
+
+.game-card:hover{
+transform: translateY(4px);
+}
+
 #game-name {
   font-size: 30px;
   margin-top: 10px;
   margin-bottom: 0px;
+  color: white;
+  text-decoration: underline;
+  
 }
 
 .info {

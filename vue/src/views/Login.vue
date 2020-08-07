@@ -94,13 +94,7 @@ export default {
 }
 
 #main-page {
-  display: grid;
-  grid-template-columns: 100px 1fr;
-  grid-gap: 0px;
-  grid-template-rows: 1fr 3fr 1fr;
-  grid-template-areas: ". ."
-                       "login title"
-                       "login description";
+  
 
 }
 
