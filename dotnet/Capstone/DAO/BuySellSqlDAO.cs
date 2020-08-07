@@ -48,7 +48,6 @@ namespace Capstone.DAO
                     buyModel.BuyId = Convert.ToInt32(cmd2.ExecuteScalar());
                     buyModel.AmountPerShare = stock.C;
                     buyModel.BuyTimeTicks = timeTicks;
-                    buyModel.
                 }
             }
             catch
