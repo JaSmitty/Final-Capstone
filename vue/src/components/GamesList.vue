@@ -61,6 +61,7 @@ export default {
 
 .invites{
   grid-area: invites;
+  border-left: 2px solid #e7f3ff;
 }
 
 #game {
