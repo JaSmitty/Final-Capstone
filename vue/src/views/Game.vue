@@ -11,12 +11,14 @@
           </ul>
       </div>
       <invite-friends />
+      <stocks-summary />
   </div>
 </template>
 
 <script>
 import InviteFriends from '@/components/InviteFriends'
 import gamesService from '@/services/GamesService'
+import StocksSummary from '@/components/StocksSummary'
 export default {
     data() {
         return {
@@ -24,7 +26,8 @@ export default {
         }
     },
     components: {
-        InviteFriends
+        InviteFriends,
+        StocksSummary
     },
     computed: {
         game() {
