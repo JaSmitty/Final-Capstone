@@ -94,10 +94,10 @@ export default {
 
 #main-page {
   display: grid;
-  grid-template-columns: 300px 1fr 300px;
+  grid-template-columns: 300px 1fr;
   grid-template-rows: 200px 1fr;
-  grid-template-areas: "login ."
-                      "login description "
+  grid-template-areas: "login description"
+                      "login description"
 
 }
 
@@ -121,7 +121,7 @@ export default {
   width: 1000px;
   height: 250px;
   justify-self: center;
-  align-content: center;
+  align-self: center;
   position: relative;
   padding: 20px 20px;
 }

@@ -27,7 +27,7 @@ body{
   /* max-width: 1150px; */
   margin: 0 auto;
   display: grid;
-  grid-template-rows: 35px 1fr;
+  grid-template-rows: 60px 1fr;
   grid-template-areas: "nav"
                        "content";
 
@@ -35,6 +35,7 @@ body{
 
 .link{
   color:#f1eff0;
+  
 }
 .link:hover{
   color: #f68e4f;
@@ -47,6 +48,7 @@ body{
 #nav{
    background: #001a33;
    grid-area: nav;
+   
 
 }
 
