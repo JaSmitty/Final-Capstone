@@ -41,6 +41,6 @@ export default new Vuex.Store({
     },
     SET_CURRENT_GAME(state, game) {
       state.currentGame = game
-    }
+    },
   }
 })

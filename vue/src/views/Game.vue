@@ -11,6 +11,7 @@
           </ul>
       </div>
       <invite-friends />
+      <current-investments />
       <stocks-summary />
   </div>
 </template>
@@ -19,6 +20,7 @@
 import InviteFriends from '@/components/InviteFriends'
 import gamesService from '@/services/GamesService'
 import StocksSummary from '@/components/StocksSummary'
+import CurrentInvestments from '@/components/CurrentInvestments'
 export default {
     data() {
         return {
@@ -27,7 +29,8 @@ export default {
     },
     components: {
         InviteFriends,
-        StocksSummary
+        StocksSummary,
+        CurrentInvestments
     },
     computed: {
         game() {
@@ -38,6 +41,11 @@ export default {
         gamesService.getPlayersInGame(this.game.gameId).then(response => {
             if (response.status === 200) {
                 this.friends = response.data.filter(friend => friend.userId !== this.$store.state.user.userId);
+            }
+        }),
+        stocksService.getStocks().then(response => {
+            if (response.status === 200) {
+                
             }
         })
     }
