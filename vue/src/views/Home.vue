@@ -20,8 +20,17 @@ export default {
 
 <style scoped>
 
+.home{
+  display: grid;
+  height: 95vh;
+  grid-template-rows: 50px 1fr 75px;
+  grid-template-areas: "welcome"
+                       "games"
+                       "footer";
+}
 
 #welcome {
+  grid-area: welcome;
   background: #003366;
   color: white;
   /* text-align: center; */
@@ -32,10 +41,16 @@ export default {
   margin-bottom: 0px;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   font-size: 25px;
+  margin-top: 0px;
 
 }
 
+games-list {
+  grid-area: games;
+}
+
 .footer{
+  grid-area: footer;
   background: #001f3d;
   padding-bottom: 8px;
   padding-top: 8px;

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div id="nav">
-      <router-link class="link main home" v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
+      <router-link class="link main home" v-bind:to="{ name: 'home' }">Home</router-link>
       <router-link class="link main logout" v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
     </div>
     <router-view class="content"/>
@@ -17,6 +17,7 @@ body{
  color: white;
  text-align: center;
  height: 98vh;
+ 
 
  
 }
@@ -42,7 +43,6 @@ body{
 .link.main {
   font-size: x-large;
  
-  
 }
 #nav{
    background: #001a33;
@@ -52,6 +52,15 @@ body{
 
 .content{
   grid-area: content;
+}
+
+.logout {
+  float: right;
+}
+
+.home{
+  float: left;
+  
 }
 
 

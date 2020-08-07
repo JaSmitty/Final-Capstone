@@ -97,6 +97,7 @@ export default {
   padding-bottom: 20px;
   grid-area: title;
   text-align: center;
+  margin-top: 0px;
 }
 
 .game-card-display {
