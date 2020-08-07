@@ -14,12 +14,12 @@ namespace Capstone.Controllers
     [ApiController]
     public class StocksController : ControllerBase
     {
-        private readonly CompanySqlDAO CompanySqlDao;
-        private readonly StockAPI StockAPI;
+        private readonly CompanySqlDAO companySqlDao;
+        private readonly StockAPI stockAPI;
         public StocksController(CompanySqlDAO companySqlDAO, StockAPI stockAPI)
         {
-            this.CompanySqlDao = companySqlDAO;
-            this.StockAPI = stockAPI;
+            this.companySqlDao = companySqlDAO;
+            this.stockAPI = stockAPI;
         }
 
 
