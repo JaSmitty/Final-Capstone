@@ -4,7 +4,7 @@
     <h2 class="info">Organizer: {{game.organizerName}}</h2>
     <h2 class="info">Start Date: {{game.startDateAsString}}</h2>
     <h2 class="info">End Date: {{game.endDateAsString}}</h2>
-    <button @click="acceptInvitation">Accept Invitation</button>
+    <button class="btn accept" @click="acceptInvitation">Accept Invitation</button>
   </div>
 </template>
 
@@ -35,4 +35,28 @@ export default {
   margin-top: 15px;
   color: rgb(43, 66, 66);
 }
+
+.btn.accept{
+  padding: 5px 10px;
+  font-size: 15px;
+   text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: 	#f97b04;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 5px #999;
+}
+
+.btn.accept:hover{
+   background-color: #d96308;
+  }
+
+.btn.accept:active {
+  background-color: #d96308;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
 </style>

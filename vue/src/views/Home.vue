@@ -20,6 +20,7 @@ export default {
 
 <style scoped>
 
+
 #welcome {
   background: #003366;
   color: white;
@@ -43,7 +44,27 @@ export default {
   align-self: end;
 }
 
+.button {
+  padding: 15px 25px;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: 	#f97b04;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 5px #999;
+}
+.button:hover {
+  background-color: #d96308;
+  }
 
+  .button:active {
+  background-color: #d96308;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
 
 
 </style>
