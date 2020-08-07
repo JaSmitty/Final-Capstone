@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Capstone.Models
 {
-    public class Company
+    public class Stock
     {
         public string CompanyName { get; set; }
 

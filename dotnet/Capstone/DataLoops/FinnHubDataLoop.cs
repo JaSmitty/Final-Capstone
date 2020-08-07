@@ -12,7 +12,7 @@ namespace Capstone.DataLoops
     public class FinnHubDataLoop
     {
         StockAPI stockAPI = new StockAPI();
-        CompanySqlDAO companySql = new CompanySqlDAO("Server=.\\SQLEXPRESS;Database=final_capstone;Trusted_Connection=True;");
+        StockSqlDAO companySql = new StockSqlDAO("Server=.\\SQLEXPRESS;Database=final_capstone;Trusted_Connection=True;");
         //public FinnHubDataLoop()
         //{
         //    this.companySqlDAO = companySql;

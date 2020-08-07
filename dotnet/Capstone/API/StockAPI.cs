@@ -14,14 +14,14 @@ namespace Capstone.API
     {
         //string API_URL = "https://finnhub.io/api/v1/quote?symbol=AAPL&token=bskkcjvrh5rdcdh7faa0";
 
-        public Company GetCompanyStockInfo(string ticker, string companyName)
+        public Stock GetCompanyStockInfo(string ticker, string companyName)
         {
             string API_URL = "https://finnhub.io/api/v1";
             RestClient client = new RestClient(API_URL);
 
             RestRequest request = new RestRequest($"quote?symbol={ticker}&token=bskkcjvrh5rdcdh7faa0", DataFormat.Json);
 
-            IRestResponse<Company> stockResponse = client.Get<Company>(request);
+            IRestResponse<Stock> stockResponse = client.Get<Stock>(request);
             CheckResponse(stockResponse);
             stockResponse.Data.Ticker = ticker;
             stockResponse.Data.CompanyName = companyName;

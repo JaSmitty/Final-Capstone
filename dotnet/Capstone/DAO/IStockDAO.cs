@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Capstone.DAO
 {
-    public interface ICompanyDAO
+    public interface IStockDAO
     {
-        Company GetCurrentStockByName(string stockTick);
-        int AddStock(Company company);
+        Stock GetCurrentStockByName(string stockTick);
+        int AddStock(Stock company);
 
 
     }
