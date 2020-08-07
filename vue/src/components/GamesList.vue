@@ -3,7 +3,7 @@
     <div class="active">
     <h1 class="title">Active Games</h1>
     <div class="game-card-display open">
-      <active-game-details id="game" v-for="game in activeGames" :key="game.gameID" :game="game" />
+      <active-game-details id="game" class="open" v-for="game in activeGames" :key="game.gameID" :game="game" />
     </div>
     </div>
     <div class="invitations">
@@ -76,22 +76,22 @@ export default {
   width: 50%;
   }
 
-  #game:hover{
-    border-left: solid #f6710b 7px;
+  #game.open:hover{
+    border-left: solid #c15803 7px;
   padding-left: 15px;
   padding-bottom: 5px;
   padding-top: 1px;
   margin-bottom: 25px;
-  background: linear-gradient(to right, #fbbf92,
-#feeadb);
+  background: linear-gradient(to right, #f06e04,
+#fcd5b6);
   border-radius: 8px;
   width: 50%;
   }
 
   
 .title {
-  background: #005cb8;
-  color: white;
+  background: #add6ff;
+  color: #003366;
   padding-left: 15px;
   padding-top: 20px;
   padding-bottom: 20px;

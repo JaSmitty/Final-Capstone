@@ -11,9 +11,13 @@
 <style>
 body{
   background-image: url('https://bitcoinist.com/wp-content/uploads/2018/10/shutterstock_732185581.jpg');
+  background-attachment: fixed;
+  background-repeat: no-repeat;
  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; 
  color: white;
  text-align: center;
+ height: 98vh;
+
  
 }
 
@@ -22,7 +26,7 @@ body{
   /* max-width: 1150px; */
   margin: 0 auto;
   display: grid;
-  grid-template-rows: 40px 1fr;
+  grid-template-rows: 35px 1fr;
   grid-template-areas: "nav"
                        "content";
 
@@ -41,7 +45,7 @@ body{
   
 }
 #nav{
-   background: #001f3d;
+   background: #001a33;
    grid-area: nav;
 
 }

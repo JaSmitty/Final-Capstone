@@ -1,10 +1,9 @@
 <template>
 
 <div id="main-page">
-  <div id="game-title">
+  <div id="description">
     <h1>Virtual Stock Market</h1>
-    </div>
-    <div id="description">
+    
       <h2>Invest virtual money in the stock market and compete against your friends! The player with the highest net-worth at the end of the game, wins!</h2>
       </div>
     
@@ -21,7 +20,7 @@
         role="alert"
         v-if="this.$route.query.registration"
       >Thank you for registering, please sign in.</div>
-      <label for="username" class="sr-only">Username</label>
+      <label for="username" class="sr-only">Username: </label>
       <input
         type="text"
         id="username"
@@ -31,7 +30,7 @@
         required
         autofocus
       />
-      <label for="password" class="sr-only">Password</label>
+      <label for="password" class="sr-only">Password: </label>
       <input
         type="password"
         id="password"
@@ -40,7 +39,7 @@
         v-model="user.password"
         required
       />
-      <router-link class="link" :to="{ name: 'register' }">Need an account?</router-link>
+      <router-link class="link signup" :to="{ name: 'register' }">Need an account?</router-link>
       <button type="submit">Sign in</button>
     </form>
   </div>
@@ -94,29 +93,53 @@ export default {
 }
 
 #main-page {
-  
+  display: grid;
+  grid-template-columns: 300px 1fr 300px;
+  grid-template-rows: 200px 1fr;
+  grid-template-areas: "login ."
+                      "login description "
 
 }
 
 #login {
   grid-area: login;
-  background: #002447;
-  width: 200px;
-  height: 100%;
+  background: #add6ff;
+  color: #003366;
+  width: 260px;
+  height: 95.4vh;
+  padding-left: 5px;
+  padding-right: 5px;
   
 }
 
-#game-title {
-  grid-area: title;
-}
+
 
 #description{
   grid-area: description;
-  background: #002447;
+  background: radial-gradient(#fcd5b6, 	#f06e04);
   border-radius: 7px;
   width: 1000px;
+  height: 250px;
   justify-self: center;
+  align-content: center;
+  position: relative;
   padding: 20px 20px;
+}
+
+#description > h1 {
+  font-size: 50px;
+}
+
+#description > h2 {
+  padding-top: 20px;
+}
+
+.link.signup {
+  color: #003366;
+}
+
+.link.signup:hover{
+  color: #f68e4f;
 }
 
 </style>

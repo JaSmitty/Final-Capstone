@@ -45,7 +45,7 @@ export default {
   color: #fff;
   background-color: 	#f97b04;
   border: none;
-  border-radius: 15px;
+  border-radius: 10px;
   box-shadow: 0 5px #999;
 }
 
