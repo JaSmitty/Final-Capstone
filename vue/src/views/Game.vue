@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div id="game-screen">
+      <div class="current-game-stats">
       <h1>{{game.name}}</h1>
       <p>Your balance: {{game.balance}}</p>
       <p>Start date: {{game.startDateAsString}}</p>
@@ -9,10 +10,11 @@
           <ul>
               <li v-for="friend in friends" :key=friend.id>{{friend.username}}</li>
           </ul>
+          </div>
       </div>
-      <invite-friends />
-      <current-investments />
-      <stocks-summary />
+      <invite-friends class="invite"/>
+      <current-investments class="investments"/>
+      <stocks-summary class="available-stocks"/>
   </div>
 </template>
 
@@ -54,5 +56,11 @@ export default {
 </script>
 
 <style>
+
+#game-screen{
+    display: grid;
+    grid-template-columns: 300px 1fr 300px;
+}
+
 
 </style>
