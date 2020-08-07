@@ -1,0 +1,38 @@
+<template>
+  <div>
+    <h2 id="game-name">{{game.name}}</h2>
+    <h2 class="info">Organizer: {{game.organizerName}}</h2>
+    <h2 class="info">Start Date: {{game.startDateAsString}}</h2>
+    <h2 class="info">End Date: {{game.endDateAsString}}</h2>
+    <button @click="acceptInvitation">Accept Invitation</button>
+  </div>
+</template>
+
+<script>
+import gamesService from '@/services/GamesService'
+export default {
+  props: {
+    game: Object,
+  },
+  methods: {
+      acceptInvitation() {
+        let userGame = {userId: this.$store.state.user.userId, gameId: this.game.gameId};
+        gamesService.acceptInvitation(userGame);
+      }
+  }
+};
+</script>
+
+<style>
+#game-name {
+  font-size: 30px;
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+
+.info {
+  font-size: 20px;
+  margin-top: 15px;
+  color: rgb(43, 66, 66);
+}
+</style>

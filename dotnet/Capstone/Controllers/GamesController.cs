@@ -14,7 +14,7 @@ namespace Capstone.Controllers
     public class GamesController : ControllerBase
     {
         private readonly GameSqlDAO gameSqlDAO;
-        private string UserName
+        private string Username
         {
             get
             {
@@ -27,11 +27,11 @@ namespace Capstone.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Game>> GetGamesByUserName()
+        public ActionResult<List<Game>> GetActiveGames()
         {
             try
             {
-                return Ok(gameSqlDAO.GetGamesByUserName(UserName));
+                return Ok(gameSqlDAO.GetActiveGames(Username));
             }
             catch (Exception ex)
             {
@@ -58,12 +58,12 @@ namespace Capstone.Controllers
 
         [HttpPost]
         [Route("invite")]
-        public ActionResult<bool> AddUsersToGame(List<UserGame> userGames)
+        public ActionResult<bool> InviteUsersToGame(List<UserGame> userGames)
         {
             try
             {
                 string location = $"api/games/invite/success";
-                return Created(location, gameSqlDAO.AddUsersToGame(userGames));
+                return Created(location, gameSqlDAO.InviteUsersToGame(userGames));
             }
             catch (Exception ex)
             {
@@ -72,7 +72,7 @@ namespace Capstone.Controllers
         }
         [HttpGet]
         [Route("{gameId}/invite")]
-        public ActionResult<List<UserInfo>> GetUsersToInvite(int gameId)
+        public ActionResult<List<UserInfo>> GetUsersToInviteToGame(int gameId)
         {
             try
             {
@@ -85,11 +85,37 @@ namespace Capstone.Controllers
         }
         [HttpGet]
         [Route("{gameId}/players")]
-        public ActionResult<List<UserInfo>> GetPlayersInGame(int gameId)
+        public ActionResult<List<UserInfo>> GetActivePlayersInGame(int gameId)
         {
             try
             {
-                return Ok(gameSqlDAO.GetPlayersInGame(gameId));
+                return Ok(gameSqlDAO.GetActivePlayersInGame(gameId));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        [HttpGet]
+        [Route("pending")]
+        public ActionResult<List<Game>> GetPendingGames()
+        {
+            try
+            {
+                return Ok(gameSqlDAO.GetPendingGames(Username));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        [HttpPut]
+        [Route("{gameId}/accept")]
+        public ActionResult<bool> AcceptInvitation(UserGame userGame)
+        {
+            try
+            {
+                return Ok(gameSqlDAO.AcceptInvitation(userGame));
             }
             catch (Exception ex)
             {

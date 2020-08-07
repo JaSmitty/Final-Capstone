@@ -17,7 +17,7 @@ namespace Capstone.DAO
         }
 
 
-        public bool AddUsersToGame(List<UserGame> userGame)
+        public bool InviteUsersToGame(List<UserGame> userGame)
         {
             try
             {
@@ -31,7 +31,7 @@ namespace Capstone.DAO
                         cmd.Parameters.AddWithValue("@gameId", user.GameId);
 
                         /******* Do we have balance be set or hard code it here?*******/
-                        cmd.Parameters.AddWithValue("@balance", (decimal)100000);
+                        cmd.Parameters.AddWithValue("@balance", 0M);
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -50,11 +50,12 @@ namespace Capstone.DAO
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    const string QUERY = @"Begin Transaction INSERT into game(organizer_id, name, end_date) VALUES (@organizer_id, @name, @endDate); Select @@identity
-                    INSERT into users_game(users_id, game_id, balance) VALUES (@organizer_id, @@identity, @balance) Commit Transaction";
+                    const string QUERY = @"Begin Transaction INSERT into game(organizer_id, name, start_date, end_date) VALUES (@organizer_id, @name, @startDate, @endDate); Select @@identity
+                    INSERT into users_game(users_id, game_id, status, balance) VALUES (@organizer_id, @@identity, 'approved', @balance) Commit Transaction";
                     SqlCommand cmd = new SqlCommand(QUERY, conn);
                     cmd.Parameters.AddWithValue("@organizer_id", game.OrganizerId);
                     cmd.Parameters.AddWithValue("@name", game.Name);
+                    cmd.Parameters.AddWithValue("@startDate", game.StartDate);
                     cmd.Parameters.AddWithValue("@endDate", game.EndDate);
                     cmd.Parameters.AddWithValue("@balance", game.Balance);
                     game.GameId = Convert.ToInt32(cmd.ExecuteScalar());
@@ -67,7 +68,7 @@ namespace Capstone.DAO
             return game;
         }
 
-        public List<Game> GetGamesByUserName(string username)
+        public List<Game> GetActiveGames(string username)
         {
             List<Game> games = new List<Game>();
             try
@@ -75,11 +76,11 @@ namespace Capstone.DAO
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand(@"SELECT game.id, game.name, organizer_id, end_date, balance, uORGANIZER.username FROM game
+                    SqlCommand cmd = new SqlCommand(@"SELECT game.id, game.name, organizer_id, start_date, end_date, balance, uORGANIZER.username FROM game
 JOIN users_game ON game.id = users_game.game_id
 JOIN users uPLAY ON uPLAY.id = users_game.users_id
 JOIN users uORGANIZER ON game.organizer_id = uORGANIZER.id
-WHERE uPLAY.username = @username", conn);
+WHERE uPLAY.username = @username AND users_game.status = 'approved'", conn);
                     cmd.Parameters.AddWithValue("@username", username);
                     SqlDataReader rdr = cmd.ExecuteReader();
                     while (rdr.Read())
@@ -103,7 +104,7 @@ WHERE uPLAY.username = @username", conn);
 
                 SqlCommand cmd = new SqlCommand(@"SELECT id, username FROM users WHERE users.id NOT IN
 (SELECT u.id FROM users u
-LEFT JOIN users_game ug ON u.id = ug.users_id
+JOIN users_game ug ON u.id = ug.users_id
 WHERE game_id = @gameId)", conn);
                 cmd.Parameters.AddWithValue("@gameId", gameId);
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -115,7 +116,7 @@ WHERE game_id = @gameId)", conn);
             }
             return userList;
         }
-        public List<UserInfo> GetPlayersInGame(int gameId)
+        public List<UserInfo> GetActivePlayersInGame(int gameId)
         {
             List<UserInfo> userList = new List<UserInfo>();
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -124,8 +125,8 @@ WHERE game_id = @gameId)", conn);
 
                 SqlCommand cmd = new SqlCommand(@"SELECT id, username FROM users WHERE users.id IN
 (SELECT u.id FROM users u
-LEFT JOIN users_game ug ON u.id = ug.users_id
-WHERE game_id = @gameId)", conn);
+JOIN users_game ug ON u.id = ug.users_id
+WHERE game_id = @gameId AND ug.status = 'approved')", conn);
                 cmd.Parameters.AddWithValue("@gameId", gameId);
                 SqlDataReader reader = cmd.ExecuteReader();
 
@@ -136,6 +137,56 @@ WHERE game_id = @gameId)", conn);
             }
             return userList;
         }
+        public List<Game> GetPendingGames(string username)
+        {
+            List<Game> games = new List<Game>();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand(@"SELECT game.id, game.name, organizer_id, start_date, end_date, balance, uORGANIZER.username FROM game
+JOIN users_game ON game.id = users_game.game_id
+JOIN users uPLAY ON uPLAY.id = users_game.users_id
+JOIN users uORGANIZER ON game.organizer_id = uORGANIZER.id
+WHERE uPLAY.username = @username AND users_game.status = 'pending'", conn);
+                    cmd.Parameters.AddWithValue("@username", username);
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        games.Add(ReadToGame(rdr));
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            return games;
+        }
+        public bool AcceptInvitation(UserGame userGame)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    const string QUERY = @"UPDATE users_game
+SET users_id = @userId, game_id = @gameId, status = 'approved', balance = @balance
+WHERE users_id = @userId AND game_id = @gameId";
+                    SqlCommand cmd = new SqlCommand(QUERY, conn);
+                    cmd.Parameters.AddWithValue("@userId", userGame.UserId);
+                    cmd.Parameters.AddWithValue("@gameId", userGame.GameId);
+                    cmd.Parameters.AddWithValue("@balance", (decimal)100000);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            return true;
+        }
         private Game ReadToGame(SqlDataReader rdr)
         {
             Game game = new Game();
@@ -143,6 +194,7 @@ WHERE game_id = @gameId)", conn);
             game.Name = Convert.ToString(rdr["name"]);
             game.OrganizerName = Convert.ToString(rdr["username"]);
             game.OrganizerId = Convert.ToInt32(rdr["organizer_id"]);
+            game.StartDate = Convert.ToDateTime(rdr["start_date"]);
             game.EndDate = Convert.ToDateTime(rdr["end_date"]);
             game.Balance = Convert.ToDecimal(rdr["balance"]);
             return game;

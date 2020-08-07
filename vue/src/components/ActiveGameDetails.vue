@@ -4,7 +4,8 @@
         <div @click="setGameObject">
             <h2 id="game-name">{{game.name}}</h2>
       <h2 class="info">Organizer: {{game.organizerName}}</h2>
-      <h2 class="info">End Date: {{game.dateAsString}}</h2>
+      <h2 class="info">Start Date: {{game.startDateAsString}}</h2>
+      <h2 class="info">End Date: {{game.endDateAsString}}</h2>
         </div>
     </router-link>
   </div>

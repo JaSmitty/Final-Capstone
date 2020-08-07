@@ -29,6 +29,7 @@ Create table game (
 	organizer_id int not null,
 	name varchar(100) not null,
 	-- should we have a begin date?
+	start_date Date not null,
 	end_date Date not null,
 	Constraint pk_game_id Primary Key (id),
 	Constraint fk_game_organizer_users_id Foreign Key (organizer_id) References users(id)
@@ -37,6 +38,7 @@ Create table game (
 Create table users_game (
 	users_id int not null,
 	game_id int not null,
+	status varchar(10) default 'pending',
 	balance money not null,
 	Constraint pk_users_id_game_id Primary Key (users_id, game_id),
 	Constraint fk_users_game_users_id_users_id Foreign Key (users_id) References users(id),
@@ -73,8 +75,8 @@ Create table investment (
 INSERT INTO users (username, password_hash, salt, user_role) VALUES ('user','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user');
 INSERT INTO users (username, password_hash, salt, user_role) VALUES ('admin','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin');
 
-INSERT INTO game (organizer_id, name, end_date) VALUES (1, 'game1', '2020-08-10');
-INSERT INTO game (organizer_id, name, end_date) VALUES (2, 'game2', '2020-08-08');
+INSERT INTO game (organizer_id, name, start_date, end_date) VALUES (1, 'game1', '2020-08-16', '2020-08-20');
+INSERT INTO game (organizer_id, name, start_date, end_date) VALUES (2, 'game2', '2020-08-18', '2020-08-22');
 
 INSERT INTO company(ticker, open_price, high_price, low_price, current_price, previous_close_price) VALUES ('AAPL', 432.80, 446.55, 431.57, 437.70, 425.04);
 INSERT INTO company(ticker, open_price, high_price, low_price, current_price, previous_close_price) VALUES ('PGR', 90.70, 91.23, 90.15, 90.99, 90.34);
@@ -88,9 +90,9 @@ INSERT INTO investment(users_id, company_ticker, game_id, shares, amount) VALUES
 INSERT INTO investment(users_id, company_ticker, game_id, shares, amount) VALUES (2, 'AAPL', 2, 4, 1726.28);
 INSERT INTO investment(users_id, company_ticker, game_id, shares, amount) VALUES (2, 'PGR', 2, 3, 272.97);
 
-INSERT INTO users_game(users_id, game_id, balance) VALUES (1, 1, 100000);
-INSERT INTO users_game(users_id, game_id, balance) VALUES (1, 2, 100000);
-INSERT INTO users_game(users_id, game_id, balance) VALUES (2, 1, 100000);
-INSERT INTO users_game(users_id, game_id, balance) VALUES (2, 2, 100000);
+INSERT INTO users_game(users_id, game_id, status, balance) VALUES (1, 1, 'approved', 100000);
+INSERT INTO users_game(users_id, game_id, status, balance) VALUES (1, 2, 'pending', 100000);
+INSERT INTO users_game(users_id, game_id, status, balance) VALUES (2, 1, 'approved', 100000);
+INSERT INTO users_game(users_id, game_id, status, balance) VALUES (2, 2, 'pending', 100000);
 
 GO

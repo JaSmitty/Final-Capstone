@@ -2,6 +2,9 @@
   <div>
     <h1>Create a Game</h1>
       <form @submit.prevent="createGame">
+          <label for="date">Start Date: </label>
+          <input type="date" id="date" v-model="game.startDate">
+
           <label for="date">End Date: </label>
           <input type="date" id="date" v-model="game.endDate">
 

@@ -11,8 +11,16 @@ namespace Capstone.Models
         public int OrganizerId { get; set; }
         public string OrganizerName { get; set; }
         public string Name { get; set; }
+        public DateTime StartDate { get; set; }
+        public string StartDateAsString
+        {
+            get
+            {
+                return this.StartDate.ToString("MM/dd/yyyy");
+            }
+        }
         public DateTime EndDate { get; set; }
-        public string DateAsString
+        public string EndDateAsString
         {
             get
             {
