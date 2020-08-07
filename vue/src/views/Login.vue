@@ -40,7 +40,7 @@
         v-model="user.password"
         required
       />
-      <router-link :to="{ name: 'register' }">Need an account?</router-link>
+      <router-link class="link" :to="{ name: 'register' }">Need an account?</router-link>
       <button type="submit">Sign in</button>
     </form>
   </div>
@@ -96,6 +96,7 @@ export default {
 #main-page {
   display: grid;
   grid-template-columns: 100px 1fr;
+  grid-gap: 0px;
   grid-template-rows: 1fr 3fr 1fr;
   grid-template-areas: ". ."
                        "login title"
@@ -105,7 +106,7 @@ export default {
 
 #login {
   grid-area: login;
-  background:  #003366;
+  background: #002447;
   width: 200px;
   height: 100%;
   
@@ -117,7 +118,7 @@ export default {
 
 #description{
   grid-area: description;
-  background: #003366;
+  background: #002447;
   border-radius: 7px;
   width: 1000px;
   justify-self: center;

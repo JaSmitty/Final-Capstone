@@ -1,12 +1,16 @@
 <template>
   <div class="games-list">
+    <div class="active">
     <h1 class="title">Active Games</h1>
     <div class="game-card-display">
       <active-game-details id="game" v-for="game in activeGames" :key="game.gameID" :game="game" />
     </div>
+    </div>
+    <div class="invites">
     <h1 class="title">Invitations</h1>
     <div class="game-card-display">
       <pending-game-details id="game" v-for="game in pendingGames" :key="game.gameID" :game="game" />
+    </div>
     </div>
   </div>
 </template>
@@ -44,11 +48,21 @@ export default {
 </script>
 
 <style scoped>
-.games-list {
-  /* font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
-  /* background: #f0f7ff; */
-  /* background: url('../../images/4057028.jpg') */
+
+.games-list{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "active invites";
 }
+.active {
+  grid-area: active;
+  border-right: 2px solid #e7f3ff;
+}
+
+.invites{
+  grid-area: invites;
+}
+
 #game {
   border-left: solid #0059b3 7px;
   padding-left: 15px;

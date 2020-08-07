@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <div id="nav">
-      <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
-      <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
+      <router-link class="link main" v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
+      <router-link class="link main" v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
     </div>
     <router-view class="content"/>
   </div>
@@ -21,8 +21,24 @@ body{
   width: 100%;
   /* max-width: 1150px; */
   margin: 0 auto;
+  /* display: grid;
+  grid-template-columns: 1fr 3fr 1fr; */
 
 }
+
+.link{
+  color:#5cadff;
+}
+
+.link.main {
+  font-size: x-large;
+ 
+  
+}
+#nav{
+   background: #001f3d;
+}
+
 
 
 </style> 

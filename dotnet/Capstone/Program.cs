@@ -18,11 +18,11 @@ namespace Capstone
         
         public static void Main(string[] args)
         {
-            FinnHubDataLoop dataLoop = new FinnHubDataLoop();
-            Thread newThread = new Thread(
-            new ThreadStart(dataLoop.Run));
+            //FinnHubDataLoop dataLoop = new FinnHubDataLoop();
+            //Thread newThread = new Thread(
+            //new ThreadStart(dataLoop.Run));
 
-            newThread.Start();
+            //newThread.Start();
 
             //CompanySqlDAO companySql = new CompanySqlDAO("Server=.\\SQLEXPRESS;Database=final_capstone;Trusted_Connection=True;");
             //FinnHubDataLoop dataLoop = new FinnHubDataLoop();
