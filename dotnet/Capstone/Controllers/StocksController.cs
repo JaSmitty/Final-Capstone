@@ -12,11 +12,11 @@ namespace Capstone.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CompanyController : ControllerBase
+    public class StocksController : ControllerBase
     {
         private readonly CompanySqlDAO CompanySqlDao;
         private readonly StockAPI StockAPI;
-        public CompanyController(CompanySqlDAO companySqlDAO, StockAPI stockAPI)
+        public StocksController(CompanySqlDAO companySqlDAO, StockAPI stockAPI)
         {
             this.CompanySqlDao = companySqlDAO;
             this.StockAPI = stockAPI;
