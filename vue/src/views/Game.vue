@@ -14,7 +14,7 @@
       </div>
       <invite-friends class="invite"/>
       <current-investments class="investments"/>
-      <stocks-summary class="available-stocks"/>
+      <stock-market class="available-stocks"/>
   </div>
 </template>
 
@@ -22,7 +22,7 @@
 import gamesService from '@/services/GamesService'
 import stocksService from '@/services/StocksService'
 import InviteFriends from '@/components/InviteFriends'
-import StocksSummary from '@/components/StocksSummary'
+import StockMarket from '@/components/StockMarket'
 import CurrentInvestments from '@/components/CurrentInvestments'
 export default {
     data() {
@@ -32,7 +32,7 @@ export default {
     },
     components: {
         InviteFriends,
-        StocksSummary,
+        StockMarket,
         CurrentInvestments
     },
     computed: {

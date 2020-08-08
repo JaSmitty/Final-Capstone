@@ -1,20 +1,8 @@
 <template>
   <div>
-    <h1>{{stock.companyName}} ({{stock.ticker}})</h1>
-    <h2>
-      {{stock.c}}
-      <span :class="{'green': stock.c >= stock.o, 'red': stock.c < stock.o}">
-        {{stock.c > stock.o ? "+" : ""}}
-        {{(stock.c - stock.o).toFixed(3)}}
-        ({{stock.c > stock.o ? "+" : ""}}
-        {{((stock.c / stock.o) - 1).toFixed(3)}}%)
-      </span>
-    </h2>
-    <h3>Open: {{stock.o}}</h3>
-    <h3>High: {{stock.h}}</h3>
-    <h3>Low: {{stock.l}}</h3>
-    <h3>Previous Close: {{stock.pc}}</h3>
-    <form @submit.prevent="setSharesToBuy">
+    <stock-details :stock="stock"/>
+    
+    <form @submit.prevent="buyStock">
       <h2>How much stock do you want to purchase?</h2>
       <h4>Please specify:</h4>
       <label for="buyDollars">Dollars:</label>
@@ -47,21 +35,29 @@
 </template>
 
 <script>
+import stocksService from '@/services/StocksService'
+import StockDetails from '@/components/StockDetails'
 export default {
+  components: {
+    StockDetails
+  },
   data() {
     return {
       stock: this.$store.state.stock,
       stockToBuy: {
+        stockId: this.$store.state.stock.stockId,
+        gameId: this.$store.state.currentGame.gameId,
         sharesToBuy: ""
       },
       amount: "",
     };
   },
   methods: {
-    setSharesToBuy() {
+    buyStock() {
       if (this.stockToBuy.sharesToBuy === "") {
-        this.stockToBuy.sharesToBuy = this.amount * this.stock.c
+        this.stockToBuy.sharesToBuy = (this.amount / this.stock.c).toFixed(3)
       }
+      stocksService.buyStock(this.stockToBuy)
     },
     blurShares() {
       document.getElementById("buyShares").disabled = true;

@@ -3,23 +3,40 @@
     <h1>Current investments</h1>
     <table>
       <tr>
-        <td>Company</td>
-        <td>Current Shares Owned</td>
-        <td>Purchase Price</td>
-        <td>Current Price per Share</td>
-        <td>Sell</td>
+        <th>Company</th>
+        <th>Shares Owned</th>
+        <th>Purchase Price</th>
+        <th>Profit</th>
+      </tr>
+
+      <tr v-for="investment in investments" :key="investment.id" :investment="investment">
+        <td>
+          <router-link :to="{name: 'SellStock', params: {stockId: investment.stockId}}">
+            <div @click="setStockToSell(investment)">{{investment.companyTicker}}</div>
+          </router-link>
+        </td>
+        <td>{{investment.currentShares}}</td>
+        <td>{{investment.pricePerShare}}</td>
+        <td>{{investment.profit}}</td>
+
+        <!-- <td>
+      <div v-if="isSelling">
+        <label for="sellStock" />
+        <input type="number" id="sellStock" min="0" :max="investment.currentShares" v-model.number="investmentToSell.sharesSold" />
+        <button @click="submitSell">Sell</button>
+      </div>
+      <div v-else>
+        <button @click="isSelling = !isSelling">Sell?</button>
+      </div>
+        </td>-->
       </tr>
     </table>
-    <investment v-for="investment in investments" :key="investment.id" :investment="investment" />
   </div>
 </template>
 
 <script>
-import Investment from "./Investment";
 export default {
-  components: {
-    Investment,
-  },
+  components: {},
   data() {
     return {
       currentStockMarket: this.$store.state.currentStockMarket,
@@ -39,6 +56,9 @@ export default {
     };
   },
   methods: {
+    setStockToSell(investment) {
+      this.$store.commit("SET_STOCK", investment)
+    }
     //   focus() {
     //       this.$refs.sellStock.focus()
     //  }

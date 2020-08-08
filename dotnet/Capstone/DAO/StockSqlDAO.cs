@@ -100,6 +100,7 @@ namespace Capstone.DAO
         private Stock HelperStock(SqlDataReader rdr)
         {
             Stock newStock = new Stock();
+            newStock.StockId = Convert.ToInt32(rdr["stock_id"]);
             newStock.Ticker = Convert.ToString(rdr["ticker"]);
             newStock.CompanyName = Convert.ToString(rdr["company_name"]);
             newStock.O = Convert.ToDecimal(rdr["open_price"]);

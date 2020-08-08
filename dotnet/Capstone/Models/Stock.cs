@@ -8,6 +8,7 @@ namespace Capstone.Models
 {
     public class Stock
     {
+        public int StockId { get; set; }
         public string CompanyName { get; set; }
 
 

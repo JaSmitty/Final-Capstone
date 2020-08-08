@@ -8,6 +8,7 @@ import store from '../store/index'
 import CreateGame from '@/views/CreateGame'
 import Game from '@/views/Game'
 import BuyStock from '@/views/BuyStock'
+import SellStock from '@/views/SellStock'
 
 Vue.use(Router)
 
@@ -67,9 +68,14 @@ const router = new Router({
       component: Game
     },
     {
-      path: "/games/:gameId/buy/:stockId",
+      path: "/games/:gameId/buy/:ticker",
       name: "BuyStock",
       component: BuyStock
+    },
+    {
+      path: "/games/:gameId/sell/:stockId",
+      name: "SellStock",
+      component: SellStock
     }
   ]
 })

@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h1>Stocks Summary</h1>
+    <h1>Stock Market</h1>
     <ul>
       <li v-for="stock in sortedStocks" :key="stock.id">
-        <router-link :to="{name: 'BuyStock', params: {stockId: stock.ticker}}">
+        <router-link :to="{name: 'BuyStock', params: {ticker: stock.ticker}}">
           <div @click="setStockToBuy(stock)">
             <h2>{{stock.ticker}}</h2>
             <h2>{{stock.c}}</h2>
