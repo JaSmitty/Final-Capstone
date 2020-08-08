@@ -3,15 +3,17 @@
     <h1>Stocks Summary</h1>
     <ul>
       <li v-for="stock in sortedStocks" :key="stock.id">
-        <router-link :to="{name: 'BuyStock', params: {stockId: stock.ticker}}" :stockToBuy="stock">
-          <h2>{{stock.ticker}}</h2>
-          <h2>{{stock.c}}</h2>
-          <p :class="{'green': stock.c >= stock.o, 'red': stock.c < stock.o}">
-            {{stock.c > stock.o ? "+" : ""}}
-            {{(stock.c - stock.o).toFixed(3)}}
-            ({{stock.c > stock.o ? "+" : ""}}
-            {{((stock.c / stock.o) - 1).toFixed(3)}}%)
-          </p>
+        <router-link :to="{name: 'BuyStock', params: {stockId: stock.ticker}}">
+          <div @click="setStockToBuy(stock)">
+            <h2>{{stock.ticker}}</h2>
+            <h2>{{stock.c}}</h2>
+            <p :class="{'green': stock.c >= stock.o, 'red': stock.c < stock.o}">
+              {{stock.c > stock.o ? "+" : ""}}
+              {{(stock.c - stock.o).toFixed(3)}}
+              ({{stock.c > stock.o ? "+" : ""}}
+              {{((stock.c / stock.o) - 1).toFixed(3)}}%)
+            </p>
+          </div>
         </router-link>
       </li>
     </ul>
@@ -28,6 +30,11 @@ export default {
       //     {id: 1, ticker: 'AAPL', o: 441.62, h: 454.72, l: 439.50, c: 454.296, pc: 440.25, performance: 0.13 + '%'}
       // ]
     };
+  },
+  methods: {
+    setStockToBuy(stock) {
+      this.$store.commit("SET_STOCK", stock);
+    },
   },
   computed: {
     sortedStocks() {
