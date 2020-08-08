@@ -48,12 +48,7 @@ export default {
 </script>
 
 <style>
-.green {
-  color: green;
-}
-.red {
-  color: red;
-}
+
 li {
   list-style: none;
 }

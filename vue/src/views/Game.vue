@@ -2,7 +2,7 @@
   <div id="game-screen">
       <div class="current-game-stats">
       <h1>{{game.name}}</h1>
-      <p>Your balance: {{game.balance}}</p>
+      <p>Your balance: ${{game.balance}}</p>
       <p>Start date: {{game.startDateAsString}}</p>
       <p>End date: {{game.endDateAsString}}</p>
       <div>

@@ -2,7 +2,7 @@
   <div>
     <stock-details :stock="stock"/>
     
-    <form @submit.prevent="buyStock">
+    <form @submit.prevent="submitBuy">
       <h2>How much stock do you want to purchase?</h2>
       <h4>Please specify:</h4>
       <label for="buyDollars">Dollars:</label>
@@ -53,11 +53,11 @@ export default {
     };
   },
   methods: {
-    buyStock() {
+    submitBuy() {
       if (this.stockToBuy.sharesToBuy === "") {
         this.stockToBuy.sharesToBuy = (this.amount / this.stock.c).toFixed(3)
       }
-      stocksService.buyStock(this.stockToBuy)
+      stocksService.submitBuy(this.stockToBuy)
     },
     blurShares() {
       document.getElementById("buyShares").disabled = true;

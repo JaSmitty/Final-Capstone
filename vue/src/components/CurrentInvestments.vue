@@ -12,7 +12,7 @@
       <tr v-for="investment in investments" :key="investment.id" :investment="investment">
         <td>
           <router-link :to="{name: 'SellStock', params: {stockId: investment.stockId}}">
-            <div @click="setStockToSell(investment)">{{investment.companyTicker}}</div>
+            <div @click="setInvestmentToSell(investment)">{{investment.companyTicker}}</div>
           </router-link>
         </td>
         <td>{{investment.currentShares}}</td>
@@ -49,15 +49,17 @@ export default {
           gameId: 1,
           initialShares: 2,
           currentShares: 2,
-          pricePerShare: 90,
+          pricePerShare: 460,
           profit: 40,
         },
       ],
     };
   },
   methods: {
-    setStockToSell(investment) {
-      this.$store.commit("SET_STOCK", investment)
+    setInvestmentToSell(investment) {
+      this.$store.commit("SET_INVESTMENT", investment)
+      const stock = this.$store.state.currentStockMarket.find(s => s.ticker === investment.companyTicker)
+      this.$store.commit("SET_STOCK", stock)
     }
     //   focus() {
     //       this.$refs.sellStock.focus()
