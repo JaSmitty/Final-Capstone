@@ -17,6 +17,7 @@
         <p>Your game {{game.name}} has been created. It will end on {{game.endDate}}</p>
         <label for=""></label>
         <invite-friends />
+        <router-link :to="{name: 'Game', params: {gameId: game.gameId}}">Go to game</router-link>
       </div>
       
   </div>
@@ -44,6 +45,7 @@ export default {
       gamesService.createGame(this.game).then(response => {
       if (response.status === 201) {
         this.$store.commit("SET_CURRENT_GAME", response.data);
+        this.game.gameId = response.data.gameId;
         this.isCreated = true;
       }
     })

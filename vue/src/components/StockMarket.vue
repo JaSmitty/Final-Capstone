@@ -43,7 +43,7 @@ export default {
         return b.c / b.o - a.c / a.o;
       });
     },
-  },
+  }
 };
 </script>
 

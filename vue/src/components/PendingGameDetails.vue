@@ -5,6 +5,7 @@
     <h2 class="info">Start Date: {{game.startDateAsString}}</h2>
     <h2 class="info">End Date: {{game.endDateAsString}}</h2>
     <button class="btn accept" @click="acceptInvitation">Accept Invitation</button>
+    <button class="btn accept" @click="declineInvitation">Decline Invitation</button>
   </div>
 </template>
 
@@ -18,6 +19,10 @@ export default {
       acceptInvitation() {
         let userGame = {userId: this.$store.state.user.userId, gameId: this.game.gameId};
         gamesService.acceptInvitation(userGame);
+      },
+      declineInvitation() {
+        let userGame = {userId: this.$store.state.user.userId, gameId: this.game.gameId};
+        gamesService.declineInvitation(userGame);
       }
   }
 };

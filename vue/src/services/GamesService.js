@@ -1,7 +1,6 @@
 import axios from 'axios'
 
 export default {
-    // TODO remove hard-coded value
     getActiveGames() {
         return axios.get('/api/games')
     },
@@ -22,6 +21,10 @@ export default {
     },
     acceptInvitation(userGame) {
         return axios.put(`/api/games/${userGame.gameId}/accept`, userGame)
-    }
+    },
+    // TODO
+    // declineInvitation(userGame) {
+    //     return axios.put(`/api/games/${userGame.gameId}/decline`, userGame)
+    // }
   }
   
