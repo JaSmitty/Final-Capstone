@@ -53,8 +53,6 @@ namespace Capstone.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-        // TODO Write a controller method to receive a user ID and game ID to add to the users_game table
-        // {userId}/ invite
 
         [HttpPost]
         [Route("invite")]

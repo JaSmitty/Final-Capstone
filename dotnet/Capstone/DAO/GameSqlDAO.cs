@@ -123,10 +123,9 @@ WHERE game_id = @gameId)", conn);
             {
                 conn.Open();
 
-                SqlCommand cmd = new SqlCommand(@"SELECT id, username FROM users WHERE users.id IN
-(SELECT u.id FROM users u
+                SqlCommand cmd = new SqlCommand(@"SELECT u.id, u.username, ug.balance FROM users u
 JOIN users_game ug ON u.id = ug.users_id
-WHERE game_id = @gameId AND ug.status = 'approved')", conn);
+WHERE game_id = @gameId AND ug.status = 'approved'", conn);
                 cmd.Parameters.AddWithValue("@gameId", gameId);
                 SqlDataReader reader = cmd.ExecuteReader();
 
@@ -134,6 +133,33 @@ WHERE game_id = @gameId AND ug.status = 'approved')", conn);
                 {
                     userList.Add(ReadToUserInfo(reader));
                 }
+                reader.Close();
+                foreach(UserInfo user in userList)
+                {
+                    user.TotalWorth = user.Balance;
+                    Dictionary<string, double> sharesPerCompany = new Dictionary<string, double>();
+                    cmd = new SqlCommand(@"SELECT company_ticker, shares FROM investment 
+WHERE game_id = @gameId AND investment.users_id = @userId", conn);
+                    cmd.Parameters.AddWithValue("@gameId", gameId);
+                    cmd.Parameters.AddWithValue("@userId", user.UserId);
+                    reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        string company = Convert.ToString(reader["company_ticker"]);
+                        double shares = Convert.ToDouble(reader["shares"]);
+                        sharesPerCompany.Add(company, shares);
+                    }
+                    reader.Close();
+                    foreach(KeyValuePair<string, double> pair in sharesPerCompany)
+                    {
+                        cmd = new SqlCommand(@"SELECT TOP 1 current_price FROM company
+WHERE ticker = @stockTick ORDER BY time_updated DESC", conn);
+                        cmd.Parameters.AddWithValue("@stockTick", pair.Key);
+                        user.TotalWorth += Convert.ToDecimal(cmd.ExecuteScalar()) * (decimal)pair.Value;
+                    }
+                }
+                
+
             }
             return userList;
         }
@@ -205,7 +231,7 @@ WHERE users_id = @userId AND game_id = @gameId";
 
             user.UserId = Convert.ToInt32(rdr["id"]);
             user.Username = Convert.ToString(rdr["username"]);
-
+            user.Balance = Convert.ToDecimal(rdr["balance"]);
             return user;
         }
     }

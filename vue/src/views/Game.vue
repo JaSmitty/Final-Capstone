@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import gamesService from "@/services/GamesService";
+// import gamesService from "@/services/GamesService";
 import InviteFriends from "@/components/InviteFriends";
 import StockMarket from "@/components/StockMarket";
 import CurrentInvestments from "@/components/CurrentInvestments";
