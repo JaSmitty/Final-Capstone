@@ -20,8 +20,10 @@
       </div>
     </div>
     <invite-friends class="invite" />
+    <div class="main-content">
     <current-investments class="investments" />
     <stock-market class="available-stocks" />
+    </div>
     <!-- <game-leaderboard class="leaderboard" /> -->
   </div>
 </template>
@@ -69,6 +71,22 @@ export default {
     grid-template-areas: "stats title invite"
                          "stats gameplay invite";
     
+}
+
+.main-content{
+  display:grid;
+  grid-template-areas: "investments"
+                       "stocks";
+  grid-template-rows: 1fr 1fr;
+  height: 95vh;
+}
+
+.investments {
+  grid-area: investments;
+}
+
+.available-stocks{
+  grid-area: stocks;
 }
 
 .current-game-stats{
