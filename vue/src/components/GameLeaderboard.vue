@@ -9,8 +9,8 @@
       </tr>
       <tr v-for="player in players" :key="player.id">
         <td>{{player.username}}</td>
-        <td>${{player.balance}}</td>
-        <td>${{player.totalWorth}}</td>
+        <td>${{(player.balance).toFixed(2)}}</td>
+        <td>${{(player.totalWorth).toFixed(2)}}</td>
       </tr>
     </table>
     <ul>
