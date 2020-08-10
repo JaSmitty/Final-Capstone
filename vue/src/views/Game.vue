@@ -4,7 +4,7 @@
       <div class="player-stats">
       <h1>{{game.name}}</h1>
       <div class="stats">
-      <p>Your balance: ${{game.balance}}</p>
+      <p>Your balance: ${{(game.balance).toFixed(2)}}</p>
       <p>Start date: {{game.startDateAsString}}</p>
       <p>End date: {{game.endDateAsString}}</p>
       </div>
