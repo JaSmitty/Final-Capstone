@@ -68,11 +68,11 @@ namespace Capstone.DAO
                     //Insert buy into database
                     SqlCommand cmd2 = new SqlCommand(@"INSERT into buy_table(users_id, stock_at_buy_id, game_id, initial_shares_purchased, shares_currently_owned, amount_per_share, time_purchased) 
                                                        VALUES (@userId, @stockBuyId, @gameId, @sharesPurchased, @currentlyOwned, @amountPerShare, @timePurchased); SELECT @@IDENTITY", conn);
-                    cmd2.Parameters.AddWithValue("@userId", buyModel.UserId);
+                    cmd2.Parameters.AddWithValue("@userId", buyModel.UsersId);
                     cmd2.Parameters.AddWithValue("@stockBuyId", buyModel.StockId);
                     cmd2.Parameters.AddWithValue("@gameId", buyModel.GameId);
-                    cmd2.Parameters.AddWithValue("@sharesPurchased", buyModel.SharesToBuy);
-                    cmd2.Parameters.AddWithValue("@currentlyOwned", buyModel.SharesToBuy);
+                    cmd2.Parameters.AddWithValue("@sharesPurchased", buyModel.InitialSharesPurchased);
+                    cmd2.Parameters.AddWithValue("@currentlyOwned", buyModel.InitialSharesPurchased);
                     cmd2.Parameters.AddWithValue("@amountPerShare", stock.C);
                     cmd2.Parameters.AddWithValue("@timePurchased", timeTicks);
                     int id = Convert.ToInt32(cmd2.ExecuteScalar());
