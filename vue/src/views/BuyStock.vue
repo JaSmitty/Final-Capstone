@@ -23,7 +23,7 @@
         type="number"
         id="buyShares"
         placeholder="e.g. 1.5"
-        v-model.number="stockToBuy.sharesToBuy"
+        v-model.number="stockToBuy.initialSharesPurchased"
         @focus="blurDollars"
         @blur="showDollars"
       />
@@ -47,15 +47,15 @@ export default {
       stockToBuy: {
         stockId: this.$store.state.stock.stockId,
         gameId: this.$store.state.currentGame.gameId,
-        sharesToBuy: ""
+        initialSharesPurchased: ""
       },
       amount: "",
     };
   },
   methods: {
     submitBuy() {
-      if (this.stockToBuy.sharesToBuy === "") {
-        this.stockToBuy.sharesToBuy = (this.amount / this.stock.c).toFixed(3)
+      if (this.stockToBuy.initialSharesPurchased === "") {
+        this.stockToBuy.initialSharesPurchased = (this.amount / this.stock.c).toFixed(3)
       }
       stocksService.submitBuy(this.stockToBuy)
     },
@@ -71,7 +71,7 @@ export default {
       document.getElementById("buyDollars").disabled = true;
     },
     showDollars() {
-      if (this.stockToBuy.sharesToBuy === "") {
+      if (this.stockToBuy.initialSharesPurchased === "") {
         document.getElementById("buyDollars").disabled = false;
       }
     },
