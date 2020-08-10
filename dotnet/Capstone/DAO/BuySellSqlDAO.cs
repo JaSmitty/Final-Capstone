@@ -58,7 +58,7 @@ namespace Capstone.DAO
                     rdr.Read();
                     stock = HelperStock(rdr);
                     buyModel.AmountPerShare = stock.C;
-
+                    rdr.Close();
                     //********************************************\\
 
                     //Store current ticks
@@ -145,7 +145,26 @@ namespace Capstone.DAO
             return sellObj;
         }
 
-        private SellModel SellModelHelper(SqlDataReader rdr)
+
+        //public List<BuyModel> GetAllPastBuys(int userId)
+        //{
+        //    try
+        //    {
+        //        using (SqlConnection conn = new SqlConnection(connectionString))
+        //        {
+        //            conn.Open();
+        //            SqlCommand cmd = new SqlCommand(@"Select *
+        //                                              from buy_table
+        //                                              where users_id = 1", conn);
+        //        }
+        //    }
+        //    catch
+        //    {
+        //        throw;
+        //    }
+        //}
+
+            private SellModel SellModelHelper(SqlDataReader rdr)
         {
             SellModel newSell = new SellModel();
             newSell.SellId = Convert.ToInt32(rdr["id"]);
