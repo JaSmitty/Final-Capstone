@@ -11,10 +11,11 @@ namespace Capstone.Models
         {
         }
 
-        public BuyModel(int buyId, int userId, int gameId, int stockId, float sharesPurchaed, float sharesOwned, decimal amountPerShare, long buyTick)
+        public BuyModel(int buyId, string userId, int gameId, int stockId, float sharesPurchaed, float sharesOwned, decimal amountPerShare, long buyTick)
         {
             this.BuyId = buyId;
             this.UserId = userId;
+            this.GameId = gameId;
             this.StockId = stockId;
             this.InitialSharesPurchased = sharesPurchaed;
             this.SharesCurrentlyOwned = sharesOwned;
@@ -24,7 +25,7 @@ namespace Capstone.Models
 
 
         public int BuyId { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public int GameId { get; set; }
         public int StockId { get; set; }
         public float InitialSharesPurchased { get; set; }

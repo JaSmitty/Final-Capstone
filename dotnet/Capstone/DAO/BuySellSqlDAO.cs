@@ -16,10 +16,9 @@ namespace Capstone.DAO
             this.connectionString = dbconnectionString;
         }
 
-        public BuyModel BuyStock(int userId, int gameId, int stockId, float numberOfShares)
+        public BuyModel BuyStock(BuyModel buyModel) 
         {
             Stock stock = new Stock();
-            BuyModel buyModel;
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -30,26 +29,30 @@ namespace Capstone.DAO
                     conn.Open();
                     //Get stock info
                     SqlCommand cmd = new SqlCommand("SELECT * FROM company where company.stock_id = @stockId", conn);
-                    cmd.Parameters.AddWithValue("@stockId", stockId);
+                    cmd.Parameters.AddWithValue("@stockId", buyModel.StockId);
                     SqlDataReader rdr = cmd.ExecuteReader();
                     rdr.Read();
                     stock = HelperStock(rdr);
+                    buyModel.AmountPerShare = stock.C;
+
+                    //********************************************\\
 
                     //Store current ticks
                     long timeTicks = DateTime.Now.Ticks;
+                    buyModel.BuyTimeTicks = timeTicks;
 
                     //Insert buy into database
-                    SqlCommand cmd2 = new SqlCommand(@"INSERT into company(users_id, stock_at_buy_id, game_id, initial_shares_purchased, shares_currently_owned, amount_per_share, time_purchased) 
+                    SqlCommand cmd2 = new SqlCommand(@"INSERT into buy_table(users_id, stock_at_buy_id, game_id, initial_shares_purchased, shares_currently_owned, amount_per_share, time_purchased) 
                                                        VALUES (@userId, @stockBuyId, @gameId, @sharesPurchased, @currentlyOwned, @amountPerShare, @timePurchased); SELECT @@IDENTITY", conn);
-                    cmd2.Parameters.AddWithValue("@userId", userId);
-                    cmd2.Parameters.AddWithValue("@stockBuyId", stockId);
-                    cmd2.Parameters.AddWithValue("@gameId", gameId);
-                    cmd2.Parameters.AddWithValue("@sharesPurchased", numberOfShares);
-                    cmd2.Parameters.AddWithValue("@currentlyOwned", numberOfShares);
+                    cmd2.Parameters.AddWithValue("@userId", buyModel.UserId);
+                    cmd2.Parameters.AddWithValue("@stockBuyId", buyModel.StockId);
+                    cmd2.Parameters.AddWithValue("@gameId", buyModel.GameId);
+                    cmd2.Parameters.AddWithValue("@sharesPurchased", buyModel.InitialSharesPurchased);
+                    cmd2.Parameters.AddWithValue("@currentlyOwned", buyModel.InitialSharesPurchased);
                     cmd2.Parameters.AddWithValue("@amountPerShare", stock.C);
                     cmd2.Parameters.AddWithValue("@timePurchased", timeTicks);
                     int id = Convert.ToInt32(cmd2.ExecuteScalar());
-                    buyModel = new BuyModel(id, userId, gameId, stockId, numberOfShares, numberOfShares, stock.C, timeTicks);
+                    buyModel.BuyId = id;
                 }
             }
             catch
@@ -59,7 +62,7 @@ namespace Capstone.DAO
             return buyModel;
         }
 
-        public SellModel SellStock(int buyStockId, int stockAtSellId, float numberOfShares)
+        public SellModel SellStock(SellModel sellModel)
         {
             SellModel sellObj = new SellModel();
             try
@@ -92,11 +95,21 @@ namespace Capstone.DAO
 
                           INSERT INTO sell_table(stock_at_sell_id, buy_reference_id, shares_sold, amount_per_share, profit, time_sold)
                           VALUES(@stockAtSellId, @buyId, @sharesSold, @amountPerShareSold, ((@amountPerShareSold * @sharesSold) - (@amountPerShareBuy * @sharesSold)), @timeSold)
+                          Select @@IDENTITY
                           Commit Transaction", conn);
-                    cmd.Parameters.AddWithValue("@buyId", buyStockId);
-                    cmd.Parameters.AddWithValue("@sharesSold", numberOfShares);
-                    cmd.Parameters.AddWithValue("@stockAtSellId", stockAtSellId);
+                    cmd.Parameters.AddWithValue("@buyId", sellModel.BuyReferenceId);
+                    cmd.Parameters.AddWithValue("@sharesSold", sellModel.SharesSold);
+                    cmd.Parameters.AddWithValue("@stockAtSellId", sellModel.StockAtSellId);
                     cmd.Parameters.AddWithValue("@timeSold", timeTicks);
+                    int id = Convert.ToInt32(cmd.ExecuteScalar());
+                    sellModel.SellId = id;
+
+                    //***********************************************************************************************\\
+
+                    SqlCommand cmd2 = new SqlCommand("SELECT * FROM company where company.stock_id = @stockId", conn);
+                    cmd.Parameters.AddWithValue("@stockId", sellModel.StockId);
+                    SqlDataReader rdr = cmd2.ExecuteReader();
+                    rdr.Read();
 
                 }
             }
