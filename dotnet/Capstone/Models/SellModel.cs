@@ -10,7 +10,7 @@ namespace Capstone.Models
         public int SellId { get; set; }
         public int StockAtSellId { get; set; }
         public int BuyReferenceId { get; set; }
-        public float SharesSold { get; set; }
+        public double SharesSold { get; set; }
         public decimal PricePerShare { get; set; }
         public decimal Profit { get; set; }
         public long SellTimeTicks { get; set; }

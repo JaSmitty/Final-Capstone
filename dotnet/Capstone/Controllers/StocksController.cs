@@ -22,7 +22,7 @@ namespace Capstone.Controllers
         private readonly StockAPI stockAPI;
         private List<string> stockTickers;
         private FinnHubDataLoop DataLoop;
-        private BuySellSqlDAO BuySellDAO;
+        private readonly BuySellSqlDAO BuySellDAO;
         private string Username
         {
             get
@@ -36,6 +36,7 @@ namespace Capstone.Controllers
             this.stockAPI = stockAPI;
             this.stockTickers = ReadToStocks();
             this.DataLoop = dataLoop;
+            this.BuySellDAO = buySellDAO;
         }
         [HttpGet]
         public ActionResult<List<Stock>> GetCurrentStocks()
@@ -67,7 +68,7 @@ namespace Capstone.Controllers
             try
             {
                 int id = this.BuySellDAO.GetUserId(this.Username);
-                buyModel.UserId = id;
+                buyModel.UsersId = id;
                 BuyModel returnModel = this.BuySellDAO.BuyStock(buyModel);
                 return Ok(returnModel);
             }
