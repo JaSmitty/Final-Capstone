@@ -2,14 +2,14 @@
   <div id="leaderboard">
     <h1>Leaderboard</h1>
     <table>
-      <tr>
+      <tr class="table-headings">
         <th>&nbsp;</th>
-        <th>Balance</th>
+        <th class="balance">Balance</th>
         <th>Total Worth</th>
       </tr>
       <tr v-for="player in players" :key="player.id">
         <td>{{player.username}}</td>
-        <td>${{(player.balance).toFixed(2)}}</td>
+        <td class="balance">${{(player.balance).toFixed(2)}}</td>
         <td>${{(player.totalWorth).toFixed(2)}}</td>
       </tr>
     </table>
@@ -48,8 +48,8 @@ export default {
 } 
 
 #leaderboard table {
-  border: #add6ff solid 3px;
-border-collapse: collapse;
+  border: rgba(0, 26, 51) solid 3px;
+  
   background: rgba(0, 26, 51, 0.7);
   border-radius: 8px;
   padding-top: 4px;
@@ -59,8 +59,17 @@ border-collapse: collapse;
 
 }
 
+#leaderboard th {
+  border-bottom: #add6ff solid 2px;
+}
+
 #leaderboard td {
- border: #add6ff solid 3px;
+  border-bottom: #add6ff solid 1px;
+}
+
+.balance{
+  border-left:#add6ff solid 2px;
+  border-right: #add6ff solid 2px;
 }
 
 #leaderboard{

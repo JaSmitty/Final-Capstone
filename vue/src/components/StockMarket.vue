@@ -1,8 +1,9 @@
 <template>
   <div id="stock-market">
     <h1>Stock Market</h1>
+    
     <ul>
-      <li v-for="stock in sortedStocks" :key="stock.id">
+      <li class="stock-card" v-for="stock in sortedStocks" :key="stock.id">
         <router-link :to="{name: 'BuyStock', params: {ticker: stock.ticker}}">
           <div @click="setStockToBuy(stock)">
             <h2>{{stock.ticker}}</h2>
@@ -17,6 +18,7 @@
         </router-link>
       </li>
     </ul>
+    
   </div>
 </template>
 
@@ -58,5 +60,26 @@ li {
   margin-top: 0;
   padding-bottom: 5px;
   padding-top: 5px;
+}
+
+#stock-market ul{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow:  scroll;
+  height: 400px;
+  overflow-x: hidden;
+}
+
+.stock-card{
+  border-left: solid #005cb8 7px;
+  border-right: solid #005cb8 7px;
+  padding-left: 15px;
+  padding-bottom: 5px;
+  padding-top: 1px;
+  margin-bottom: 25px;
+  background: linear-gradient(to right, #5cadff,#e7f3ff);
+  border-radius: 8px;
+  width: 40%;
 }
 </style>
