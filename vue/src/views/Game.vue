@@ -55,8 +55,33 @@ export default {
 </script>
 
 <style>
-#game-screen {
-  display: grid;
-  grid-template-columns: 300px 1fr 300px;
+
+#game-screen{
+    display: grid;
+    grid-template-columns: 235px 1fr 235px;
+    grid-template-areas: "stats title invite"
+                         "stats gameplay invite";
+}
+
+.current-game-stats{
+    grid-area: stats;
+    background: #add6ff;
+    width: 235px;
+    height: 95.4vh;
+    padding-left: 5px;
+    padding-right: 5px;
+    
+}
+
+.gameplay{
+    grid-area: gameplay;
+}
+
+.invite{
+    grid-area: invite;
+    background: #add6ff; width: 250px;
+    height: 95.4vh;
+    width: 235px;
+    
 }
 </style>
