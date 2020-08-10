@@ -19,10 +19,12 @@ export default {
       acceptInvitation() {
         let userGame = {userId: this.$store.state.user.userId, gameId: this.game.gameId};
         gamesService.acceptInvitation(userGame);
+        window.location.reload()
       },
       declineInvitation() {
         let userGame = {userId: this.$store.state.user.userId, gameId: this.game.gameId};
         gamesService.declineInvitation(userGame);
+        window.location.reload()
       }
   }
 };

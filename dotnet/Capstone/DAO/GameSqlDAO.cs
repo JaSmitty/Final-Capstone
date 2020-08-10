@@ -111,7 +111,10 @@ WHERE game_id = @gameId)", conn);
 
                 while (reader.Read())
                 {
-                    userList.Add(ReadToUserInfo(reader));
+                    UserInfo user = new UserInfo();
+                    user.UserId = Convert.ToInt32(reader["id"]);
+                    user.Username = Convert.ToString(reader["username"]);
+                    userList.Add(user);
                 }
             }
             return userList;

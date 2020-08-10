@@ -6,10 +6,10 @@ export default {
     },
     
     // TODO
-    // submitBuy(stock) {
-    //     return axios.post('api/stocks/buy', stock)
-    // },
-    // submitSell(investmentToSell) {
-    //     return axios.post('api/stocks/sell', investmentToSell)
-    // }
+    submitBuy(stock) {
+        return axios.post('api/stocks/buy', stock)
+    },
+    submitSell(investmentToSell) {
+        return axios.post('api/stocks/sell', investmentToSell)
+    }
 }
