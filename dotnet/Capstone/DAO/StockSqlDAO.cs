@@ -97,6 +97,34 @@ namespace Capstone.DAO
                 throw;
             }
         }
+        public List<BuyModel> GetCurrentInvestments(string username, int gameId)
+        {
+            try
+            {
+                List<BuyModel> investments = new List<BuyModel>();
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    const string QUERY = @"SELECT * FROM buy_table
+JOIN users ON buy_table.users_id = users.id
+JOIN company ON buy_table.stock_at_buy_id = company.stock_id
+WHERE game_id = @gameId AND username = @username";
+                    SqlCommand cmd = new SqlCommand(QUERY, conn);
+                    cmd.Parameters.AddWithValue("@gameId", gameId);
+                    cmd.Parameters.AddWithValue("@username", username);
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+
+                    }
+                }
+                return investments;
+            }
+            catch
+            {
+                throw;
+            }
+        }
         private Stock HelperStock(SqlDataReader rdr)
         {
             Stock newStock = new Stock();
