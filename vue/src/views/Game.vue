@@ -1,24 +1,5 @@
 <template>
   <div id="game-screen">
-<<<<<<< HEAD
-      <h1 id="game-title">{{game.name}}</h1>
-      <div class="current-game-stats">
-      <p>Your balance: {{game.balance}}</p>
-      <p>Start date: {{game.startDateAsString}}</p>
-      <p>End date: {{game.endDateAsString}}</p>
-      <div>
-          <p>You are competing against the following users:</p>
-          <ul>
-              <li v-for="friend in friends" :key=friend.id>{{friend.username}}</li>
-          </ul>
-          </div>
-      </div>
-      <invite-friends class="invite"/>
-      <div class="gameplay">
-      <current-investments class="investments"/>
-      <stocks-summary class="available-stocks"/>
-      </div>
-=======
     <div class="current-game-stats">
       <h1>{{game.name}}</h1>
       <p>Your balance: ${{game.balance}}</p>
@@ -35,7 +16,6 @@
     <current-investments class="investments" />
     <stock-market class="available-stocks" />
     <game-leaderboard />
->>>>>>> dd1d458d01676bb32788551dd42987ca428ad1c9
   </div>
 </template>
 
@@ -75,7 +55,6 @@ export default {
 </script>
 
 <style>
-<<<<<<< HEAD
 
 #game-screen{
     display: grid;
@@ -104,10 +83,5 @@ export default {
     height: 95.4vh;
     width: 235px;
     
-=======
-#game-screen {
-  display: grid;
-  grid-template-columns: 300px 1fr 300px;
->>>>>>> dd1d458d01676bb32788551dd42987ca428ad1c9
 }
 </style>
