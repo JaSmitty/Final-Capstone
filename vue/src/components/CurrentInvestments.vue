@@ -17,7 +17,7 @@
           </router-link>
         </td>
         <td>{{investment.sharesCurrentlyOwned}}</td>
-        <td>{{investment.amountPerShare}}</td>
+        <td>${{(investment.amountPerShare).toFixed(2)}}</td>
         <!-- <td>{{investment.profit}}</td> -->
 
         <!-- <td>
