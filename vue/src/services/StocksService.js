@@ -5,7 +5,7 @@ export default {
         return axios.get('api/stocks')
     },
     getInvestments() {
-        return axios.get('api/investments')
+        return axios.get('api/stocks/investments')
     },
     // TODO
     // submitBuy(stock) {

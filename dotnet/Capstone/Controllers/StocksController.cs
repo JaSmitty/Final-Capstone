@@ -49,6 +49,7 @@ namespace Capstone.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+        
 
         //Call this get at server startup to get hangfire to start
         [HttpGet]
