@@ -46,7 +46,7 @@ body{
  
 }
 #nav{
-   background: #001a33;
+   background: rgba(0, 26, 51, 0.9);
    grid-area: nav;
    
 

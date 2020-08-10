@@ -1,21 +1,26 @@
 <template>
   <div id="game-screen">
     <div class="current-game-stats">
+      <div class="player-stats">
       <h1>{{game.name}}</h1>
       <p>Your balance: ${{game.balance}}</p>
       <p>Start date: {{game.startDateAsString}}</p>
       <p>End date: {{game.endDateAsString}}</p>
+      </div>
       <!-- <div>
         <p>You are competing against the following users:</p>
         <ul>
           <li v-for="friend in friends" :key="friend.id">{{friend.username}}</li>
         </ul>
       </div> -->
+      <div class="ranking">
+      <game-leaderboard class="leaderboard" />
+      </div>
     </div>
     <invite-friends class="invite" />
     <current-investments class="investments" />
     <stock-market class="available-stocks" />
-    <game-leaderboard />
+    <!-- <game-leaderboard class="leaderboard" /> -->
   </div>
 </template>
 
@@ -61,12 +66,16 @@ export default {
     grid-template-columns: 235px 1fr 235px;
     grid-template-areas: "stats title invite"
                          "stats gameplay invite";
+    
 }
 
 .current-game-stats{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
     grid-area: stats;
-    background: #add6ff;
-    width: 235px;
+    background: rgba(173, 214, 255, 0.9);
+    width: 225px;
     height: 95.4vh;
     padding-left: 5px;
     padding-right: 5px;
@@ -79,9 +88,17 @@ export default {
 
 .invite{
     grid-area: invite;
-    background: #add6ff; width: 250px;
+    background: rgba(173, 214, 255, 0.9); 
+    width: 250px;
     height: 95.4vh;
     width: 235px;
-    
+}
+
+.leaderboard{
+  grid-area: leaderboard;
+}
+
+.player-stats > h1 {
+  color: #003366;
 }
 </style>

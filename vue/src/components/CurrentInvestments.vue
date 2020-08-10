@@ -1,23 +1,24 @@
 <template>
   <div>
-    <h1>Current investments</h1>
+    <h1 class="curr-inv-title">Current Investments</h1>
+    <div id="current-investments">
     <table>
-      <tr>
+      <tr class="headers">
         <th>Company</th>
         <th>Shares Owned</th>
         <th>Purchase Price</th>
         <th>Profit</th>
       </tr>
 
-      <tr v-for="investment in investments" :key="investment.id" :investment="investment">
+      <tr class="investment" v-for="investment in investments" :key="investment.id" :investment="investment">
         <td>
-          <router-link :to="{name: 'SellStock', params: {stockId: investment.stockId}}">
+          <router-link class="stock-link" :to="{name: 'SellStock', params: {stockId: investment.stockId}}">
             <div @click="setInvestmentToSell(investment)">{{investment.companyTicker}}</div>
           </router-link>
         </td>
         <td>{{investment.currentShares}}</td>
-        <td>{{investment.pricePerShare}}</td>
-        <td>{{investment.profit}}</td>
+        <td>${{investment.pricePerShare}}</td>
+        <td>${{investment.profit}}</td>
 
         <!-- <td>
       <div v-if="isSelling">
@@ -31,6 +32,7 @@
         </td>-->
       </tr>
     </table>
+    </div>
   </div>
 </template>
 
@@ -82,4 +84,43 @@ export default {
 </script>
 
 <style>
+#current-investments {
+  display: flex;
+  justify-content: center;
+}
+
+
+
+table {
+border: #add6ff solid 3px;
+border-collapse: collapse;
+}
+
+.headers > th{
+  font-size: large;
+  border: #add6ff solid 3px;
+  padding: 4px;
+  background: rgba(173, 214, 255, 0.7);
+  color:  #003366;
+}
+
+.investment > td{
+   border-right: #add6ff solid 3px;
+   background: rgba(0, 51, 102, 0.7);
+}
+
+.stock-link{
+  color: white;
+}
+
+.stock-link:hover{
+  color: #f68e4f;
+}
+
+.curr-inv-title{
+  background: rgba(0, 26, 51, 0.7);
+  margin-top: 0;
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
 </style>
