@@ -19,11 +19,14 @@ namespace Capstone.DAO
         public BuyModel BuyStock(int userId, int gameId, int stockId, float numberOfShares)
         {
             Stock stock = new Stock();
-            BuyModel buyModel = new BuyModel();
+            BuyModel buyModel;
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
+                    //*******************************************
+                    //May have to change into a transaction later
+                    //*******************************************
                     conn.Open();
                     //Get stock info
                     SqlCommand cmd = new SqlCommand("SELECT * FROM company where company.stock_id = @stockId", conn);
@@ -36,7 +39,7 @@ namespace Capstone.DAO
                     long timeTicks = DateTime.Now.Ticks;
 
                     //Insert buy into database
-                    SqlCommand cmd2 = new SqlCommand(@"INSERT into company(users_id, stock_at_buy_id, game_id, intitial_shares_purchased, shares_currently_owned, amount_per_share, time_purchased) 
+                    SqlCommand cmd2 = new SqlCommand(@"INSERT into company(users_id, stock_at_buy_id, game_id, initial_shares_purchased, shares_currently_owned, amount_per_share, time_purchased) 
                                                        VALUES (@userId, @stockBuyId, @gameId, @sharesPurchased, @currentlyOwned, @amountPerShare, @timePurchased); SELECT @@IDENTITY", conn);
                     cmd2.Parameters.AddWithValue("@userId", userId);
                     cmd2.Parameters.AddWithValue("@stockBuyId", stockId);
@@ -45,9 +48,8 @@ namespace Capstone.DAO
                     cmd2.Parameters.AddWithValue("@currentlyOwned", numberOfShares);
                     cmd2.Parameters.AddWithValue("@amountPerShare", stock.C);
                     cmd2.Parameters.AddWithValue("@timePurchased", timeTicks);
-                    buyModel.BuyId = Convert.ToInt32(cmd2.ExecuteScalar());
-                    buyModel.AmountPerShare = stock.C;
-                    buyModel.BuyTimeTicks = timeTicks;
+                    int id = Convert.ToInt32(cmd2.ExecuteScalar());
+                    buyModel = new BuyModel(id, userId, gameId, stockId, numberOfShares, numberOfShares, stock.C, timeTicks);
                 }
             }
             catch
@@ -56,6 +58,56 @@ namespace Capstone.DAO
             }
             return buyModel;
         }
+
+        public SellModel SellStock(int buyStockId, int stockAtSellId, float numberOfShares)
+        {
+            SellModel sellObj = new SellModel();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    //Store current ticks
+                    long timeTicks = DateTime.Now.Ticks;
+
+                    //Insert buy into database
+                    SqlCommand cmd = new SqlCommand(
+                        @"BEGIN TRANSACTION
+
+                          DECLARE  @shares_owned float
+                          DECLARE  @amountPerShareBuy money
+                          DECLARE  @amountPerShareSold money
+
+                          Select @shares_owned = shares_currently_owned, @amountPerShareBuy = amount_per_share
+                          From buy_table
+                          Where id = @buyId
+
+                          UPDATE buy_table
+                          SET shares_currently_owned = (@shares_owned - @sharesSold)
+                          Where id = @buyId
+
+                          Select @amountPerShareSold = company.current_price
+                          From company
+                          where stock_id = @stockAtSellId
+
+                          INSERT INTO sell_table(stock_at_sell_id, buy_reference_id, shares_sold, amount_per_share, profit, time_sold)
+                          VALUES(@stockAtSellId, @buyId, @sharesSold, @amountPerShareSold, ((@amountPerShareSold * @sharesSold) - (@amountPerShareBuy * @sharesSold)), @timeSold)
+                          Commit Transaction", conn);
+                    cmd.Parameters.AddWithValue("@buyId", buyStockId);
+                    cmd.Parameters.AddWithValue("@sharesSold", numberOfShares);
+                    cmd.Parameters.AddWithValue("@stockAtSellId", stockAtSellId);
+                    cmd.Parameters.AddWithValue("@timeSold", timeTicks);
+
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            return sellObj;
+        }
+
+
 
 
         private Stock HelperStock(SqlDataReader rdr)

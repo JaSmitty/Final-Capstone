@@ -10,11 +10,19 @@
 
 <script>
 import GamesList from "@/components/GamesList.vue";
+import stocksService from '@/services/StocksService'
 export default {
   name: "home",
   components: {
     GamesList
   },
+  created() {
+    stocksService.getStocks().then(response => {
+            if (response.status === 200) {
+                this.$store.commit("SET_CURRENT_STOCKS", response.data)
+            }
+        })
+  }
 };
 </script>
 

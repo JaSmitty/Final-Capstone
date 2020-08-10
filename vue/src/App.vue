@@ -64,6 +64,11 @@ body{
   float: left;
   
 }
-
+.green {
+  color: green;
+}
+.red {
+  color: red;
+}
 
 </style> 

@@ -15,6 +15,8 @@ namespace Capstone.Models
     {
         public int UserId { get; set; }
         public string Username { get; set; }
+        public decimal? Balance { get; set; }
+        public decimal? TotalWorth { get; set; }
     }
 
     /// <summary>

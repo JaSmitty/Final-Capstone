@@ -7,7 +7,11 @@ export default {
     getInvestments() {
         return axios.get('api/investments')
     },
-    submitSell(investmentToSell) {
-        return axios.post('/', investmentToSell)
-    }
+    // TODO
+    // submitBuy(stock) {
+    //     return axios.post('api/stocks/buy', stock)
+    // },
+    // submitSell(investmentToSell) {
+    //     return axios.post('api/stocks/sell', investmentToSell)
+    // }
 }
