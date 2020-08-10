@@ -16,6 +16,30 @@ namespace Capstone.DAO
             this.connectionString = dbconnectionString;
         }
 
+        public int GetUserId(string username)
+        {
+            int returnUserId = 0;
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand("SELECT id FROM users WHERE username = @username", conn);
+                    cmd.Parameters.AddWithValue("@username", username);
+                    returnUserId = Convert.ToInt32(cmd.ExecuteScalar());
+
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+
+            return returnUserId;
+        }
+
         public BuyModel BuyStock(BuyModel buyModel) 
         {
             Stock stock = new Stock();
@@ -47,8 +71,8 @@ namespace Capstone.DAO
                     cmd2.Parameters.AddWithValue("@userId", buyModel.UserId);
                     cmd2.Parameters.AddWithValue("@stockBuyId", buyModel.StockId);
                     cmd2.Parameters.AddWithValue("@gameId", buyModel.GameId);
-                    cmd2.Parameters.AddWithValue("@sharesPurchased", buyModel.InitialSharesPurchased);
-                    cmd2.Parameters.AddWithValue("@currentlyOwned", buyModel.InitialSharesPurchased);
+                    cmd2.Parameters.AddWithValue("@sharesPurchased", buyModel.SharesToBuy);
+                    cmd2.Parameters.AddWithValue("@currentlyOwned", buyModel.SharesToBuy);
                     cmd2.Parameters.AddWithValue("@amountPerShare", stock.C);
                     cmd2.Parameters.AddWithValue("@timePurchased", timeTicks);
                     int id = Convert.ToInt32(cmd2.ExecuteScalar());
@@ -107,7 +131,7 @@ namespace Capstone.DAO
                     //***********************************************************************************************\\
 
                     SqlCommand cmd2 = new SqlCommand("SELECT * FROM company where company.stock_id = @stockId", conn);
-                    cmd.Parameters.AddWithValue("@stockId", sellModel.StockId);
+                    //cmd.Parameters.AddWithValue("@stockId", sellModel.StockId);
                     SqlDataReader rdr = cmd2.ExecuteReader();
                     rdr.Read();
 

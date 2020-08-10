@@ -22,7 +22,15 @@ namespace Capstone.Controllers
         private readonly StockAPI stockAPI;
         private List<string> stockTickers;
         private FinnHubDataLoop DataLoop;
-        public StocksController(StockSqlDAO stockSqlDAO, StockAPI stockAPI, FinnHubDataLoop dataLoop)
+        private BuySellSqlDAO BuySellDAO;
+        private string Username
+        {
+            get
+            {
+                return User?.Identity?.Name;
+            }
+        }
+        public StocksController(StockSqlDAO stockSqlDAO, StockAPI stockAPI, FinnHubDataLoop dataLoop, BuySellSqlDAO buySellDAO)
         {
             this.stockSqlDAO = stockSqlDAO;
             this.stockAPI = stockAPI;
@@ -42,12 +50,29 @@ namespace Capstone.Controllers
             }
         }
 
+        //Call this get at server startup to get hangfire to start
         [HttpGet]
         [Route("sendit")]
         public void HangfireSetup()
         {
             RecurringJob.AddOrUpdate(recurringJobId: "Dataloop", methodCall: () => DataLoop.Run(), Cron.Minutely);
         }
+
+
+        //[HttpPost]
+        //[Route("buy")]
+        //public ActionResult<BuyModel> BuyStock(BuyModel buyModel)
+        //{
+        //    int id = this.BuySellDAO.GetUserId(this.Username);
+        //    buyModel.UserId = id;
+        //    this.BuySellDAO.BuyStock(buyModel);
+        //}
+
+
+
+
+
+
         //[HttpGet]
         //[Route("{stockTicker}")]
         //public ActionResult<Company> GetStockByTickerName(string stockTicker)
