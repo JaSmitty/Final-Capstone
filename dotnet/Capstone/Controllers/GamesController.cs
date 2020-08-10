@@ -120,5 +120,18 @@ namespace Capstone.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+        [HttpPut]
+        [Route("{gameId}/decline")]
+        public ActionResult<bool> DeclineInvitation(UserGame userGame)
+        {
+            try
+            {
+                return Ok(gameSqlDAO.DeclineInvitation(userGame));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }

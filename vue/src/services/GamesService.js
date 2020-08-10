@@ -22,9 +22,8 @@ export default {
     acceptInvitation(userGame) {
         return axios.put(`/api/games/${userGame.gameId}/accept`, userGame)
     },
-    // TODO
-    // declineInvitation(userGame) {
-    //     return axios.put(`/api/games/${userGame.gameId}/decline`, userGame)
-    // }
+    declineInvitation(userGame) {
+        return axios.put(`/api/games/${userGame.gameId}/decline`, userGame)
+    }
   }
   
