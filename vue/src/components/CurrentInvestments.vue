@@ -7,7 +7,7 @@
         <th>Company</th>
         <th>Shares Owned</th>
         <th>Purchase Price</th>
-        <th>Profit</th>
+        <!-- <th>Profit</th> -->
       </tr>
 
       <tr v-for="investment in investments" :key="investment.buyId" :investment="investment">
@@ -18,7 +18,7 @@
         </td>
         <td>{{investment.initialSharesPurchased}}</td>
         <td>{{investment.amountPerShare}}</td>
-        <td>{{investment.profit}}</td>
+        <!-- <td>{{investment.profit}}</td> -->
 
         <!-- <td>
       <div v-if="isSelling">

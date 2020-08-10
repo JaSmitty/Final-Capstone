@@ -3,9 +3,11 @@
     <div class="current-game-stats">
       <div class="player-stats">
       <h1>{{game.name}}</h1>
+      <div class="stats">
       <p>Your balance: ${{game.balance}}</p>
       <p>Start date: {{game.startDateAsString}}</p>
       <p>End date: {{game.endDateAsString}}</p>
+      </div>
       </div>
       <!-- <div>
         <p>You are competing against the following users:</p>
@@ -80,6 +82,15 @@ export default {
     padding-left: 5px;
     padding-right: 5px;
     
+}
+
+.stats {
+  background: rgba(0, 26, 51, 0.7);
+  border-radius: 8px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin-left: 4px;
+  margin-right: 4px;
 }
 
 .gameplay{

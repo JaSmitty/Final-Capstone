@@ -1,8 +1,8 @@
 <template>
   <div>
     <stock-details :stock="stock" />
-    <h2>Current shares: {{investment.currentShares}}</h2>
-    <h2>Purchase price per share: ${{investment.pricePerShare}}</h2>
+    <h2>Current shares: {{investment.sharesCurrentlyOwned}}</h2>
+    <h2>Purchase price per share: ${{investment.amountPerShare}}</h2>
     <h2>Current price per share: ${{stock.c}}</h2>
     <h2>
       Per share {{profitPerShare >= 0 ? 'profit: ' : 'loss: '}}
@@ -17,7 +17,7 @@
           type="number"
           id="sharesToSell"
           min="0"
-          :max="investment.currentShares"
+          :max="investment.sharesCurrentlyOwned"
           required
           v-model.number="investmentToSell.sharesSold"
         />
@@ -53,12 +53,12 @@ export default {
   },
   computed: {
     profitPerShare() {
-      return (this.stock.c - this.investment.pricePerShare).toFixed(2);
+      return (this.stock.c - this.investment.amountPerShare).toFixed(2);
     },
     totalProfit() {
       return (
         this.investmentToSell.sharesSold *
-        (this.stock.c - this.investment.pricePerShare)
+        (this.stock.c - this.investment.amountPerShare)
       ).toFixed(2);
     },
   },

@@ -103,12 +103,13 @@ export default {
 
 #login {
   grid-area: login;
-  background: #add6ff;
+  background: rgba(173, 214, 255, 0.9);
   color: #003366;
   width: 260px;
   height: 95.4vh;
   padding-left: 5px;
   padding-right: 5px;
+  border-radius: 3px;
   
 }
 

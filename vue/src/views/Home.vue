@@ -50,6 +50,7 @@ export default {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   font-size: 25px;
   margin-top: 0px;
+  border-radius: 2px;
 
 }
 
@@ -65,6 +66,7 @@ games-list {
   display: flex;
   justify-content: center;
   align-self: end;
+  border-radius: 2px;
 }
 
 .button {

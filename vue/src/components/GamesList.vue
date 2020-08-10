@@ -98,6 +98,7 @@ export default {
   grid-area: title;
   text-align: center;
   margin-top: 0px;
+  border-radius: 2px;
 }
 
 .game-card-display {

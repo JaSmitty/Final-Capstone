@@ -47,4 +47,26 @@ export default {
   color: #003366;
 } 
 
+#leaderboard table {
+  border: #add6ff solid 3px;
+border-collapse: collapse;
+  background: rgba(0, 26, 51, 0.7);
+  border-radius: 8px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin-left: 4px;
+  margin-right: 4px;
+
+}
+
+#leaderboard td {
+ border: #add6ff solid 3px;
+}
+
+#leaderboard{
+  display: flex;
+  flex-direction: column;
+  
+}
+
 </style>
