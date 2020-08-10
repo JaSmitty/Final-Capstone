@@ -3,7 +3,11 @@ DECLARE  @shares_owned float
 DECLARE  @amountPerShareBuy money
 DECLARE  @amountPerShareSold money
 DECLARE  @sellId int
-Select @shares_owned = shares_currently_owned, @amountPerShareBuy = amount_per_share
+
+DECLARE  @userId int
+DECLARE  @gameId int
+
+Select @shares_owned = shares_currently_owned, @amountPerShareBuy = amount_per_share, @userId = users_id, @gameId = game_id
 From buy_table
 Where id = @buyId
 
@@ -14,6 +18,15 @@ Where id = @buyId
 Select @amountPerShareSold = company.current_price
 From company
 where stock_id = @stockAtSellId
+
+DECLARE @currentbalance money
+select @currentbalance = balance
+from users_game
+where users_id = @userId and game_id = @gameId
+UPDATE users_game
+SET balance = (balance + (@sharesSold * @amountPerShareSold))
+Where users_id = @userId and game_id = @gameId
+
 
 INSERT INTO sell_table (stock_at_sell_id, buy_reference_id, shares_sold, amount_per_share, profit, time_sold)
 VALUES (@stockAtSellId, @buyId, @sharesSold, @amountPerShareSold, ((@amountPerShareSold * @sharesSold) - (@amountPerShareBuy * @sharesSold)), @timeSold)

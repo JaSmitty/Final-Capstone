@@ -87,7 +87,7 @@ namespace Capstone.DAO
                     cmd2.Parameters.AddWithValue("@timePurchased", timeTicks);
                     int id = Convert.ToInt32(cmd2.ExecuteScalar());
                     buyModel.BuyId = id;
-                    buyModel.SharesCurrentlyOwned = buyModel.SharesCurrentlyOwned;
+                    buyModel.SharesCurrentlyOwned = buyModel.InitialSharesPurchased;
                 }
             }
             catch
@@ -115,8 +115,10 @@ namespace Capstone.DAO
                           DECLARE  @shares_owned float
                           DECLARE  @amountPerShareBuy money
                           DECLARE  @amountPerShareSold money
+                          DECLARE  @userId int
+                          DECLARE  @gameId int
 
-                          Select @shares_owned = shares_currently_owned, @amountPerShareBuy = amount_per_share
+                          Select @shares_owned = shares_currently_owned, @amountPerShareBuy = amount_per_share, @userId = users_id, @gameId = game_id
                           From buy_table
                           Where id = @buyId
 
@@ -128,9 +130,19 @@ namespace Capstone.DAO
                           From company
                           where stock_id = @stockAtSellId
 
+                          DECLARE @currentbalance money
+                          select @currentbalance = balance
+                          from users_game
+                          where users_id = @userId and game_id = @gameId
+
+                          UPDATE users_game
+                          SET balance = (balance + (@sharesSold * @amountPerShareSold))
+                          Where users_id = @userId and game_id = @gameId
+
                           INSERT INTO sell_table(stock_at_sell_id, buy_reference_id, shares_sold, amount_per_share, profit, time_sold)
                           VALUES(@stockAtSellId, @buyId, @sharesSold, @amountPerShareSold, ((@amountPerShareSold * @sharesSold) - (@amountPerShareBuy * @sharesSold)), @timeSold)
                           Select @@IDENTITY
+
                           Commit Transaction", conn);
                     cmd.Parameters.AddWithValue("@buyId", sellModel.BuyReferenceId);
                     cmd.Parameters.AddWithValue("@sharesSold", sellModel.SharesSold);
