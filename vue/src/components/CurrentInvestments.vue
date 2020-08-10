@@ -82,8 +82,10 @@ export default {
     //   }
   },
   created() {
-    gamesService.getInvestments.then(response => {
-      
+    gamesService.getInvestments(this.$store.state.currentGame.gameId).then(response => {
+      if (response.status === 200) {
+        this.investments = response.data;
+      }
     })
   }
 };

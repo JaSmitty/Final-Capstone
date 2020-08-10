@@ -24,6 +24,9 @@ export default {
     },
     declineInvitation(userGame) {
         return axios.put(`/api/games/${userGame.gameId}/decline`, userGame)
-    }
+    },
+    getInvestments(gameId) {
+        return axios.get(`api/games/${gameId}/investments`)
+    },
   }
   
