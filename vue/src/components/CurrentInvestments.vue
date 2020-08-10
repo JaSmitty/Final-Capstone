@@ -16,7 +16,7 @@
             <div @click="setInvestmentToSell(investment)">{{investment.companyTicker}}</div>
           </router-link>
         </td>
-        <td>{{investment.initialSharesPurchased}}</td>
+        <td>{{investment.sharesCurrentlyOwned}}</td>
         <td>{{investment.amountPerShare}}</td>
         <!-- <td>{{investment.profit}}</td> -->
 
