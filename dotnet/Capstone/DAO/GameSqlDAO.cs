@@ -137,26 +137,25 @@ WHERE game_id = @gameId AND ug.status = 'approved'", conn);
                 foreach(UserInfo user in userList)
                 {
                     user.TotalWorth = user.Balance;
-                    Dictionary<string, double> sharesPerCompany = new Dictionary<string, double>();
-                    cmd = new SqlCommand(@"SELECT company_ticker, shares FROM investment 
-WHERE game_id = @gameId AND investment.users_id = @userId", conn);
+                    //Dictionary<string, double> sharesPerCompany = new Dictionary<string, double>();
+                    cmd = new SqlCommand(@"SELECT (shares_currently_owned * current_price) AS stock_worth FROM buy_table 
+JOIN company ON buy_table.stock_at_buy_id = company.stock_id
+WHERE game_id = @gameId AND buy_table.users_id = @userId", conn);
                     cmd.Parameters.AddWithValue("@gameId", gameId);
                     cmd.Parameters.AddWithValue("@userId", user.UserId);
                     reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        string company = Convert.ToString(reader["company_ticker"]);
-                        double shares = Convert.ToDouble(reader["shares"]);
-                        sharesPerCompany.Add(company, shares);
+                        user.TotalWorth += Convert.ToDecimal(reader["stock_worth"]);
                     }
                     reader.Close();
-                    foreach(KeyValuePair<string, double> pair in sharesPerCompany)
-                    {
-                        cmd = new SqlCommand(@"SELECT TOP 1 current_price FROM company
-WHERE ticker = @stockTick ORDER BY time_updated DESC", conn);
-                        cmd.Parameters.AddWithValue("@stockTick", pair.Key);
-                        user.TotalWorth += Convert.ToDecimal(cmd.ExecuteScalar()) * (decimal)pair.Value;
-                    }
+                    //                    foreach(KeyValuePair<string, double> pair in sharesPerCompany)
+                    //                    {
+                    //                        cmd = new SqlCommand(@"SELECT TOP 1 current_price FROM company
+                    //WHERE ticker = @stockTick ORDER BY time_updated DESC", conn);
+                    //                        cmd.Parameters.AddWithValue("@stockTick", pair.Key);
+                    //                        user.TotalWorth += Convert.ToDecimal(cmd.ExecuteScalar()) * (decimal)pair.Value;
+                    //                    }
                 }
                 
 
@@ -212,6 +211,72 @@ WHERE users_id = @userId AND game_id = @gameId";
                 throw;
             }
             return true;
+        }
+        public bool DeclineInvitation(UserGame userGame)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    const string QUERY = @"UPDATE users_game
+SET users_id = @userId, game_id = @gameId, status = 'rejected'
+WHERE users_id = @userId AND game_id = @gameId";
+                    SqlCommand cmd = new SqlCommand(QUERY, conn);
+                    cmd.Parameters.AddWithValue("@userId", userGame.UserId);
+                    cmd.Parameters.AddWithValue("@gameId", userGame.GameId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            return true;
+        }
+        public List<BuyModel> GetCurrentInvestments(string username, int gameId)
+        {
+            try
+            {
+                List<BuyModel> investments = new List<BuyModel>();
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    const string QUERY = @"SELECT * FROM buy_table
+JOIN users ON buy_table.users_id = users.id
+JOIN company ON buy_table.stock_at_buy_id = company.stock_id
+WHERE game_id = @gameId AND username = @username";
+                    SqlCommand cmd = new SqlCommand(QUERY, conn);
+                    cmd.Parameters.AddWithValue("@gameId", gameId);
+                    cmd.Parameters.AddWithValue("@username", username);
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        BuyModel investment = ReadToBuyModel(rdr);
+                        investments.Add(investment);
+                    }
+                }
+                return investments;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        private BuyModel ReadToBuyModel(SqlDataReader rdr)
+        {
+            return new BuyModel
+            {
+                BuyId = Convert.ToInt32(rdr["id"]),
+                UsersId = Convert.ToInt32(rdr["users_id"]),
+                StockId = Convert.ToInt32(rdr["stock_at_buy_id"]),
+                CompanyTicker = Convert.ToString(rdr["ticker"]),
+                GameId = Convert.ToInt32(rdr["game_id"]),
+                InitialSharesPurchased = Convert.ToDouble(rdr["initial_shares_purchased"]),
+                SharesCurrentlyOwned = Convert.ToDouble(rdr["shares_currently_owned"]),
+                AmountPerShare = Convert.ToDecimal(rdr["amount_per_share"]),
+                BuyTimeTicks = Convert.ToInt64(rdr["time_purchased"]),
+            };
         }
         private Game ReadToGame(SqlDataReader rdr)
         {

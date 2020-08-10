@@ -97,6 +97,7 @@ namespace Capstone.DAO
                 throw;
             }
         }
+
         private Stock HelperStock(SqlDataReader rdr)
         {
             Stock newStock = new Stock();

@@ -22,12 +22,21 @@ namespace Capstone.Controllers
         private readonly StockAPI stockAPI;
         private List<string> stockTickers;
         private FinnHubDataLoop DataLoop;
-        public StocksController(StockSqlDAO stockSqlDAO, StockAPI stockAPI, FinnHubDataLoop dataLoop)
+        private readonly BuySellSqlDAO BuySellDAO;
+        private string Username
+        {
+            get
+            {
+                return User?.Identity?.Name;
+            }
+        }
+        public StocksController(StockSqlDAO stockSqlDAO, StockAPI stockAPI, FinnHubDataLoop dataLoop, BuySellSqlDAO buySellDAO)
         {
             this.stockSqlDAO = stockSqlDAO;
             this.stockAPI = stockAPI;
             this.stockTickers = ReadToStocks();
             this.DataLoop = dataLoop;
+            this.BuySellDAO = buySellDAO;
         }
         [HttpGet]
         public ActionResult<List<Stock>> GetCurrentStocks()
@@ -41,13 +50,54 @@ namespace Capstone.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+        
 
+        //Call this get at server startup to get hangfire to start
         [HttpGet]
         [Route("sendit")]
         public void HangfireSetup()
         {
             RecurringJob.AddOrUpdate(recurringJobId: "Dataloop", methodCall: () => DataLoop.Run(), Cron.Minutely);
         }
+
+
+        [HttpPost]
+        [Route("buy")]
+        public ActionResult<BuyModel> BuyStock(BuyModel buyModel)
+        {
+            try
+            {
+                int id = this.BuySellDAO.GetUserId(this.Username);
+                buyModel.UsersId = id;
+                BuyModel returnModel = this.BuySellDAO.BuyStock(buyModel);
+                return Ok(returnModel);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("sell")]
+        public ActionResult<SellModel> SellStock(SellModel sellModel)
+        {
+            try
+            {
+                SellModel returnModel = this.BuySellDAO.SellStock(sellModel);
+                return Ok(returnModel);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+
+
+
+
+
         //[HttpGet]
         //[Route("{stockTicker}")]
         //public ActionResult<Company> GetStockByTickerName(string stockTicker)

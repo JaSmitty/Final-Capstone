@@ -10,15 +10,25 @@
         <th>Profit</th>
       </tr>
 
+<<<<<<< HEAD
       <tr class="investment" v-for="investment in investments" :key="investment.id" :investment="investment">
+=======
+      <tr v-for="investment in investments" :key="investment.buyId" :investment="investment">
+>>>>>>> dd103a8af12ed0de2df6edd6cadddce7dfff6c65
         <td>
           <router-link class="stock-link" :to="{name: 'SellStock', params: {stockId: investment.stockId}}">
             <div @click="setInvestmentToSell(investment)">{{investment.companyTicker}}</div>
           </router-link>
         </td>
+<<<<<<< HEAD
         <td>{{investment.currentShares}}</td>
         <td>${{investment.pricePerShare}}</td>
         <td>${{investment.profit}}</td>
+=======
+        <td>{{investment.initialSharesPurchased}}</td>
+        <td>{{investment.amountPerShare}}</td>
+        <td>{{investment.profit}}</td>
+>>>>>>> dd103a8af12ed0de2df6edd6cadddce7dfff6c65
 
         <!-- <td>
       <div v-if="isSelling">
@@ -37,24 +47,27 @@
 </template>
 
 <script>
+import gamesService from '@/services/GamesService'
 export default {
   components: {},
   data() {
     return {
       currentStockMarket: this.$store.state.currentStockMarket,
-      investments: [
-        {
-          id: 1,
-          usersId: 1,
-          stockId: 35,
-          companyTicker: "AAPL",
-          gameId: 1,
-          initialShares: 2,
-          currentShares: 2,
-          pricePerShare: 460,
-          profit: 40,
-        },
-      ],
+      // investments: [
+      //   {
+      //     id: 1,
+      //     usersId: 1,
+      //     stockId: 35,
+      //     companyTicker: "AAPL",
+      //     gameId: 1,
+      //     initialSharesPurchased: 2,
+      //     sharesCurrentlyOwned: 2,
+      //     amountPerShare: 460,
+      //     buyTime: "",
+      //     profit: 40,
+      //   },
+      // ],
+      investments: []
     };
   },
   methods: {
@@ -80,6 +93,11 @@ export default {
     //       return profitList
     //   }
   },
+  created() {
+    gamesService.getInvestments.then(response => {
+      
+    })
+  }
 };
 </script>
 
