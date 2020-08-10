@@ -1,7 +1,7 @@
 <template>
   <div id="game-screen">
+      <h1 id="game-title">{{game.name}}</h1>
       <div class="current-game-stats">
-      <h1>{{game.name}}</h1>
       <p>Your balance: {{game.balance}}</p>
       <p>Start date: {{game.startDateAsString}}</p>
       <p>End date: {{game.endDateAsString}}</p>
@@ -13,8 +13,10 @@
           </div>
       </div>
       <invite-friends class="invite"/>
+      <div class="gameplay">
       <current-investments class="investments"/>
       <stocks-summary class="available-stocks"/>
+      </div>
   </div>
 </template>
 
@@ -59,7 +61,31 @@ export default {
 
 #game-screen{
     display: grid;
-    grid-template-columns: 300px 1fr 300px;
+    grid-template-columns: 235px 1fr 235px;
+    grid-template-areas: "stats title invite"
+                         "stats gameplay invite";
+}
+
+.current-game-stats{
+    grid-area: stats;
+    background: #add6ff;
+    width: 235px;
+    height: 95.4vh;
+    padding-left: 5px;
+    padding-right: 5px;
+    
+}
+
+.gameplay{
+    grid-area: gameplay;
+}
+
+.invite{
+    grid-area: invite;
+    background: #add6ff; width: 250px;
+    height: 95.4vh;
+    width: 235px;
+    
 }
 
 
