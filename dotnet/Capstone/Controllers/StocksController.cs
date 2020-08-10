@@ -59,14 +59,37 @@ namespace Capstone.Controllers
         }
 
 
-        //[HttpPost]
-        //[Route("buy")]
-        //public ActionResult<BuyModel> BuyStock(BuyModel buyModel)
-        //{
-        //    int id = this.BuySellDAO.GetUserId(this.Username);
-        //    buyModel.UserId = id;
-        //    this.BuySellDAO.BuyStock(buyModel);
-        //}
+        [HttpPost]
+        [Route("buy")]
+        public ActionResult<BuyModel> BuyStock(BuyModel buyModel)
+        {
+            try
+            {
+                int id = this.BuySellDAO.GetUserId(this.Username);
+                buyModel.UserId = id;
+                BuyModel returnModel = this.BuySellDAO.BuyStock(buyModel);
+                return Ok(returnModel);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("sell")]
+        public ActionResult<SellModel> SellStock(SellModel sellModel)
+        {
+            try
+            {
+                SellModel returnModel = this.BuySellDAO.SellStock(sellModel);
+                return Ok(returnModel);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
 
 
 
