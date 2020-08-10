@@ -5,7 +5,7 @@
     <h2 class="info">Start Date: {{game.startDateAsString}}</h2>
     <h2 class="info">End Date: {{game.endDateAsString}}</h2>
     <button class="btn accept" @click="acceptInvitation">Accept Invitation</button>
-    <button class="btn accept" @click="declineInvitation">Decline Invitation</button>
+    <button class="btn decline" @click="declineInvitation">Decline Invitation</button>
   </div>
 </template>
 
@@ -41,7 +41,7 @@ export default {
   color: rgb(43, 66, 66);
 }
 
-.btn.accept{
+.btn {
   padding: 5px 10px;
   font-size: 15px;
    text-align: center;
@@ -54,11 +54,19 @@ export default {
   box-shadow: 0 5px #999;
 }
 
-.btn.accept:hover{
+.accept{
+margin-right: 8px;
+}
+
+.decline{
+  margin-left: 8px;
+}
+
+.btn:hover{
    background-color: #d96308;
   }
 
-.btn.accept:active {
+.btn:active {
   background-color: #d96308;
   box-shadow: 0 5px #666;
   transform: translateY(4px);

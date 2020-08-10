@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div id="invite-friends">
     <h1>Invite Friends</h1>
     <form @submit.prevent="inviteUsers">
       <table>
         <tr>
-          <td>Search</td>
+          <td id="search-label">Search</td>
           <td>
             <input type="text" id="usernameFilter" v-model="filter.username" />
           </td>
@@ -92,4 +92,11 @@ export default {
 </script>
 
 <style>
+#invite-friends > h1 {
+  color: #003366;
+}
+
+#search-label{
+  color: #003366;
+}
 </style>

@@ -131,9 +131,10 @@ namespace Capstone.DAO
                     //***********************************************************************************************\\
 
                     SqlCommand cmd2 = new SqlCommand("SELECT * FROM company where company.stock_id = @stockId", conn);
-                    //cmd.Parameters.AddWithValue("@stockId", sellModel.StockId);
+                    cmd.Parameters.AddWithValue("@stockId", sellModel.SellId);
                     SqlDataReader rdr = cmd2.ExecuteReader();
                     rdr.Read();
+                    sellObj = SellModelHelper(rdr);
 
                 }
             }
@@ -144,13 +145,25 @@ namespace Capstone.DAO
             return sellObj;
         }
 
-
+        private SellModel SellModelHelper(SqlDataReader rdr)
+        {
+            SellModel newSell = new SellModel();
+            newSell.SellId = Convert.ToInt32(rdr["id"]);
+            newSell.StockAtSellId = Convert.ToInt32(rdr["stock_at_sell_id"]);
+            newSell.BuyReferenceId = Convert.ToInt32(rdr["buy_reference_id"]);
+            newSell.SharesSold = Convert.ToDouble(rdr["id"]);
+            newSell.PricePerShare = Convert.ToInt32(rdr["id"]);
+            newSell.Profit = Convert.ToDecimal(rdr["profit"]);
+            newSell.SellTimeTicks = Convert.ToInt64(rdr["time_sold"]);
+            return newSell;
+        }
+        
 
 
         private Stock HelperStock(SqlDataReader rdr)
         {
             Stock newStock = new Stock();
-            newStock.Ticker = Convert.ToString(rdr["ticker"]);
+            
             newStock.CompanyName = Convert.ToString(rdr["company_name"]);
             newStock.O = Convert.ToDecimal(rdr["open_price"]);
             newStock.H = Convert.ToDecimal(rdr["high_price"]);

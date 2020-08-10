@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="leaderboard">
     <h1>Leaderboard</h1>
     <table>
       <tr>
@@ -43,4 +43,8 @@ export default {
 </script>
 
 <style>
+#leaderboard > h1 {
+  color: #003366;
+} 
+
 </style>

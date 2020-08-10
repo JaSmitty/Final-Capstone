@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="stock-market">
     <h1>Stock Market</h1>
     <ul>
       <li v-for="stock in sortedStocks" :key="stock.id">
@@ -51,5 +51,12 @@ export default {
 
 li {
   list-style: none;
+}
+
+#stock-market >h1 {
+ background: rgba(0, 26, 51, 0.7);
+  margin-top: 0;
+  padding-bottom: 5px;
+  padding-top: 5px;
 }
 </style>
