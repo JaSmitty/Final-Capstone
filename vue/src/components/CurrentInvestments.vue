@@ -10,25 +10,15 @@
         <th>Profit</th>
       </tr>
 
-<<<<<<< HEAD
-      <tr class="investment" v-for="investment in investments" :key="investment.id" :investment="investment">
-=======
       <tr v-for="investment in investments" :key="investment.buyId" :investment="investment">
->>>>>>> dd103a8af12ed0de2df6edd6cadddce7dfff6c65
         <td>
           <router-link class="stock-link" :to="{name: 'SellStock', params: {stockId: investment.stockId}}">
             <div @click="setInvestmentToSell(investment)">{{investment.companyTicker}}</div>
           </router-link>
         </td>
-<<<<<<< HEAD
-        <td>{{investment.currentShares}}</td>
-        <td>${{investment.pricePerShare}}</td>
-        <td>${{investment.profit}}</td>
-=======
         <td>{{investment.initialSharesPurchased}}</td>
         <td>{{investment.amountPerShare}}</td>
         <td>{{investment.profit}}</td>
->>>>>>> dd103a8af12ed0de2df6edd6cadddce7dfff6c65
 
         <!-- <td>
       <div v-if="isSelling">
