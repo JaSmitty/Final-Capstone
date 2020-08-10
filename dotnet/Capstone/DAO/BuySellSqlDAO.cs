@@ -66,8 +66,18 @@ namespace Capstone.DAO
                     buyModel.BuyTimeTicks = timeTicks;
 
                     //Insert buy into database
-                    SqlCommand cmd2 = new SqlCommand(@"INSERT into buy_table(users_id, stock_at_buy_id, game_id, initial_shares_purchased, shares_currently_owned, amount_per_share, time_purchased) 
-                                                       VALUES (@userId, @stockBuyId, @gameId, @sharesPurchased, @currentlyOwned, @amountPerShare, @timePurchased); SELECT @@IDENTITY", conn);
+                    SqlCommand cmd2 = new SqlCommand(@"Begin Transaction
+                                                        DECLARE @currentbalance money
+                                                        select @currentbalance = balance
+                                                        from users_game
+                                                        where users_id = @userId and game_id = @gameId
+                                                        UPDATE users_game
+                                                        SET balance = (balance - (@sharesPurchased * @amountPerShare))
+                                                        Where users_id = @userId and game_id = @gameId
+                                                        INSERT into buy_table(users_id, stock_at_buy_id, game_id, initial_shares_purchased, shares_currently_owned, amount_per_share, time_purchased)
+                                                        VALUES (@userId, @stockBuyId, @gameId, @sharesPurchased, @currentlyOwned, @amountPerShare, @timePurchased); 
+                                                        SELECT @@IDENTITY
+                                                        Commit Transaction", conn);
                     cmd2.Parameters.AddWithValue("@userId", buyModel.UsersId);
                     cmd2.Parameters.AddWithValue("@stockBuyId", buyModel.StockId);
                     cmd2.Parameters.AddWithValue("@gameId", buyModel.GameId);
@@ -77,6 +87,7 @@ namespace Capstone.DAO
                     cmd2.Parameters.AddWithValue("@timePurchased", timeTicks);
                     int id = Convert.ToInt32(cmd2.ExecuteScalar());
                     buyModel.BuyId = id;
+                    buyModel.SharesCurrentlyOwned = buyModel.SharesCurrentlyOwned;
                 }
             }
             catch

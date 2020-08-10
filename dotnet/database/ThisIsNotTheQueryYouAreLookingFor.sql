@@ -27,19 +27,15 @@ Commit Transaction
 -- buy transaction
 
 Begin Transaction
-
 DECLARE @currentbalance money
-
 select @currentbalance = balance
 from users_game
 where users_id = @userId and game_id = @gameId
-
 UPDATE users_game
-SET balance = (balance - ())
-Where id = @buyId
-
-
+SET balance = (balance - (@sharesPurchased * @amountPerShare))
+Where users_id = @userId and game_id = @gameId
 INSERT into buy_table(users_id, stock_at_buy_id, game_id, initial_shares_purchased, shares_currently_owned, amount_per_share, time_purchased)
-VALUES (@userId, @stockBuyId, @gameId, @sharesPurchased, @currentlyOwned, @amountPerShare, @timePurchased); SELECT @@IDENTITY
+VALUES (@userId, @stockBuyId, @gameId, @sharesPurchased, @currentlyOwned, @amountPerShare, @timePurchased); 
+SELECT @@IDENTITY
 Commit Transaction
 
