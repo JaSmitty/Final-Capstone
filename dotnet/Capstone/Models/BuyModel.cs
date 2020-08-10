@@ -15,8 +15,9 @@ namespace Capstone.Models
         {
             this.BuyId = buyId;
             this.UserId = userId;
+            this.GameId = gameId;
             this.StockId = stockId;
-            this.InitialSharesPurchased = sharesPurchaed;
+            this.SharesToBuy = sharesPurchaed;
             this.SharesCurrentlyOwned = sharesOwned;
             this.AmountPerShare = amountPerShare;
             this.BuyTimeTicks = buyTick;
@@ -27,7 +28,7 @@ namespace Capstone.Models
         public int UserId { get; set; }
         public int GameId { get; set; }
         public int StockId { get; set; }
-        public float InitialSharesPurchased { get; set; }
+        public float SharesToBuy { get; set; }
         public float SharesCurrentlyOwned { get; set; }
         public decimal AmountPerShare { get; set; }
         public long BuyTimeTicks { get; set; }
