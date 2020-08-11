@@ -25,7 +25,7 @@
     <div>
       <h1>Completed</h1>
       <div>
-        
+        <completed-game-details />
       </div>
     </div>
     </div>
@@ -35,6 +35,7 @@
 <script>
 import ActiveGameDetails from "./ActiveGameDetails.vue";
 import PendingGameDetails from "./PendingGameDetails.vue";
+import CompletedGameDetails from "./CompletedGameDetails.vue";
 import gamesService from "@/services/GamesService";
 
 export default {
@@ -42,11 +43,13 @@ export default {
   components: {
     ActiveGameDetails,
     PendingGameDetails,
+    CompletedGameDetails
   },
   data() {
     return {
       activeGames: [],
       pendingGames: [],
+      completedGames: []
     };
   },
   created() {
@@ -58,6 +61,11 @@ export default {
     gamesService.getPendingGames().then((response) => {
       if (response.status === 200) {
         this.pendingGames = response.data;
+      }
+    });
+    gamesService.getCompletedGames().then((response) => {
+      if (response.status === 200) {
+        this.completedGames = response.data;
       }
     });
   },

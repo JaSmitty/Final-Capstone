@@ -22,6 +22,9 @@ export default {
     getPendingGames() {
         return axios.get('/api/games/pending')
     },
+    getCompletedGames() {
+        return axios.get('/api/games/completed')
+    },
     acceptInvitation(userGame) {
         return axios.put(`/api/games/${userGame.gameId}/accept`, userGame)
     },
