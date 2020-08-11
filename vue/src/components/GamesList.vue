@@ -90,7 +90,7 @@ export default {
 
   
 .title {
-  background: #add6ff;
+  background: rgba(173, 214, 255, 0.90);
   color: #003366;
   padding-left: 15px;
   padding-top: 20px;

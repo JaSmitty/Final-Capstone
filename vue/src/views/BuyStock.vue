@@ -96,6 +96,7 @@ export default {
   width: 750px;
   margin-top: 70px;
   padding-bottom: 20px;
+  opacity: 0.95;
 }
 
 .dollars {
