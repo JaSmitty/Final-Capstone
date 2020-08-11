@@ -1,7 +1,7 @@
 <template>
   <div id="games-list">
     <div class="active">
-      <h1 class="title">Active Games</h1>
+      <h1 class="title">Games</h1>
       <div class="game-card-display open">
         <active-game-details
           id="game"
@@ -22,16 +22,21 @@
           :game="game"
         />
       </div>
+      </div>
     <div>
-      <h1>Completed</h1>
-      <div>
-        <completed-game-details id="game"
+      <div class="complete">
+      <h1 class="title">Completed Games</h1>
+      <div class="game-card-display completed">
+        <completed-game-details 
+        id="game"
+        class="open"
           v-for="game in completedGames"
           :key="game.gameID"
           :game="game" />
       </div>
+      </div>
     </div>
-    </div>
+    
   </div>
 </template>
 
@@ -78,17 +83,23 @@ export default {
 <style scoped>
 #games-list {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-areas: "active invites";
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas: "active-games invites completed";
 }
 .active {
-  grid-area: active;
+  grid-area: active-games;
   border-right: 3px solid #e7f3ff;
 }
 
-.invites {
+.invitations {
   grid-area: invites;
   border-left: 3px solid #e7f3ff;
+  border-right: 6px solid #e7f3ff;
+}
+
+.complete {
+  grid-area: completed;
+  
 }
 
 #game {

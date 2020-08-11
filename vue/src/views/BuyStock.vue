@@ -1,6 +1,8 @@
 <template>
   <div>
-    <router-link :to="{name: 'Game', params: {gameId: stockToBuy.gameId}}">Back To Game</router-link>
+    <div class="nav-back">
+    <router-link class="link back" :to="{name: 'Game', params: {gameId: stockToBuy.gameId}}">Back To Game</router-link>
+    </div>
     <stock-details :stock="stock"/>
     
     <div class="buy">
@@ -110,6 +112,17 @@ export default {
 
 .shares{
   font-size: 18px;
+}
+
+.back{
+  font-size: 20px;
+  color: #003366;
+}
+
+.nav-back{
+  background: rgba(173, 214, 255, 0.9);
+  padding-top: 7px;
+  padding-bottom: 7px;
 }
 
 </style>

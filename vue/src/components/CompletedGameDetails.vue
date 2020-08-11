@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-link class="game-card" :to="{name: 'Game', params: {gameId: game.gameId}}">
+    <router-link class="game-card closed" :to="{name: 'Game', params: {gameId: game.gameId}}">
         <div>
             <h2 id="game-name">{{game.name}}</h2>
       <h2 class="info">Organizer: {{game.organizerName}}</h2>
@@ -25,6 +25,7 @@ export default {
 .game-card{
   text-decoration: none;
 }
+
 
 
 
