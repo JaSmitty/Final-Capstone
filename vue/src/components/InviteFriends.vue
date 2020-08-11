@@ -92,6 +92,9 @@ export default {
 </script>
 
 <style>
+/* #invite-friends {
+  padding-right: 4px;
+} */
 #invite-friends > h1 {
   color: #003366;
 }

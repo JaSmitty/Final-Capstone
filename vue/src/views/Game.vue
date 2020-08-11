@@ -74,7 +74,7 @@ export default {
 
 #game-screen{
     display: grid;
-    grid-template-columns: 235px 1fr 235px;
+    grid-template-columns: 235px 1fr 240px;
     grid-template-areas: "stats title invite"
                          "stats gameplay invite";
     
@@ -130,6 +130,8 @@ export default {
     width: 250px;
     height: 95.4vh;
     width: 235px;
+    padding-right: 5px;
+    
 }
 
 .leaderboard{
