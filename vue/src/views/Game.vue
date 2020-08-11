@@ -21,8 +21,8 @@
     </div>
     <invite-friends class="invite" />
     <div class="main-content">
-    <current-investments class="investments" />
-    <stock-market class="available-stocks" />
+    <current-investments class="investments" v-if="isActive"/>
+    <stock-market class="available-stocks" v-if="isActive"/>
     </div>
     <!-- <game-leaderboard class="leaderboard" /> -->
   </div>
@@ -36,11 +36,10 @@ import StockMarket from '@/components/StockMarket';
 import CurrentInvestments from '@/components/CurrentInvestments';
 import GameLeaderboard from '@/components/GameLeaderboard'
 export default {
-//   data() {
-//     return {
-//       friends: [],
-//     };
-//   },
+  data() {
+    return {
+    };
+  },
   components: {
     InviteFriends,
     StockMarket,
@@ -51,6 +50,15 @@ export default {
     game() {
       return this.$store.state.currentGame;
     },
+    isActive() {
+      return this.now >= this.startDate
+    },
+    now() {
+      return Date.now()
+    },
+    startDate() {
+      return Date.parse(this.game.startDate)
+    }
   },
   created() {
 //     gamesService.getPlayersInGame(this.game.gameId).then((response) => {

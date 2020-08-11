@@ -25,7 +25,10 @@
     <div>
       <h1>Completed</h1>
       <div>
-        <completed-game-details />
+        <completed-game-details id="game"
+          v-for="game in completedGames"
+          :key="game.gameID"
+          :game="game" />
       </div>
     </div>
     </div>
