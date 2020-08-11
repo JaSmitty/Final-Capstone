@@ -70,7 +70,7 @@ namespace Capstone.Controllers
                 int id = this.BuySellDAO.GetUserId(this.Username);
                 buyModel.UsersId = id;
                 BuyModel returnModel = this.BuySellDAO.BuyStock(buyModel);
-                return Ok(returnModel);
+                return Created($"api/stocks/buy/{returnModel.CompanyTicker}", returnModel);
             }
             catch (Exception ex)
             {
@@ -85,7 +85,7 @@ namespace Capstone.Controllers
             try
             {
                 SellModel returnModel = this.BuySellDAO.SellStock(sellModel);
-                return Ok(returnModel);
+                return Created($"api/stocks/sell/{returnModel.StockAtSellId}", returnModel);
             }
             catch (Exception ex)
             {

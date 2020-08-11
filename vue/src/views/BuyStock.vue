@@ -1,5 +1,6 @@
 <template>
   <div>
+    <router-link :to="{name: 'Game', params: {gameId: stockToBuy.gameId}}">Back To Game</router-link>
     <stock-details :stock="stock"/>
     
     <div class="buy">
@@ -61,7 +62,11 @@ export default {
       if (this.stockToBuy.initialSharesPurchased === "") {
         this.stockToBuy.initialSharesPurchased = (this.amount / this.stock.c)
       }
-      stocksService.submitBuy(this.stockToBuy)
+      stocksService.submitBuy(this.stockToBuy).then(response => {
+        if (response.status === 201) {
+          this.$router.push(`/games/${this.stockToBuy.gameId}`)
+        }
+      })
     },
     blurShares() {
       document.getElementById("buyShares").disabled = true;
