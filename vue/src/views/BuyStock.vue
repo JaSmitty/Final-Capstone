@@ -2,6 +2,7 @@
   <div>
     <stock-details :stock="stock"/>
     
+    <div class="buy">
     <form @submit.prevent="submitBuy">
       <h2>How much stock do you want to purchase?</h2>
       <h4>Please specify:</h4>
@@ -31,6 +32,7 @@
       <br />
       <input type="submit" />
     </form>
+    </div>
   </div>
 </template>
 
@@ -80,4 +82,6 @@ export default {
 </script>
 
 <style>
+
+
 </style>

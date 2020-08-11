@@ -37,7 +37,6 @@ export default {
   background: radial-gradient(#fcd5b6, 	#f06e04);
   border-radius: 7px;
   width: 750px;
-  /* height: 300px;
-  justify-self: center; */
+  
 }
 </style>
