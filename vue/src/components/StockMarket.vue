@@ -3,7 +3,9 @@
     <h1>Available Stocks</h1>
     
     <ul>
-      <li class="stock-card" v-for="stock in sortedStocks" :key="stock.id">
+      <label for="stockSearch">Search: </label>
+      <input type="text" id="stockSearch" v-model="filter.companyName">
+      <li class="stock-card" v-for="stock in filteredStocks" :key="stock.id">
         <router-link class="card" :to="{name: 'BuyStock', params: {ticker: stock.ticker}}">
           <div class="card-text" @click="setStockToBuy(stock)">
             <h2 class="stock-name">{{stock.companyName}}&nbsp;({{stock.ticker}})</h2>
@@ -27,11 +29,10 @@ import stocksService from '@/services/StocksService'
 export default {
   data() {
     return {
-      //comment this line
-      stocks: this.$store.state.currentStockMarket,
-      // stocks: [
-      //     {id: 1, ticker: 'AAPL', o: 441.62, h: 454.72, l: 439.50, c: 454.296, pc: 440.25, performance: 0.13 + '%'}
-      // ]
+      stocks: [],
+      filter: {
+        companyName: ""
+      }
     };
   },
   methods: {
@@ -46,11 +47,23 @@ export default {
         return b.c / b.o - a.c / a.o;
       });
     },
+    filteredStocks() {
+      let filteredStocks = this.sortedStocks;
+      if (this.filter.companyName != "") {
+        filteredStocks = filteredStocks.filter((stock) =>
+          stock.companyName
+            .toLowerCase()
+            .includes(this.filter.companyName.toLowerCase())
+        );
+      }
+      return filteredStocks;
+  }
   },
   created() {
     stocksService.getStocks().then(response => {
             if (response.status === 200) {
                 this.$store.commit("SET_CURRENT_STOCKS", response.data)
+                this.stocks = response.data;
             }
         })
   }

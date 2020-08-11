@@ -45,7 +45,7 @@ export default {
       stock: this.$store.state.stock,
       investment: this.$store.state.investment,
       investmentToSell: {
-        gameId: this.$store.state.currentGame.gameId,
+        buyReferenceId: this.$store.state.investment.buyId,
         stockAtSellId: this.$store.state.stock.stockId,
         sharesSold: "",
       },

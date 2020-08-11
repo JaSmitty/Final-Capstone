@@ -152,9 +152,9 @@ namespace Capstone.DAO
                     sellModel.SellId = id;
                     //***********************************************************************************************\\
 
-                    SqlCommand cmd2 = new SqlCommand("SELECT * FROM company where company.stock_id = @stockId", conn);
+                    cmd = new SqlCommand("SELECT * FROM company where company.stock_id = @stockId", conn);
                     cmd.Parameters.AddWithValue("@stockId", sellModel.SellId);
-                    SqlDataReader rdr = cmd2.ExecuteReader();
+                    SqlDataReader rdr = cmd.ExecuteReader();
                     rdr.Read();
                     sellObj = SellModelHelper(rdr);
 
