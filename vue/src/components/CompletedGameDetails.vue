@@ -41,6 +41,6 @@ export default {
 .info {
   font-size: 20px;
   margin-top: 15px;
-  color: rgb(43, 66, 66);
+  color: #003366;
 }
 </style>

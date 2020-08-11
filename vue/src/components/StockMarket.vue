@@ -3,7 +3,7 @@
     <h1>Available Stocks</h1>
     
     <ul>
-      <label for="stockSearch">Search: </label>
+      <label class="search-label" for="stockSearch">Search: </label>
       <input type="text" id="stockSearch" v-model="filter.companyName">
       <li class="stock-card" v-for="stock in filteredStocks" :key="stock.id">
         <router-link class="card" :to="{name: 'BuyStock', params: {ticker: stock.ticker}}">
@@ -109,6 +109,9 @@ li {
   font-size: 25px;
 }
 
+.search-label{
+  font-size:18px;
+}
 
 .card{
   text-decoration: none;
