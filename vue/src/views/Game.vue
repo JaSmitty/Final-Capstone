@@ -19,7 +19,7 @@
       <game-leaderboard class="leaderboard" />
       </div>
     </div>
-    <invite-friends class="invite" />
+    <invite-friends class="invite" v-if="!isCompleted" />
     <div class="main-content">
     <current-investments class="investments" v-if="isActive"/>
     <h1 v-if="!isActive && !isCompleted">This game has not yet begun</h1>

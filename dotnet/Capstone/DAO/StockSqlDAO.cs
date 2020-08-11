@@ -65,6 +65,33 @@ namespace Capstone.DAO
             }
             return stock;
         }
+        public BuyModel GetInvestment(int stockId, int gameId, string username)
+        {
+            BuyModel buyModel = new BuyModel();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand(@"SELECT buy_table.id AS buy_id, users_id, stock_at_buy_id, game_id, initial_shares_purchased, shares_currently_owned, amount_per_share, time_purchased FROM buy_table 
+JOIN users ON users.id = buy_table.users_id
+WHERE stock_at_buy_id = @stockId AND buy_table.game_id = @gameId AND users.username = @username", conn);
+                    cmd.Parameters.AddWithValue("@stockId", stockId);
+                    cmd.Parameters.AddWithValue("@gameId", gameId);
+                    cmd.Parameters.AddWithValue("@username", username);
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.Read())
+                    {
+                        buyModel = ReadToBuyModel(rdr);
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            return buyModel;
+        }
         public List<Stock> GetCurrentStocks(List<string> tickers)
         {
             try
@@ -111,6 +138,21 @@ namespace Capstone.DAO
             newStock.PC = Convert.ToDecimal(rdr["previous_close_price"]);
             newStock.T = Convert.ToInt64(rdr["time_updated"]);
             return newStock;
+        }
+
+        private BuyModel ReadToBuyModel(SqlDataReader rdr)
+        {
+            return new BuyModel
+            {
+                BuyId = Convert.ToInt32(rdr["buy_id"]),
+                StockId = Convert.ToInt32(rdr["stock_at_buy_id"]),
+                UsersId = Convert.ToInt32(rdr["users_id"]),
+                GameId = Convert.ToInt32(rdr["game_id"]),
+                InitialSharesPurchased = Convert.ToDouble(rdr["initial_shares_purchased"]),
+                SharesCurrentlyOwned = Convert.ToDouble(rdr["shares_currently_owned"]),
+                AmountPerShare = Convert.ToDecimal(rdr["amount_per_share"]),
+                BuyTimeTicks = Convert.ToInt64(rdr["time_purchased"])
+            };
         }
     }
 }

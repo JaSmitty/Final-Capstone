@@ -50,6 +50,19 @@ namespace Capstone.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+        [HttpGet]
+        [Route("{stockId}/{gameId}")]
+        public ActionResult<BuyModel> GetCurrentInvestment(int stockId, int gameId)
+        {
+            try
+            {
+                return Ok(stockSqlDAO.GetInvestment(stockId, gameId, Username));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
 
 
         //Call this get at server startup to get hangfire to start

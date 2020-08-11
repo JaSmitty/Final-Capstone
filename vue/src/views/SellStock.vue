@@ -49,7 +49,7 @@ export default {
   data() {
     return {
       stock: this.$store.state.stock,
-      investment: this.$store.state.investment,
+      // investment: this.$store.state.investment,
       investmentToSell: {
         buyReferenceId: this.$store.state.investment.buyId,
         stockAtSellId: this.$store.state.stock.stockId,
@@ -67,6 +67,9 @@ export default {
         (this.stock.c - this.investment.amountPerShare)
       ).toFixed(2);
     },
+    investment() {
+      return this.$store.state.investment
+    }
   },
   methods: {
     submitSell() {
@@ -77,6 +80,13 @@ export default {
       });
     },
   },
+  created() {
+    stocksService.getInvestment(this.$route.params.stockId, this.$route.params.gameId).then(response => {
+      if (response.status === 200) {
+        this.$store.commit("SET_INVESTMENT", response.data)
+      }
+    })
+  }
 };
 </script>
 
