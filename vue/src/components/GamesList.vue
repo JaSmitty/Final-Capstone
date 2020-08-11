@@ -1,15 +1,32 @@
 <template>
   <div id="games-list">
     <div class="active">
-    <h1 class="title">Active Games</h1>
-    <div class="game-card-display open">
-      <active-game-details id="game" class="open" v-for="game in activeGames" :key="game.gameID" :game="game" />
-    </div>
+      <h1 class="title">Active Games</h1>
+      <div class="game-card-display open">
+        <active-game-details
+          id="game"
+          class="open"
+          v-for="game in activeGames"
+          :key="game.gameID"
+          :game="game"
+        />
+      </div>
     </div>
     <div class="invitations">
-    <h1 class="title">Invitations</h1>
-    <div class="game-card-display invited">
-      <pending-game-details id="game" v-for="game in pendingGames" :key="game.gameID" :game="game" />
+      <h1 class="title">Invitations</h1>
+      <div class="game-card-display invited">
+        <pending-game-details
+          id="game"
+          v-for="game in pendingGames"
+          :key="game.gameID"
+          :game="game"
+        />
+      </div>
+    <div>
+      <h1>Completed</h1>
+      <div>
+        
+      </div>
     </div>
     </div>
   </div>
@@ -24,12 +41,12 @@ export default {
   name: "GamesList",
   components: {
     ActiveGameDetails,
-    PendingGameDetails
+    PendingGameDetails,
   },
   data() {
     return {
       activeGames: [],
-      pendingGames: []
+      pendingGames: [],
     };
   },
   created() {
@@ -48,8 +65,7 @@ export default {
 </script>
 
 <style scoped>
-
-#games-list{
+#games-list {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-areas: "active invites";
@@ -59,7 +75,7 @@ export default {
   border-right: 3px solid #e7f3ff;
 }
 
-.invites{
+.invites {
   grid-area: invites;
   border-left: 3px solid #e7f3ff;
 }
@@ -70,25 +86,22 @@ export default {
   padding-bottom: 5px;
   padding-top: 1px;
   margin-bottom: 25px;
-  background: linear-gradient(to right, #5cadff,
-#e7f3ff);
+  background: linear-gradient(to right, #5cadff, #e7f3ff);
   border-radius: 8px;
   width: 50%;
-  }
+}
 
-  #game.open:hover{
-    border-left: solid #c15803 7px;
+#game.open:hover {
+  border-left: solid #c15803 7px;
   padding-left: 15px;
   padding-bottom: 5px;
   padding-top: 1px;
   margin-bottom: 25px;
-  background: linear-gradient(to right, #f06e04,
-#fcd5b6);
+  background: linear-gradient(to right, #f06e04, #fcd5b6);
   border-radius: 8px;
   width: 50%;
-  }
+}
 
-  
 .title {
   background: #add6ff;
   color: #003366;
