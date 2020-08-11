@@ -150,12 +150,11 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@timeSold", timeTicks);
                     int id = Convert.ToInt32(cmd.ExecuteScalar());
                     sellModel.SellId = id;
-
                     //***********************************************************************************************\\
 
-                    SqlCommand cmd2 = new SqlCommand("SELECT * FROM company where company.stock_id = @stockId", conn);
+                    cmd = new SqlCommand("SELECT * FROM company where company.stock_id = @stockId", conn);
                     cmd.Parameters.AddWithValue("@stockId", sellModel.SellId);
-                    SqlDataReader rdr = cmd2.ExecuteReader();
+                    SqlDataReader rdr = cmd.ExecuteReader();
                     rdr.Read();
                     sellObj = SellModelHelper(rdr);
 

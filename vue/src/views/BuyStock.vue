@@ -55,7 +55,7 @@ export default {
   methods: {
     submitBuy() {
       if (this.stockToBuy.initialSharesPurchased === "") {
-        this.stockToBuy.initialSharesPurchased = (this.amount / this.stock.c).toFixed(3)
+        this.stockToBuy.initialSharesPurchased = (this.amount / this.stock.c)
       }
       stocksService.submitBuy(this.stockToBuy)
     },

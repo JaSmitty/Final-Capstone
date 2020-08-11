@@ -28,7 +28,7 @@
           :class="profitPerShare >= 0 ? 'green' : 'red'"
         >${{Math.abs(totalProfit)}}</span>
       </h2>
-      <input type="button" value="Sell" />
+      <input type="submit" value="Sell" />
     </form>
   </div>
 </template>
@@ -45,8 +45,8 @@ export default {
       stock: this.$store.state.stock,
       investment: this.$store.state.investment,
       investmentToSell: {
-        gameId: this.$store.state.currentGame.gameId,
-        stockId: this.$store.state.stock.stockId,
+        buyReferenceId: this.$store.state.investment.buyId,
+        stockAtSellId: this.$store.state.stock.stockId,
         sharesSold: "",
       },
     };
@@ -64,7 +64,7 @@ export default {
   },
   methods: {
       submitSell() {
-          stocksService.sellInvestment(this.investmentToSell);
+          stocksService.submitSell(this.investmentToSell);
       }
   }
 };

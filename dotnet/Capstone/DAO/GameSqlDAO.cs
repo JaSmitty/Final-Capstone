@@ -67,7 +67,35 @@ namespace Capstone.DAO
             }
             return game;
         }
-
+        public Game GetGameById(string username, int gameId)
+        {
+            try
+            {
+                Game game = new Game();
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    const string QUERY = @"SELECT game.id, game.name, organizer_id, start_date, end_date, balance, uORGANIZER.username FROM game
+JOIN users_game ON game.id = users_game.game_id
+JOIN users uPLAY ON uPLAY.id = users_game.users_id
+JOIN users uORGANIZER ON game.organizer_id = uORGANIZER.id
+WHERE uPLAY.username = @username AND users_game.status = 'approved' AND game.id = @gameId";
+                    SqlCommand cmd = new SqlCommand(QUERY, conn);
+                    cmd.Parameters.AddWithValue("@username", username);
+                    cmd.Parameters.AddWithValue("@gameId", gameId);
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.Read())
+                    {
+                        game = ReadToGame(rdr);
+                    }
+                    return game;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
         public List<Game> GetActiveGames(string username)
         {
             List<Game> games = new List<Game>();
@@ -140,25 +168,28 @@ WHERE game_id = @gameId AND ug.status = 'approved'", conn);
                 foreach(UserInfo user in userList)
                 {
                     user.TotalWorth = user.Balance;
-                    //Dictionary<string, double> sharesPerCompany = new Dictionary<string, double>();
-                    cmd = new SqlCommand(@"SELECT (shares_currently_owned * current_price) AS stock_worth FROM buy_table 
+                    Dictionary<string, double> sharesPerCompany = new Dictionary<string, double>();
+                    cmd = new SqlCommand(@"SELECT ticker, SUM(shares_currently_owned) AS shares FROM buy_table
 JOIN company ON buy_table.stock_at_buy_id = company.stock_id
-WHERE game_id = @gameId AND buy_table.users_id = @userId", conn);
+WHERE users_id = @userId AND game_id = @gameId
+GROUP BY ticker", conn);
                     cmd.Parameters.AddWithValue("@gameId", gameId);
                     cmd.Parameters.AddWithValue("@userId", user.UserId);
                     reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        user.TotalWorth += Convert.ToDecimal(reader["stock_worth"]);
+                        string ticker = Convert.ToString(reader["ticker"]);
+                        double shares = Convert.ToDouble(reader["shares"]);
+                        sharesPerCompany.Add(ticker, shares);
                     }
                     reader.Close();
-                    //                    foreach(KeyValuePair<string, double> pair in sharesPerCompany)
-                    //                    {
-                    //                        cmd = new SqlCommand(@"SELECT TOP 1 current_price FROM company
-                    //WHERE ticker = @stockTick ORDER BY time_updated DESC", conn);
-                    //                        cmd.Parameters.AddWithValue("@stockTick", pair.Key);
-                    //                        user.TotalWorth += Convert.ToDecimal(cmd.ExecuteScalar()) * (decimal)pair.Value;
-                    //                    }
+                    foreach (KeyValuePair<string, double> pair in sharesPerCompany)
+                    {
+                        cmd = new SqlCommand(@"SELECT TOP 1 current_price FROM company
+                    WHERE ticker = @stockTick ORDER BY time_updated DESC", conn);
+                        cmd.Parameters.AddWithValue("@stockTick", pair.Key);
+                        user.TotalWorth += Convert.ToDecimal(cmd.ExecuteScalar()) * (decimal)pair.Value;
+                    }
                 }
                 
 

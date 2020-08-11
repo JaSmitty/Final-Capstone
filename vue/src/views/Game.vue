@@ -20,17 +20,20 @@
       </div>
     </div>
     <invite-friends class="invite" />
+    <div class="main-content">
     <current-investments class="investments" />
     <stock-market class="available-stocks" />
+    </div>
     <!-- <game-leaderboard class="leaderboard" /> -->
   </div>
 </template>
 
 <script>
-// import gamesService from "@/services/GamesService";
-import InviteFriends from "@/components/InviteFriends";
-import StockMarket from "@/components/StockMarket";
-import CurrentInvestments from "@/components/CurrentInvestments";
+import gamesService from '@/services/GamesService';
+// import stocksService from '@/services/StocksService';
+import InviteFriends from '@/components/InviteFriends';
+import StockMarket from '@/components/StockMarket';
+import CurrentInvestments from '@/components/CurrentInvestments';
 import GameLeaderboard from '@/components/GameLeaderboard'
 export default {
 //   data() {
@@ -49,7 +52,7 @@ export default {
       return this.$store.state.currentGame;
     },
   },
-//   created() {
+  created() {
 //     gamesService.getPlayersInGame(this.game.gameId).then((response) => {
 //       if (response.status === 200) {
 //         this.friends = response.data.filter(
@@ -57,7 +60,13 @@ export default {
 //         );
 //       }
 //     });
-//   },
+      gamesService.getGameById(this.$route.params.gameId).then(response => {
+        if (response.status === 200) {
+          this.$store.commit("SET_CURRENT_GAME", response.data);
+        }
+      });
+      
+  },
 };
 </script>
 
@@ -71,13 +80,31 @@ export default {
     
 }
 
+.main-content{
+  display:grid;
+  grid-template-areas: "investments"
+                       "stocks";
+  grid-template-rows: 1fr 1fr;
+  height: 95vh;
+}
+
+.investments {
+  grid-area: investments;
+  margin-left: 13px;
+}
+
+.available-stocks{
+  grid-area: stocks;
+  
+}
+
 .current-game-stats{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     grid-area: stats;
     background: rgba(173, 214, 255, 0.9);
-    width: 225px;
+    width: 238px;
     height: 95.4vh;
     padding-left: 5px;
     padding-right: 5px;
