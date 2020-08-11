@@ -38,6 +38,7 @@ export default {
   border-radius: 7px;
   width: 750px;
   margin-top: 70px;
+  opacity: 0.95;
   
 }
 </style>

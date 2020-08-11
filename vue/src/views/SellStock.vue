@@ -1,6 +1,8 @@
 <template>
   <div>
     <stock-details :stock="stock" />
+    <div class="sell">
+      <div class="sell-card">
     <h2>Current shares: {{investment.sharesCurrentlyOwned}}</h2>
     <h2>Purchase price per share: ${{investment.amountPerShare}}</h2>
     <h2>Current price per share: ${{stock.c}}</h2>
@@ -28,8 +30,10 @@
           :class="profitPerShare >= 0 ? 'green' : 'red'"
         >${{Math.abs(totalProfit)}}</span>
       </h2>
-      <input type="submit" value="Sell" />
+      <input class="btn" type="submit" value="Sell" />
     </form>
+    </div>
+    </div>
   </div>
 </template>
 
@@ -71,4 +75,17 @@ export default {
 </script>
 
 <style>
+.sell{
+  display:flex;
+  justify-content: center;
+}
+
+.sell-card{
+    background: radial-gradient(#fcd5b6, 	#f06e04);
+  border-radius: 7px;
+  width: 750px;
+  margin-top: 70px;
+  padding-bottom: 20px;
+  opacity: 0.95;
+}
 </style>

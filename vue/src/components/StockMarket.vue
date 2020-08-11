@@ -73,6 +73,7 @@ export default {
 <style>
 #stock-market{
   margin-left: 13px;
+  margin-right: 1px;
 }
 
 li {

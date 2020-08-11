@@ -99,6 +99,7 @@ export default {
 .investments {
   grid-area: investments;
   margin-left: 13px;
+  margin-right: 0px;
 }
 
 .available-stocks{
