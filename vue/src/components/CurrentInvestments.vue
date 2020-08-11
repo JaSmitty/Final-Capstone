@@ -114,8 +114,9 @@ border-collapse: collapse;
   color:  #003366;
 }
 
-.investment > td{
-   border-right: #add6ff solid 3px;
+#current-investments  td{
+   border-right: #add6ff solid 1px;
+   border-bottom: #add6ff solid 1px;
    background: rgba(0, 51, 102, 0.7);
 }
 

@@ -58,6 +58,9 @@ export default {
 </script>
 
 <style>
+#stock-market{
+  margin-left: 13px;
+}
 
 li {
   list-style: none;

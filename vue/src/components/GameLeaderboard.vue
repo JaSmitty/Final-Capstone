@@ -60,8 +60,8 @@ export default {
   border-radius: 8px;
   padding-top: 4px;
   padding-bottom: 4px;
-  margin-left: 4px;
-  margin-right: 4px;
+  margin-left: 0px;
+  margin-right: 0px;
 
 }
 
