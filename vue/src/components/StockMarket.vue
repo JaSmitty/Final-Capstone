@@ -6,7 +6,7 @@
       <li class="stock-card" v-for="stock in sortedStocks" :key="stock.id">
         <router-link :to="{name: 'BuyStock', params: {ticker: stock.ticker}}">
           <div @click="setStockToBuy(stock)">
-            <h2>{{stock.ticker}}</h2>
+            <h2>{{stock.companyName}}&nbsp;({{stock.ticker}})</h2>
             <h2>{{stock.c}}</h2>
             <p :class="{'green': stock.c >= stock.o, 'red': stock.c < stock.o}">
               {{stock.c > stock.o ? "+" : ""}}

@@ -7,7 +7,7 @@
         <th class="balance">Balance</th>
         <th>Total Worth</th>
       </tr>
-      <tr v-for="player in players" :key="player.id">
+      <tr v-for="player in sortedPlayers" :key="player.id">
         <td>{{player.username}}</td>
         <td class="balance">${{(player.balance).toFixed(2)}}</td>
         <td>${{(player.totalWorth).toFixed(2)}}</td>
@@ -31,6 +31,12 @@ export default {
     game() {
       return this.$store.state.currentGame;
     },
+    sortedPlayers() {
+      let sortedPlayers = this.players;
+      return sortedPlayers.sort(function (a, b) {
+        return b.totalWorth - a.totalWorth;
+      })
+    }
   },
   created() {
     gamesService.getPlayersInGame(this.game.gameId).then((response) => {
