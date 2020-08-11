@@ -22,6 +22,8 @@
     <invite-friends class="invite" />
     <div class="main-content">
     <current-investments class="investments" v-if="isActive"/>
+    <h1 v-if="!isActive && !isCompleted">This game has not yet begun</h1>
+    <h1 v-if="isCompleted">This game has been completed</h1>
     <stock-market class="available-stocks" v-if="isActive"/>
     </div>
     <!-- <game-leaderboard class="leaderboard" /> -->
@@ -51,13 +53,19 @@ export default {
       return this.$store.state.currentGame;
     },
     isActive() {
-      return this.now >= this.startDate
+      return this.now >= this.startDate && this.now <= this.endDate
+    },
+    isCompleted() {
+      return this.now >= this.endDate
     },
     now() {
       return Date.now()
     },
     startDate() {
       return Date.parse(this.game.startDate)
+    },
+    endDate() {
+      return Date.parse(this.game.endDate)
     }
   },
   created() {
