@@ -150,7 +150,6 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@timeSold", timeTicks);
                     int id = Convert.ToInt32(cmd.ExecuteScalar());
                     sellModel.SellId = id;
-
                     //***********************************************************************************************\\
 
                     SqlCommand cmd2 = new SqlCommand("SELECT * FROM company where company.stock_id = @stockId", conn);
