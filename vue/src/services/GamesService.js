@@ -4,6 +4,9 @@ export default {
     getActiveGames() {
         return axios.get('/api/games')
     },
+    getGameById(gameId) {
+        return axios.get(`/api/games/${gameId}`)
+    },
     createGame(newGame){
         return axios.post('/api/games', newGame)
     },

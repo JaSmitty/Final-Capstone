@@ -1,7 +1,7 @@
 <template>
   <div>
     <router-link class="game-card" :to="{name: 'Game', params: {gameId: game.gameId}}">
-        <div @click="setGameObject">
+        <div>
             <h2 id="game-name">{{game.name}}</h2>
       <h2 class="info">Organizer: {{game.organizerName}}</h2>
       <h2 class="info">Start Date: {{game.startDateAsString}}</h2>
@@ -16,11 +16,7 @@ export default {
   props: {
     game: Object,
   },
-  methods: {
-      setGameObject() {
-          this.$store.commit("SET_CURRENT_GAME", this.game)
-      }
-  }
+  methods: {}
 };
 </script>
 
