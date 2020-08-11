@@ -1,15 +1,35 @@
 <template>
   <div id="games-list">
     <div class="active">
-    <h1 class="title">Active Games</h1>
-    <div class="game-card-display open">
-      <active-game-details id="game" class="open" v-for="game in activeGames" :key="game.gameID" :game="game" />
-    </div>
+      <h1 class="title">Active Games</h1>
+      <div class="game-card-display open">
+        <active-game-details
+          id="game"
+          class="open"
+          v-for="game in activeGames"
+          :key="game.gameID"
+          :game="game"
+        />
+      </div>
     </div>
     <div class="invitations">
-    <h1 class="title">Invitations</h1>
-    <div class="game-card-display invited">
-      <pending-game-details id="game" v-for="game in pendingGames" :key="game.gameID" :game="game" />
+      <h1 class="title">Invitations</h1>
+      <div class="game-card-display invited">
+        <pending-game-details
+          id="game"
+          v-for="game in pendingGames"
+          :key="game.gameID"
+          :game="game"
+        />
+      </div>
+    <div>
+      <h1>Completed</h1>
+      <div>
+        <completed-game-details id="game"
+          v-for="game in completedGames"
+          :key="game.gameID"
+          :game="game" />
+      </div>
     </div>
     </div>
   </div>
@@ -18,18 +38,21 @@
 <script>
 import ActiveGameDetails from "./ActiveGameDetails.vue";
 import PendingGameDetails from "./PendingGameDetails.vue";
+import CompletedGameDetails from "./CompletedGameDetails.vue";
 import gamesService from "@/services/GamesService";
 
 export default {
   name: "GamesList",
   components: {
     ActiveGameDetails,
-    PendingGameDetails
+    PendingGameDetails,
+    CompletedGameDetails
   },
   data() {
     return {
       activeGames: [],
-      pendingGames: []
+      pendingGames: [],
+      completedGames: []
     };
   },
   created() {
@@ -43,13 +66,17 @@ export default {
         this.pendingGames = response.data;
       }
     });
+    gamesService.getCompletedGames().then((response) => {
+      if (response.status === 200) {
+        this.completedGames = response.data;
+      }
+    });
   },
 };
 </script>
 
 <style scoped>
-
-#games-list{
+#games-list {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-areas: "active invites";
@@ -59,7 +86,7 @@ export default {
   border-right: 3px solid #e7f3ff;
 }
 
-.invites{
+.invites {
   grid-area: invites;
   border-left: 3px solid #e7f3ff;
 }
@@ -70,25 +97,22 @@ export default {
   padding-bottom: 5px;
   padding-top: 1px;
   margin-bottom: 25px;
-  background: linear-gradient(to right, #5cadff,
-#e7f3ff);
+  background: linear-gradient(to right, #5cadff, #e7f3ff);
   border-radius: 8px;
   width: 50%;
-  }
+}
 
-  #game.open:hover{
-    border-left: solid #c15803 7px;
+#game.open:hover {
+  border-left: solid #c15803 7px;
   padding-left: 15px;
   padding-bottom: 5px;
   padding-top: 1px;
   margin-bottom: 25px;
-  background: linear-gradient(to right, #f06e04,
-#fcd5b6);
+  background: linear-gradient(to right, #f06e04, #fcd5b6);
   border-radius: 8px;
   width: 50%;
-  }
+}
 
-  
 .title {
   background: rgba(173, 214, 255, 0.90);
   color: #003366;
