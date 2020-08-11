@@ -22,7 +22,7 @@
           <td>{{user.username}}</td>
         </tr>
         <tr>
-            <input type="submit" value="Invite">
+            <input class="btn" type="submit" value="Invite">
         </tr>
       </table>
     </form>

@@ -90,10 +90,12 @@ export default {
 
 .investments {
   grid-area: investments;
+  margin-left: 13px;
 }
 
 .available-stocks{
   grid-area: stocks;
+  
 }
 
 .current-game-stats{
@@ -102,7 +104,7 @@ export default {
     justify-content: space-around;
     grid-area: stats;
     background: rgba(173, 214, 255, 0.9);
-    width: 225px;
+    width: 238px;
     height: 95.4vh;
     padding-left: 5px;
     padding-right: 5px;

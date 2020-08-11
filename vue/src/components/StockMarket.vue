@@ -1,13 +1,13 @@
 <template>
   <div id="stock-market">
-    <h1>Stock Market</h1>
+    <h1>Available Stocks</h1>
     
     <ul>
       <li class="stock-card" v-for="stock in sortedStocks" :key="stock.id">
-        <router-link :to="{name: 'BuyStock', params: {ticker: stock.ticker}}">
-          <div @click="setStockToBuy(stock)">
-            <h2>{{stock.companyName}}&nbsp;({{stock.ticker}})</h2>
-            <h2>{{stock.c}}</h2>
+        <router-link class="card" :to="{name: 'BuyStock', params: {ticker: stock.ticker}}">
+          <div class="card-text" @click="setStockToBuy(stock)">
+            <h2 class="stock-name">{{stock.companyName}}&nbsp;({{stock.ticker}})</h2>
+            <h2>${{stock.c}}</h2>
             <p :class="{'green': stock.c >= stock.o, 'red': stock.c < stock.o}">
               {{stock.c > stock.o ? "+" : ""}}
               {{(stock.c - stock.o).toFixed(3)}}
@@ -59,6 +59,9 @@ export default {
 </script>
 
 <style>
+#stock-market{
+  margin-left: 13px;
+}
 
 li {
   list-style: none;
@@ -78,9 +81,32 @@ li {
   overflow:  scroll;
   height: 400px;
   overflow-x: hidden;
+  padding: 0px;
 }
 
+.card-text{
+  color: #003366;
+  
+}
+.card-text p {
+  font-size: 23px;
+}
+
+.card-text h2 {
+  font-size: 25px;
+}
+
+
+.card{
+  text-decoration: none;
+}
+
+.stock-name{
+  text-decoration: underline;
+  font-size: 30px;
+}
 .stock-card{
+  
   border-left: solid #005cb8 7px;
   border-right: solid #005cb8 7px;
   padding-left: 15px;
@@ -90,5 +116,6 @@ li {
   background: linear-gradient(to right, #5cadff,#e7f3ff);
   border-radius: 8px;
   width: 40%;
+  
 }
 </style>
