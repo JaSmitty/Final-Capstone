@@ -29,10 +29,11 @@
 </template>
 
 <script>
-import gamesService from "@/services/GamesService";
-import InviteFriends from "@/components/InviteFriends";
-import StockMarket from "@/components/StockMarket";
-import CurrentInvestments from "@/components/CurrentInvestments";
+import gamesService from '@/services/GamesService';
+// import stocksService from '@/services/StocksService';
+import InviteFriends from '@/components/InviteFriends';
+import StockMarket from '@/components/StockMarket';
+import CurrentInvestments from '@/components/CurrentInvestments';
 import GameLeaderboard from '@/components/GameLeaderboard'
 export default {
 //   data() {
@@ -64,6 +65,7 @@ export default {
           this.$store.commit("SET_CURRENT_GAME", response.data);
         }
       });
+      
   },
 };
 </script>
