@@ -2,10 +2,12 @@
   <div>
     <stock-details :stock="stock"/>
     
+    <div class="buy">
+      <div class="buy-card">
     <form @submit.prevent="submitBuy">
       <h2>How much stock do you want to purchase?</h2>
-      <h4>Please specify:</h4>
-      <label for="buyDollars">Dollars:</label>
+      <h3>Please specify:</h3>
+      <label class="dollars" for="buyDollars">Dollars:</label>
       <input
         type="number"
         id="buyDollars"
@@ -18,7 +20,7 @@
         @blur="showShares"
       />
       <h4>OR</h4>
-      <label for="buyShares">Shares:</label>
+      <label class="shares" for="buyShares">Shares:</label>
       <input
         type="number"
         id="buyShares"
@@ -29,8 +31,10 @@
       />
       <br />
       <br />
-      <input type="submit" />
+      <input class='btn' type="submit" />
     </form>
+    </div>
+  </div>
   </div>
 </template>
 
@@ -80,4 +84,26 @@ export default {
 </script>
 
 <style>
+.buy{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.buy-card{
+   background: radial-gradient(#fcd5b6, 	#f06e04);
+  border-radius: 7px;
+  width: 750px;
+  margin-top: 70px;
+  padding-bottom: 20px;
+}
+
+.dollars {
+  font-size: 18px;
+}
+
+.shares{
+  font-size: 18px;
+}
+
 </style>
