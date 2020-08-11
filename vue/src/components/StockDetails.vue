@@ -1,5 +1,6 @@
 <template>
-  <div>
+<div class="detail-card">
+  <div id="stock-details">
     <h1>{{stock.companyName}} ({{stock.ticker}})</h1>
     <h2>
       {{stock.c}}
@@ -15,6 +16,7 @@
     <h3>Low: {{stock.l}}</h3>
     <h3>Previous Close: {{stock.pc}}</h3>
   </div>
+</div>
 </template>
 
 <script>
@@ -26,4 +28,16 @@ export default {
 </script>
 
 <style>
+
+.detail-card{
+  display: flex;
+  justify-content: center;
+}
+#stock-details{
+  background: radial-gradient(#fcd5b6, 	#f06e04);
+  border-radius: 7px;
+  width: 750px;
+  /* height: 300px;
+  justify-self: center; */
+}
 </style>

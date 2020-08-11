@@ -50,14 +50,14 @@ namespace Capstone.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-        
+
 
         //Call this get at server startup to get hangfire to start
-        [HttpGet]
+        //[HttpGet]
         [Route("sendit")]
         public void HangfireSetup()
         {
-            RecurringJob.AddOrUpdate(recurringJobId: "Dataloop", methodCall: () => DataLoop.Run(), Cron.Minutely);
+            RecurringJob.AddOrUpdate(recurringJobId: "Dataloop", methodCall: () => DataLoop.Run(), "*/10 * * * *");
         }
 
 
