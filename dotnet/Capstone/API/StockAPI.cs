@@ -19,7 +19,7 @@ namespace Capstone.API
             string API_URL = "https://finnhub.io/api/v1";
             RestClient client = new RestClient(API_URL);
 
-            RestRequest request = new RestRequest($"quote?symbol={ticker}&token=bsomjmvrh5r8ktik0vvg", DataFormat.Json);
+            RestRequest request = new RestRequest($"quote?symbol={ticker}&token=bskkcjvrh5rdcdh7faa0", DataFormat.Json);
 
             IRestResponse<Stock> stockResponse = client.Get<Stock>(request);
             CheckResponse(stockResponse);

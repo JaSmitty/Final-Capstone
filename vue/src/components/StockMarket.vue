@@ -28,7 +28,7 @@ export default {
   data() {
     return {
       //comment this line
-      stocks: this.$store.state.currentStockMarket,
+      stocks: []
       // stocks: [
       //     {id: 1, ticker: 'AAPL', o: 441.62, h: 454.72, l: 439.50, c: 454.296, pc: 440.25, performance: 0.13 + '%'}
       // ]
@@ -51,6 +51,7 @@ export default {
     stocksService.getStocks().then(response => {
             if (response.status === 200) {
                 this.$store.commit("SET_CURRENT_STOCKS", response.data)
+                this.stocks = response.data;
             }
         })
   }
