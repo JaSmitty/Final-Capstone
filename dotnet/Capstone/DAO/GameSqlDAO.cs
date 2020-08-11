@@ -140,25 +140,28 @@ WHERE game_id = @gameId AND ug.status = 'approved'", conn);
                 foreach(UserInfo user in userList)
                 {
                     user.TotalWorth = user.Balance;
-                    //Dictionary<string, double> sharesPerCompany = new Dictionary<string, double>();
-                    cmd = new SqlCommand(@"SELECT (shares_currently_owned * current_price) AS stock_worth FROM buy_table 
+                    Dictionary<string, double> sharesPerCompany = new Dictionary<string, double>();
+                    cmd = new SqlCommand(@"SELECT ticker, SUM(shares_currently_owned) AS shares FROM buy_table
 JOIN company ON buy_table.stock_at_buy_id = company.stock_id
-WHERE game_id = @gameId AND buy_table.users_id = @userId", conn);
+WHERE users_id = @userId AND game_id = @gameId
+GROUP BY ticker", conn);
                     cmd.Parameters.AddWithValue("@gameId", gameId);
                     cmd.Parameters.AddWithValue("@userId", user.UserId);
                     reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        user.TotalWorth += Convert.ToDecimal(reader["stock_worth"]);
+                        string ticker = Convert.ToString(reader["ticker"]);
+                        double shares = Convert.ToDouble(reader["shares"]);
+                        sharesPerCompany.Add(ticker, shares);
                     }
                     reader.Close();
-                    //                    foreach(KeyValuePair<string, double> pair in sharesPerCompany)
-                    //                    {
-                    //                        cmd = new SqlCommand(@"SELECT TOP 1 current_price FROM company
-                    //WHERE ticker = @stockTick ORDER BY time_updated DESC", conn);
-                    //                        cmd.Parameters.AddWithValue("@stockTick", pair.Key);
-                    //                        user.TotalWorth += Convert.ToDecimal(cmd.ExecuteScalar()) * (decimal)pair.Value;
-                    //                    }
+                    foreach (KeyValuePair<string, double> pair in sharesPerCompany)
+                    {
+                        cmd = new SqlCommand(@"SELECT TOP 1 current_price FROM company
+                    WHERE ticker = @stockTick ORDER BY time_updated DESC", conn);
+                        cmd.Parameters.AddWithValue("@stockTick", pair.Key);
+                        user.TotalWorth += Convert.ToDecimal(cmd.ExecuteScalar()) * (decimal)pair.Value;
+                    }
                 }
                 
 
