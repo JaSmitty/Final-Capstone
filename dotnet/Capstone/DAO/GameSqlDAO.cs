@@ -67,7 +67,35 @@ namespace Capstone.DAO
             }
             return game;
         }
-
+        public Game GetGameById(string username, int gameId)
+        {
+            try
+            {
+                Game game = new Game();
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    const string QUERY = @"SELECT game.id, game.name, organizer_id, start_date, end_date, balance, uORGANIZER.username FROM game
+JOIN users_game ON game.id = users_game.game_id
+JOIN users uPLAY ON uPLAY.id = users_game.users_id
+JOIN users uORGANIZER ON game.organizer_id = uORGANIZER.id
+WHERE uPLAY.username = @username AND users_game.status = 'approved' AND game.id = @gameId";
+                    SqlCommand cmd = new SqlCommand(QUERY, conn);
+                    cmd.Parameters.AddWithValue("@username", username);
+                    cmd.Parameters.AddWithValue("@gameId", gameId);
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.Read())
+                    {
+                        game = ReadToGame(rdr);
+                    }
+                    return game;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
         public List<Game> GetActiveGames(string username)
         {
             List<Game> games = new List<Game>();

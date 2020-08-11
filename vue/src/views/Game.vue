@@ -29,10 +29,11 @@
 </template>
 
 <script>
-// import gamesService from "@/services/GamesService";
-import InviteFriends from "@/components/InviteFriends";
-import StockMarket from "@/components/StockMarket";
-import CurrentInvestments from "@/components/CurrentInvestments";
+import gamesService from '@/services/GamesService';
+// import stocksService from '@/services/StocksService';
+import InviteFriends from '@/components/InviteFriends';
+import StockMarket from '@/components/StockMarket';
+import CurrentInvestments from '@/components/CurrentInvestments';
 import GameLeaderboard from '@/components/GameLeaderboard'
 export default {
 //   data() {
@@ -51,7 +52,7 @@ export default {
       return this.$store.state.currentGame;
     },
   },
-//   created() {
+  created() {
 //     gamesService.getPlayersInGame(this.game.gameId).then((response) => {
 //       if (response.status === 200) {
 //         this.friends = response.data.filter(
@@ -59,7 +60,13 @@ export default {
 //         );
 //       }
 //     });
-//   },
+      gamesService.getGameById(this.$route.params.gameId).then(response => {
+        if (response.status === 200) {
+          this.$store.commit("SET_CURRENT_GAME", response.data);
+        }
+      });
+      
+  },
 };
 </script>
 

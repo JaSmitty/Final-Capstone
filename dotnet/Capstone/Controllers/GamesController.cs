@@ -39,6 +39,19 @@ namespace Capstone.Controllers
             }
         }
         [HttpGet]
+        [Route("{gameId}")]
+        public ActionResult<Game> GetGameById(int gameId)
+        {
+            try
+            {
+                return Ok(gameSqlDAO.GetGameById(Username, gameId));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        [HttpGet]
         [Route("{gameId}/investments")]
         public ActionResult<List<BuyModel>> GetCurrentInvestments(int gameId)
         {

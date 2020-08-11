@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import stocksService from '@/services/StocksService'
 export default {
   data() {
     return {
@@ -45,6 +46,13 @@ export default {
         return b.c / b.o - a.c / a.o;
       });
     },
+  },
+  created() {
+    stocksService.getStocks().then(response => {
+            if (response.status === 200) {
+                this.$store.commit("SET_CURRENT_STOCKS", response.data)
+            }
+        })
   }
 };
 </script>
