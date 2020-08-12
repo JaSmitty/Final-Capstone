@@ -22,8 +22,8 @@
     <invite-friends class="invite" v-if="!isCompleted" />
     <div class="main-content">
     <current-investments class="investments" v-if="isActive"/>
-    <h1 v-if="!isActive && !isCompleted">This game has not yet begun</h1>
-    <h1 v-if="isCompleted">This game has been completed</h1>
+    <h1 class="final-screen-text" v-if="!isActive && !isCompleted">This game has not yet begun</h1>
+    <h1 class="final-screen-text" v-if="isCompleted">This game has been completed</h1>
     <stock-market class="available-stocks" v-if="isActive"/>
     </div>
     <!-- <game-leaderboard class="leaderboard" /> -->
@@ -126,6 +126,17 @@ export default {
     padding-left: 5px;
     padding-right: 5px;
     
+}
+
+.final-screen-text{
+  color: white;
+  background: radial-gradient(#fcd5b6, 	#f06e04);
+  align-self: center;
+  justify-self: center;
+  width: 600px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 7px;
 }
 
 .stats {

@@ -57,7 +57,7 @@ export default {
   border: rgba(0, 26, 51) solid 3px;
   
   background: rgba(0, 26, 51, 0.7);
-  border-radius: 8px;
+  /* border-radius: 8px; */
   padding-top: 4px;
   padding-bottom: 4px;
   margin-left: 0px;
