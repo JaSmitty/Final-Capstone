@@ -10,26 +10,14 @@
         <!-- <th>Profit</th> -->
       </tr>
 
-      <tr v-for="investment in investments" :key="investment.buyId" :investment="investment">
+      <tr v-for="investment in investments" :key="investment.buyId">
         <td>
           <router-link class="stock-link" :to="{name: 'SellStock', params: {stockId: investment.stockId}}">
-            <div @click="setInvestmentToSell(investment)">{{investment.companyTicker}}</div>
+            <div>{{investment.companyTicker}}</div>
           </router-link>
         </td>
         <td>{{investment.sharesCurrentlyOwned}}</td>
         <td>${{(investment.amountPerShare).toFixed(2)}}</td>
-        <!-- <td>{{investment.profit}}</td> -->
-
-        <!-- <td>
-      <div v-if="isSelling">
-        <label for="sellStock" />
-        <input type="number" id="sellStock" min="0" :max="investment.currentShares" v-model.number="investmentToSell.sharesSold" />
-        <button @click="submitSell">Sell</button>
-      </div>
-      <div v-else>
-        <button @click="isSelling = !isSelling">Sell?</button>
-      </div>
-        </td>-->
       </tr>
     </table>
     </div>
@@ -43,32 +31,15 @@ export default {
   data() {
     return {
       currentStockMarket: this.$store.state.currentStockMarket,
-      // investments: [
-      //   {
-      //     id: 1,
-      //     usersId: 1,
-      //     stockId: 35,
-      //     companyTicker: "AAPL",
-      //     gameId: 1,
-      //     initialSharesPurchased: 2,
-      //     sharesCurrentlyOwned: 2,
-      //     amountPerShare: 460,
-      //     buyTime: "",
-      //     profit: 40,
-      //   },
-      // ],
       investments: []
     };
   },
   methods: {
-    setInvestmentToSell(investment) {
-      this.$store.commit("SET_INVESTMENT", investment)
-      const stock = this.$store.state.currentStockMarket.find(s => s.ticker === investment.companyTicker)
-      this.$store.commit("SET_STOCK", stock)
-    }
-    //   focus() {
-    //       this.$refs.sellStock.focus()
-    //  }
+    // setInvestmentToSell(investment) {
+    //   this.$store.commit("SET_INVESTMENT", investment)
+    //   const stock = this.$store.state.currentStockMarket.find(s => s.ticker === investment.companyTicker)
+    //   this.$store.commit("SET_STOCK", stock)
+    // }
     //   getProfit(investment) {
     //       let currentStock = this.currentStockMarket.find(stock => stock.company_ticker === investment.company_ticker);
     //       return (currentStock.c * investment.current_shares) - investment.price_per_share * investment.current_shares;
