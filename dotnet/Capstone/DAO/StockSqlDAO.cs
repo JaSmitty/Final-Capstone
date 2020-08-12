@@ -74,8 +74,9 @@ namespace Capstone.DAO
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand(@"SELECT buy_table.id AS buy_id, users_id, stock_at_buy_id, game_id, initial_shares_purchased, shares_currently_owned, amount_per_share, time_purchased FROM buy_table 
+                    SqlCommand cmd = new SqlCommand(@"SELECT buy_table.id AS id, users_id, ticker, stock_at_buy_id, game_id, initial_shares_purchased, shares_currently_owned, amount_per_share, time_purchased FROM buy_table 
 JOIN users ON users.id = buy_table.users_id
+JOIN company ON stock_at_buy_id = company.stock_id
 WHERE stock_at_buy_id = @stockId AND buy_table.game_id = @gameId AND users.username = @username", conn);
                     cmd.Parameters.AddWithValue("@stockId", stockId);
                     cmd.Parameters.AddWithValue("@gameId", gameId);

@@ -48,7 +48,7 @@ export default {
   },
   data() {
     return {
-      stock: this.$store.state.stock,
+      // stock: this.$store.state.stock,
       // investment: this.$store.state.investment,
       investmentToSell: {
         buyReferenceId: this.$store.state.investment.buyId,
@@ -70,9 +70,9 @@ export default {
     investment() {
       return this.$store.state.investment
     },
-    // stock() {
-    //   return this.$store.state.stock
-    // }
+    stock() {
+      return this.$store.state.stock
+    }
   },
   methods: {
     submitSell() {
