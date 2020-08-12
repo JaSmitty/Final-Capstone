@@ -69,7 +69,10 @@ export default {
     },
     investment() {
       return this.$store.state.investment
-    }
+    },
+    // stock() {
+    //   return this.$store.state.stock
+    // }
   },
   methods: {
     submitSell() {
@@ -83,7 +86,12 @@ export default {
   created() {
     stocksService.getInvestment(this.$route.params.stockId, this.$route.params.gameId).then(response => {
       if (response.status === 200) {
-        this.$store.commit("SET_INVESTMENT", response.data)
+        this.$store.commit("SET_INVESTMENT", response.data);
+        stocksService.getCurrentStock(response.data.companyTicker).then(response => {
+          if (response.status === 200) {
+            this.$store.commit("SET_STOCK", response.data)
+          }
+        })
       }
     })
   }

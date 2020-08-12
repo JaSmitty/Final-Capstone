@@ -65,7 +65,19 @@ namespace Capstone.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-
+        [HttpGet]
+        [Route("{stockTicker}")]
+        public ActionResult<BuyModel> GetCurrentStockByName(string stockTicker)
+        {
+            try
+            {
+                return Ok(stockSqlDAO.GetCurrentStockByName(stockTicker));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
 
         //Call this get at server startup to get hangfire to start
         //[HttpGet]
