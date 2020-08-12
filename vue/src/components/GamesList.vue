@@ -17,6 +17,7 @@
       <div class="game-card-display invited">
         <pending-game-details
           id="game"
+          class="inv"
           v-for="game in pendingGames"
           :key="game.gameID"
           :game="game"
@@ -111,6 +112,10 @@ export default {
   background: linear-gradient(to right, #5cadff, #e7f3ff);
   border-radius: 8px;
   width: 50%;
+}
+
+#game.inv{
+  padding-bottom: 20px;
 }
 
 #game.open:hover {

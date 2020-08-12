@@ -7,7 +7,9 @@ export default {
     getInvestment(stockId, gameId) {
         return axios.get(`/api/stocks/${stockId}/${gameId}`)
     },
-    // TODO
+    getCurrentStock(stockTicker) {
+        return axios.get(`/api/stocks/${stockTicker}`)
+    },
     submitBuy(stock) {
         return axios.post('api/stocks/buy', stock)
     },

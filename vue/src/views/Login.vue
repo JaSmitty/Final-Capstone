@@ -125,6 +125,7 @@ export default {
   align-self: center;
   position: relative;
   padding: 20px 20px;
+  opacity: 0.91;
 }
 
 #description > h1 {

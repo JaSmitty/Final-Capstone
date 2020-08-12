@@ -74,8 +74,9 @@ namespace Capstone.DAO
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand(@"SELECT buy_table.id AS buy_id, users_id, stock_at_buy_id, game_id, initial_shares_purchased, shares_currently_owned, amount_per_share, time_purchased FROM buy_table 
+                    SqlCommand cmd = new SqlCommand(@"SELECT buy_table.id AS id, users_id, ticker, stock_at_buy_id, game_id, initial_shares_purchased, shares_currently_owned, amount_per_share, time_purchased FROM buy_table 
 JOIN users ON users.id = buy_table.users_id
+JOIN company ON stock_at_buy_id = company.stock_id
 WHERE stock_at_buy_id = @stockId AND buy_table.game_id = @gameId AND users.username = @username", conn);
                     cmd.Parameters.AddWithValue("@stockId", stockId);
                     cmd.Parameters.AddWithValue("@gameId", gameId);
@@ -248,7 +249,10 @@ WHERE stock_at_buy_id = @stockId AND buy_table.game_id = @gameId AND users.usern
             newStock.T = Convert.ToInt64(rdr["time_updated"]);
             return newStock;
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> b2867f6fd005e6638e8ac5dcd9f06c7bc14c5f9c
         private BuyModel BuyModelHelper(SqlDataReader rdr)
         {
             BuyModel newBuy = new BuyModel();
@@ -275,8 +279,11 @@ WHERE stock_at_buy_id = @stockId AND buy_table.game_id = @gameId AND users.usern
             newSell.Profit = Convert.ToDecimal(rdr["profit"]);
             newSell.SellTimeTicks = Convert.ToInt64(rdr["time_sold"]);
             return newSell;
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> b2867f6fd005e6638e8ac5dcd9f06c7bc14c5f9c
         }
         
     

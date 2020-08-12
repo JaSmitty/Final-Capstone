@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="nav-back">
-    <router-link class="link back" :to="{name: 'Game', params: {gameId: stockToBuy.gameId}}">Back To Game</router-link>
+    <router-link class="link back" :to="{name: 'Game', params: {gameId: $route.params.gameId}}">Back To Game</router-link>
     </div>
     <stock-details :stock="stock"/>
     
@@ -50,10 +50,10 @@ export default {
   },
   data() {
     return {
-      stock: this.$store.state.stock,
+      // stock: this.$store.state.stock,
       stockToBuy: {
-        stockId: this.$store.state.stock.stockId,
-        gameId: this.$store.state.currentGame.gameId,
+        stockId: "",
+        gameId: Number(this.$route.params.gameId),
         initialSharesPurchased: ""
       },
       amount: "",
@@ -87,6 +87,19 @@ export default {
       }
     },
   },
+  computed: {
+    stock() {
+      return this.$store.state.stock
+    }
+  },
+  created() {
+    stocksService.getCurrentStock(this.$route.params.ticker).then(response => {
+          if (response.status === 200) {
+            this.$store.commit("SET_STOCK", response.data)
+            this.stockToBuy.stockId = response.data.stockId
+          }
+        })
+  }
 };
 </script>
 
