@@ -17,7 +17,7 @@ namespace Capstone.DataLoops
             this.connectionString = dbconnectionString;
         }
 
-        private StockSqlDAO stockDAO;
+        private StockSqlDAO stockDAO = new StockSqlDAO("Server=.\\SQLEXPRESS;Database=final_capstone;Trusted_Connection=True;");
 
         public void Run()
         {
