@@ -52,6 +52,19 @@ namespace Capstone.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+        [HttpGet]
+        [Route("{stockId}/{gameId}")]
+        public ActionResult<BuyModel> GetCurrentInvestment(int stockId, int gameId)
+        {
+            try
+            {
+                return Ok(stockSqlDAO.GetInvestment(stockId, gameId, Username));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
 
 
         //Call this get at server startup to get hangfire to start
@@ -73,7 +86,7 @@ namespace Capstone.Controllers
                 int id = this.BuySellDAO.GetUserId(this.Username);
                 buyModel.UsersId = id;
                 BuyModel returnModel = this.BuySellDAO.BuyStock(buyModel);
-                return Ok(returnModel);
+                return Created($"api/stocks/buy/{returnModel.CompanyTicker}", returnModel);
             }
             catch (Exception ex)
             {
@@ -88,7 +101,7 @@ namespace Capstone.Controllers
             try
             {
                 SellModel returnModel = this.BuySellDAO.SellStock(sellModel);
-                return Ok(returnModel);
+                return Created($"api/stocks/sell/{returnModel.StockAtSellId}", returnModel);
             }
             catch (Exception ex)
             {

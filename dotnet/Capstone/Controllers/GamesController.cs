@@ -39,6 +39,19 @@ namespace Capstone.Controllers
             }
         }
         [HttpGet]
+        [Route("completed")]
+        public ActionResult<List<Game>> GetCompletedGames()
+        {
+            try
+            {
+                return Ok(gameSqlDAO.GetCompletedGames(Username));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        [HttpGet]
         [Route("{gameId}")]
         public ActionResult<Game> GetGameById(int gameId)
         {

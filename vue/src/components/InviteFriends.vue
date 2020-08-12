@@ -1,8 +1,8 @@
 <template>
   <div id="invite-friends">
     <h1>Invite Friends</h1>
-    <form @submit.prevent="inviteUsers">
-      <table>
+    <form class="invite-users" @submit.prevent="inviteUsers">
+      <table class="invite-table">
         <tr>
           <td id="search-label">Search</td>
           <td>
@@ -92,14 +92,19 @@ export default {
 </script>
 
 <style>
-/* #invite-friends {
-  padding-right: 4px;
-} */
+.invite-users{
+  display: flex;
+  justify-content: center;
+}
 #invite-friends > h1 {
   color: #003366;
 }
 
 #search-label{
   color: #003366;
+}
+
+.invite-table{
+  margin-bottom: 20px;
 }
 </style>

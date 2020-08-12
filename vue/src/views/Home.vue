@@ -39,7 +39,7 @@ export default {
 
 #welcome {
   grid-area: welcome;
-  background: #003366;
+  background: rgba(0, 51, 102, 0.95);
   color: white;
   /* text-align: center; */
   padding-left: 10px;

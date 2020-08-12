@@ -39,7 +39,7 @@ export default {
     }
   },
   created() {
-    gamesService.getPlayersInGame(this.game.gameId).then((response) => {
+    gamesService.getPlayersInGame(this.$route.params.gameId).then((response) => {
       if (response.status === 200) {
         this.players = response.data;
       }
