@@ -4,7 +4,7 @@
     <table>
       <tr class="table-headings">
         <th>&nbsp;</th>
-        <th class="balance">Balance</th>
+        <th class="balance">Balance Remaining</th>
         <th>Total Worth</th>
       </tr>
       <tr v-for="player in sortedPlayers" :key="player.id">

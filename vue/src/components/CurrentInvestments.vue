@@ -7,7 +7,10 @@
         <th>Company</th>
         <th>Shares Owned</th>
         <th>Purchase Price</th>
-        <!-- <th>Profit</th> -->
+        <th>Total Initial Value</th>
+        <th>Current Price</th>
+        <th>Total Current Value</th>
+        <th>Total Profit</th>
       </tr>
 
       <tr v-for="investment in investments" :key="investment.buyId">
@@ -16,8 +19,12 @@
             <div>{{investment.companyTicker}}</div>
           </router-link>
         </td>
-        <td>{{investment.sharesCurrentlyOwned}}</td>
+        <td>{{(investment.sharesCurrentlyOwned).toFixed(2)}}</td>
         <td>${{(investment.amountPerShare).toFixed(2)}}</td>
+        <td>${{(investment.sharesCurrentlyOwned * investment.amountPerShare).toFixed(2)}}</td>
+        <td>${{(currentPrice(investment)).toFixed(2)}}</td>
+        <td>${{(totalCurrentValue(investment)).toFixed(2)}}</td>
+        <td>${{(totalCurrentValue(investment) - investment.sharesCurrentlyOwned * investment.amountPerShare).toFixed(2)}}</td>
       </tr>
     </table>
     </div>
@@ -25,12 +32,13 @@
 </template>
 
 <script>
+import stocksService from '@/services/StocksService'
 import gamesService from '@/services/GamesService'
 export default {
   components: {},
   data() {
     return {
-      currentStockMarket: this.$store.state.currentStockMarket,
+      currentStockMarket: [],
       investments: []
     };
   },
@@ -44,6 +52,14 @@ export default {
     //       let currentStock = this.currentStockMarket.find(stock => stock.company_ticker === investment.company_ticker);
     //       return (currentStock.c * investment.current_shares) - investment.price_per_share * investment.current_shares;
     //   }
+    currentPrice(investment) {
+      let currentStock = this.currentStockMarket.find(stock => stock.ticker === investment.companyTicker);
+      return currentStock.c
+    },
+    totalCurrentValue(investment) {
+      let currentStock = this.currentStockMarket.find(stock => stock.ticker === investment.companyTicker);
+      return currentStock.c * investment.sharesCurrentlyOwned
+    }
   },
   computed: {
     //   profitList() {
@@ -53,13 +69,19 @@ export default {
     //       })
     //       return profitList
     //   }
+    
   },
   created() {
     gamesService.getInvestments(this.$store.state.currentGame.gameId).then(response => {
       if (response.status === 200) {
         this.investments = response.data;
       }
-    })
+    });
+    stocksService.getStocks().then(response => {
+            if (response.status === 200) {
+                this.currentStockMarket = response.data;
+            }
+        })
   }
 };
 </script>

@@ -13,6 +13,13 @@ namespace Capstone.Models
         public string Name { get; set; }
         public bool IsComplete { get; set; }
         public DateTime StartDate { get; set; }
+        public long StartDateAsTicks
+        {
+            get
+            {
+                return this.StartDate.Ticks;
+            }
+        }
         public string StartDateAsString
         {
             get
@@ -21,6 +28,13 @@ namespace Capstone.Models
             }
         }
         public DateTime EndDate { get; set; }
+        public long EndDateAsTicks
+        {
+            get
+            {
+                return this.EndDate.Ticks;
+            }
+        }
         public string EndDateAsString
         {
             get
