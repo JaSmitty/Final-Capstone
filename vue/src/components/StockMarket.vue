@@ -1,10 +1,10 @@
 <template>
   <div id="stock-market">
-    <h1>Available Stocks</h1>
-    
+    <h1>Stocks To Buy</h1>
+    <h2>Sorted by Daily Performance</h2>
+    <label class="search-label" for="stockSearch">Search: </label>
+    <input type="text" id="stockSearch" v-model="filter.companyName">
     <ul>
-      <label class="search-label" for="stockSearch">Search: </label>
-      <input type="text" id="stockSearch" v-model="filter.companyName">
       <li class="stock-card" v-for="stock in filteredStocks" :key="stock.id">
         <router-link class="card" :to="{name: 'BuyStock', params: {ticker: stock.ticker}}">
           <div class="card-text" @click="setStockToBuy(stock)">
