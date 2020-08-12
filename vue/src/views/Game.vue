@@ -108,7 +108,7 @@ export default {
 
 .investments {
   grid-area: investments;
-  margin-left: 13px;
+  margin-left: 50px;
   margin-right: 0px;
 }
 
@@ -122,7 +122,7 @@ export default {
   justify-content: space-around;
   grid-area: stats;
   background: rgba(173, 214, 255, 0.9);
-  width: 238px;
+  width: 275px;
   height: 95.4vh;
   padding-left: 5px;
   padding-right: 5px;
