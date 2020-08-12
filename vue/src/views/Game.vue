@@ -2,104 +2,88 @@
   <div id="game-screen">
     <div class="current-game-stats">
       <div class="player-stats">
-      <h1>{{game.name}}</h1>
-      <div class="stats">
-      <p>Your balance: ${{(game.balance).toFixed(2)}}</p>
-      <p>Start date: {{game.startDateAsString}}</p>
-      <p>End date: {{game.endDateAsString}}</p>
+        <h1>{{game.name}}</h1>
+        <div class="stats">
+          <p>Your balance: ${{(game.balance).toFixed(2)}}</p>
+          <p>Start date: {{game.startDateAsString}}</p>
+          <p>End date: {{game.endDateAsString}}</p>
+        </div>
       </div>
-      </div>
-      <!-- <div>
-        <p>You are competing against the following users:</p>
-        <ul>
-          <li v-for="friend in friends" :key="friend.id">{{friend.username}}</li>
-        </ul>
-      </div> -->
       <div class="ranking">
-      <game-leaderboard class="leaderboard" />
+        <game-leaderboard class="leaderboard" />
       </div>
     </div>
     <invite-friends class="invite" v-if="!isCompleted" />
     <div class="main-content">
-    <current-investments class="investments" v-if="isActive"/>
-    <h1 v-if="!isActive && !isCompleted">This game has not yet begun</h1>
-    <h1 v-if="isCompleted">This game has been completed</h1>
-    <stock-market class="available-stocks" v-if="isActive"/>
+      <current-investments class="investments" v-if="isActive" />
+      <h1 v-if="!isActive && !isCompleted">This game has not yet begun</h1>
+      <h1 v-if="isCompleted">This game has been completed</h1>
+      <stock-market class="available-stocks" v-if="isActive" />
     </div>
-    <!-- <game-leaderboard class="leaderboard" /> -->
   </div>
 </template>
 
 <script>
-import gamesService from '@/services/GamesService';
+import gamesService from "@/services/GamesService";
 // import stocksService from '@/services/StocksService';
-import InviteFriends from '@/components/InviteFriends';
-import StockMarket from '@/components/StockMarket';
-import CurrentInvestments from '@/components/CurrentInvestments';
-import GameLeaderboard from '@/components/GameLeaderboard'
+import InviteFriends from "@/components/InviteFriends";
+import StockMarket from "@/components/StockMarket";
+import CurrentInvestments from "@/components/CurrentInvestments";
+import GameLeaderboard from "@/components/GameLeaderboard";
 export default {
   data() {
-    return {
-    };
+    return {};
   },
   components: {
     InviteFriends,
     StockMarket,
     CurrentInvestments,
-    GameLeaderboard
+    GameLeaderboard,
   },
   computed: {
     game() {
       return this.$store.state.currentGame;
     },
     isActive() {
-      return this.now >= this.startDate && this.now <= this.endDate
+      return this.now >= this.startDate && this.now <= this.endDate;
     },
     isCompleted() {
-      return this.now >= this.endDate
+      return this.now >= this.endDate;
     },
     now() {
-      return Date.now()
+      return Date.now();
     },
     startDate() {
-      return Date.parse(this.game.startDate)
+      return Date.parse(this.game.startDate);
     },
     endDate() {
-      return Date.parse(this.game.endDate)
-    }
+      return Date.parse(this.game.endDate);
+    },
   },
   created() {
-//     gamesService.getPlayersInGame(this.game.gameId).then((response) => {
-//       if (response.status === 200) {
-//         this.friends = response.data.filter(
-//           (friend) => friend.userId !== this.$store.state.user.userId
-//         );
-//       }
-//     });
-      gamesService.getGameById(this.$route.params.gameId).then(response => {
-        if (response.status === 200) {
-          this.$store.commit("SET_CURRENT_GAME", response.data);
-        }
-      });
-      
+    gamesService.getGameById(this.$route.params.gameId).then((response) => {
+      if (response.status === 200) {
+        this.$store.commit("SET_CURRENT_GAME", response.data);
+      }
+    });
   },
 };
 </script>
 
 <style>
-
-#game-screen{
-    display: grid;
-    grid-template-columns: 235px 1fr 240px;
-    grid-template-areas: "stats title invite"
-                         "stats gameplay invite";
-    
+#game-screen {
+  display: grid;
+  grid-template-columns: 235px 1fr 240px;
+  grid-template-areas:
+    "stats title invite"
+    "stats gameplay invite";
 }
 
-.main-content{
-  display:grid;
-  grid-template-areas: "investments"
-                       "stocks";
+.main-content {
+  display: grid;
+  grid-template-areas:
+    "investments"
+    "stocks";
   grid-template-rows: 1fr 1fr;
   height: 95vh;
 }
@@ -110,22 +94,20 @@ export default {
   margin-right: 0px;
 }
 
-.available-stocks{
+.available-stocks {
   grid-area: stocks;
-  
 }
 
-.current-game-stats{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    grid-area: stats;
-    background: rgba(173, 214, 255, 0.9);
-    width: 238px;
-    height: 95.4vh;
-    padding-left: 5px;
-    padding-right: 5px;
-    
+.current-game-stats {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  grid-area: stats;
+  background: rgba(173, 214, 255, 0.9);
+  width: 238px;
+  height: 95.4vh;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .stats {
@@ -137,21 +119,20 @@ export default {
   margin-right: 4px;
 }
 
-.gameplay{
-    grid-area: gameplay;
+.gameplay {
+  grid-area: gameplay;
 }
 
-.invite{
-    grid-area: invite;
-    background: rgba(173, 214, 255, 0.9); 
-    width: 250px;
-    height: 95.4vh;
-    width: 235px;
-    padding-right: 5px;
-    
+.invite {
+  grid-area: invite;
+  background: rgba(173, 214, 255, 0.9);
+  width: 250px;
+  height: 95.4vh;
+  width: 235px;
+  padding-right: 5px;
 }
 
-.leaderboard{
+.leaderboard {
   grid-area: leaderboard;
 }
 

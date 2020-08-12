@@ -51,8 +51,8 @@ export default {
       // stock: this.$store.state.stock,
       // investment: this.$store.state.investment,
       investmentToSell: {
-        buyReferenceId: this.$store.state.investment.buyId,
-        stockAtSellId: this.$store.state.stock.stockId,
+        buyReferenceId: "",
+        stockAtSellId: "",
         sharesSold: "",
       },
     };
@@ -72,7 +72,7 @@ export default {
     },
     stock() {
       return this.$store.state.stock
-    }
+    },
   },
   methods: {
     submitSell() {
@@ -87,6 +87,8 @@ export default {
     stocksService.getInvestment(this.$route.params.stockId, this.$route.params.gameId).then(response => {
       if (response.status === 200) {
         this.$store.commit("SET_INVESTMENT", response.data);
+        this.investmentToSell.buyReferenceId = response.data.buyId;
+        this.investmentToSell.stockAtSellId = response.data.stockId;
         stocksService.getCurrentStock(response.data.companyTicker).then(response => {
           if (response.status === 200) {
             this.$store.commit("SET_STOCK", response.data)
