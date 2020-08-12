@@ -186,7 +186,7 @@ namespace Capstone.DAO
         //    }
         //}
 
-            private SellModel SellModelHelper(SqlDataReader rdr)
+        private SellModel SellModelHelper(SqlDataReader rdr)
         {
             SellModel newSell = new SellModel();
             newSell.SellId = Convert.ToInt32(rdr["id"]);

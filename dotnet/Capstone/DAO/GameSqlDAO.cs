@@ -322,6 +322,7 @@ WHERE game_id = @gameId AND username = @username";
             game.StartDate = Convert.ToDateTime(rdr["start_date"]);
             game.EndDate = Convert.ToDateTime(rdr["end_date"]);
             game.Balance = Convert.ToDecimal(rdr["balance"]);
+            
             return game;
         }
         private UserInfo ReadToUserInfo(SqlDataReader rdr)

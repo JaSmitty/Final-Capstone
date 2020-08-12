@@ -23,6 +23,7 @@ namespace Capstone.Controllers
         private List<string> stockTickers;
         private FinnHubDataLoop DataLoop;
         private readonly BuySellSqlDAO BuySellDAO;
+        private readonly CheckForGameEnd CheckForGameEnd;
         private string Username
         {
             get
@@ -30,13 +31,14 @@ namespace Capstone.Controllers
                 return User?.Identity?.Name;
             }
         }
-        public StocksController(StockSqlDAO stockSqlDAO, StockAPI stockAPI, FinnHubDataLoop dataLoop, BuySellSqlDAO buySellDAO)
+        public StocksController(StockSqlDAO stockSqlDAO, StockAPI stockAPI, FinnHubDataLoop dataLoop, BuySellSqlDAO buySellDAO, CheckForGameEnd checkForGameEnd)
         {
             this.stockSqlDAO = stockSqlDAO;
             this.stockAPI = stockAPI;
             this.stockTickers = ReadToStocks();
             this.DataLoop = dataLoop;
             this.BuySellDAO = buySellDAO;
+            this.CheckForGameEnd = checkForGameEnd;
         }
         [HttpGet]
         public ActionResult<List<Stock>> GetCurrentStocks()
@@ -58,6 +60,7 @@ namespace Capstone.Controllers
         public void HangfireSetup()
         {
             RecurringJob.AddOrUpdate(recurringJobId: "Dataloop", methodCall: () => DataLoop.Run(), "*/10 * * * *");
+            RecurringJob.AddOrUpdate(recurringJobId: "CheckForEndGame", methodCall: () => CheckForGameEnd.Run(), "0 17 * * *");
         }
 
 

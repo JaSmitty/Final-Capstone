@@ -11,6 +11,7 @@ namespace Capstone.Models
         public int OrganizerId { get; set; }
         public string OrganizerName { get; set; }
         public string Name { get; set; }
+        public bool IsComplete { get; set; }
         public DateTime StartDate { get; set; }
         public string StartDateAsString
         {

@@ -73,6 +73,7 @@ namespace Capstone
             services.AddTransient<StockAPI>(m => new StockAPI());
             services.AddTransient<FinnHubDataLoop>(m => new FinnHubDataLoop());
             services.AddTransient<BuySellSqlDAO>(m => new BuySellSqlDAO(connectionString));
+            services.AddTransient<CheckForGameEnd>(m => new CheckForGameEnd(connectionString));
 
 
             //HangFire

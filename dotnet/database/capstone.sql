@@ -31,6 +31,7 @@ Create table game (
 	-- should we have a begin date?
 	start_date Date not null,
 	end_date Date not null,
+	is_complete bit default 0,
 	Constraint pk_game_id Primary Key (id),
 	Constraint fk_game_organizer_users_id Foreign Key (organizer_id) References users(id)
 );

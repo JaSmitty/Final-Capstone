@@ -33,6 +33,7 @@ namespace Capstone.Models
         public double SharesCurrentlyOwned { get; set; }
         public decimal AmountPerShare { get; set; }
         public long BuyTimeTicks { get; set; }
+        
         public DateTime BuyTime
         {
             get
