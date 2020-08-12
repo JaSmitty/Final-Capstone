@@ -49,6 +49,9 @@ body{
    background: rgba(0, 26, 51, 0.9);
    grid-area: nav;
    border-radius: 3px;
+   padding-top: 11px;
+   padding-left: 7px;
+   padding-right: 7px;
    
 
 }

@@ -1,6 +1,8 @@
 <template>
   <div>
-    <router-link :to="{name: 'Game', params: {gameId: $route.params.gameId}}">Back To Game</router-link>
+    <div class="nav-back">
+    <router-link class="link back" :to="{name: 'Game', params: {gameId: $route.params.gameId}}">Back To Game</router-link>
+    </div>
     <stock-details :stock="stock" />
     <div class="sell">
       <div class="sell-card">

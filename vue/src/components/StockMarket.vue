@@ -3,8 +3,10 @@
     <h1>Available Stocks</h1>
     
     <ul>
+      <div class="search-bar">
       <label class="search-label" for="stockSearch">Search: </label>
       <input type="text" id="stockSearch" v-model="filter.companyName">
+      </div>
       <li class="stock-card" v-for="stock in filteredStocks" :key="stock.id">
         <router-link class="card" :to="{name: 'BuyStock', params: {ticker: stock.ticker}}">
           <div class="card-text" @click="setStockToBuy(stock)">
@@ -85,6 +87,7 @@ li {
   margin-top: 0;
   padding-bottom: 5px;
   padding-top: 5px;
+  margin-bottom: 0px;
 }
 
 #stock-market ul{
@@ -95,6 +98,14 @@ li {
   height: 400px;
   overflow-x: hidden;
   padding: 0px;
+  margin-top: 0px;
+}
+
+.search-bar{
+  background: rgba(0, 26, 51, 0.7);
+  margin-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .card-text{
