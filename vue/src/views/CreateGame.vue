@@ -5,10 +5,10 @@
       
       <form @submit.prevent="createGame">
           <label class="create-label" for="date">Start Date: </label>
-          <input type="date" id="date" v-model="game.startDate">
+          <input type="date" id="date" :min="now" v-model="game.startDate">
 
           <label class="create-label" for="date">End Date: </label>
-          <input type="date" id="date" v-model="game.endDate">
+          <input type="date" id="date" :min="game.startDate" v-model="game.endDate">
 
           <label class="create-label" for="name">Game Name: </label>
           <input type="text" id="name" v-model="game.name">
@@ -54,6 +54,24 @@ export default {
       }
     })
     }
+  },
+  computed: {
+    now() {
+      let today = new Date()
+      let year = today.getFullYear();
+      let month = today.getMonth() + 1;
+      let day = today.getDate();
+      if (day < 10) {
+        day = '0' + day
+      }
+      if (month < 10) {
+        month = '0' + month
+      }
+      return year + '-' + month + '-' + day
+    }
+  },
+  dayAfterStartDate() {
+    return this.game.startDate.getDate()
   }
 }
 </script>

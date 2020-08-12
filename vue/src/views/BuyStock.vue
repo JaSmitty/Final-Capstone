@@ -28,6 +28,8 @@
         type="number"
         id="buyShares"
         placeholder="e.g. 1.5"
+        min="0.00"
+        :max="$store.state.currentGame.balance / stock.c"
         v-model.number="stockToBuy.initialSharesPurchased"
         @focus="blurDollars"
         @blur="showDollars"
