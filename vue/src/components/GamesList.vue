@@ -6,7 +6,7 @@
         <active-game-details
           id="game"
           class="open"
-          v-for="game in activeGames"
+          v-for="game in sortedActiveGames"
           :key="game.gameID"
           :game="game"
         />
@@ -31,7 +31,7 @@
         <completed-game-details 
         id="game"
         class="open"
-          v-for="game in completedGames"
+          v-for="game in sortedCompletedGames"
           :key="game.gameID"
           :game="game" />
       </div>
@@ -60,6 +60,20 @@ export default {
       pendingGames: [],
       completedGames: []
     };
+  },
+  computed: {
+    sortedActiveGames() {
+      let sortedActiveGames = this.activeGames
+      return sortedActiveGames.sort(function (a, b) {
+        return a.startDateAsTicks - b.startDateAsTicks
+      })
+    },
+    sortedCompletedGames() {
+      let sortedCompletedGames = this.completedGames
+      return sortedCompletedGames.sort(function (a, b) {
+        return b.endDateAsTicks - a.endDateAsTicks
+      })
+    }
   },
   created() {
     gamesService.getActiveGames().then((response) => {
