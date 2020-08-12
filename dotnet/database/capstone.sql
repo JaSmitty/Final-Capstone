@@ -101,27 +101,45 @@ Create table sell_table (
 );
 
 --populate default data
-INSERT INTO users (username, password_hash, salt, user_role) VALUES ('user','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user');
-INSERT INTO users (username, password_hash, salt, user_role) VALUES ('admin','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin');
+INSERT INTO users (username, password_hash, salt, user_role) VALUES ('user','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user');--1
+INSERT INTO users (username, password_hash, salt, user_role) VALUES ('admin','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin');--2
+INSERT INTO users (username, password_hash, salt, user_role) VALUES ('Techmaster','A3D0VVL6TOwf5o0Ct6+GU46ct4U=', 'KQyy4YDXX+0=','user');--3
+INSERT INTO users (username, password_hash, salt, user_role) VALUES ('Stockguru','KZzMxfprcml8+hgSgiXfwzXlFFU=', 'if3tYbX8n1Q=','user');--4
+INSERT INTO users (username, password_hash, salt, user_role) VALUES ('Lovelace','8tAxqwSwjLtTEFaMuOBAgU7N/Q4=', 'qTqlfekF5TY=','user');--5
+INSERT INTO users (username, password_hash, salt, user_role) VALUES ('Hotpotato','h505AW8jpveYFTk2fLyh34dICaY=', 'GmTyxG6hZuA=','user');--6
 
-INSERT INTO game (organizer_id, name, start_date, end_date) VALUES (1, 'game1', '2020-08-16', '2020-08-20');
-INSERT INTO game (organizer_id, name, start_date, end_date) VALUES (2, 'game2', '2020-08-18', '2020-08-22');
 
-INSERT INTO company(ticker, open_price, high_price, low_price, current_price, previous_close_price) VALUES ('AAPL', 432.80, 446.55, 431.57, 437.70, 425.04);
-INSERT INTO company(ticker, open_price, high_price, low_price, current_price, previous_close_price) VALUES ('PGR', 90.70, 91.23, 90.15, 90.99, 90.34);
+INSERT INTO game (organizer_id, name, start_date, end_date, is_complete) VALUES (1, 'BestGameEver', '2020-08-16', '2020-08-20', 0);
+INSERT INTO game (organizer_id, name, start_date, end_date, is_complete) VALUES (2, 'GameOver', '2020-08-07', '2020-08-11', 1);
+INSERT INTO game (organizer_id, name, start_date, end_date, is_complete) VALUES (3, 'NotOverYet', '2020-08-10', '2020-08-22', 0);
+INSERT INTO game (organizer_id, name, start_date, end_date, is_complete) VALUES (4, 'YetToStart', '2020-08-18', '2020-08-25', 0);
+INSERT INTO game (organizer_id, name, start_date, end_date, is_complete) VALUES (5, 'EndsToday', '2020-08-08', '2020-08-12', 0);
 
-INSERT INTO buy_table(users_id, stock_at_buy_id, game_id, initial_shares_purchased, shares_currently_owned, amount_per_share, time_purchased) VALUES (1, 1, 1, 1, 1, 450, 637326609180000000);
-INSERT INTO buy_table(users_id, stock_at_buy_id, game_id, initial_shares_purchased, shares_currently_owned, amount_per_share, time_purchased) VALUES (1, 2, 1, 0.50, 0.50, 100, 637326609180000000);
-INSERT INTO buy_table(users_id, stock_at_buy_id, game_id, initial_shares_purchased, shares_currently_owned, amount_per_share, time_purchased) VALUES (2, 1, 1, 2, 2, 450, 637326609180000000);
-INSERT INTO buy_table(users_id, stock_at_buy_id, game_id, initial_shares_purchased, shares_currently_owned, amount_per_share, time_purchased) VALUES (2, 2, 2, 6, 6, 100, 637326609180000000);
-INSERT INTO buy_table(users_id, stock_at_buy_id, game_id, initial_shares_purchased, shares_currently_owned, amount_per_share, time_purchased) VALUES (1, 1, 2, 5.5, 5.5, 450, 637326609180000000);
-INSERT INTO buy_table(users_id, stock_at_buy_id, game_id, initial_shares_purchased, shares_currently_owned, amount_per_share, time_purchased) VALUES (1, 2, 2, 3.3, 3.3, 100, 637326609180000000);
-INSERT INTO buy_table(users_id, stock_at_buy_id, game_id, initial_shares_purchased, shares_currently_owned, amount_per_share, time_purchased) VALUES (2, 1, 2, 4, 4, 450, 637326609180000000);
-INSERT INTO buy_table(users_id, stock_at_buy_id, game_id, initial_shares_purchased, shares_currently_owned, amount_per_share, time_purchased) VALUES (2, 2, 2, 3, 3, 100, 637326609180000000);
+INSERT INTO users_game(users_id, game_id, status, balance) VALUES (3, 1, 'approved', 100000);
+INSERT INTO users_game(users_id, game_id, status, balance) VALUES (4, 1, 'pending', 100000);
+INSERT INTO users_game(users_id, game_id, status, balance) VALUES (5, 1, 'approved', 100000);
+INSERT INTO users_game(users_id, game_id, status, balance) VALUES (5, 2, 'approved', 100000);
+INSERT INTO users_game(users_id, game_id, status, balance) VALUES (6, 2, 'approved', 100000);
+INSERT INTO users_game(users_id, game_id, status, balance) VALUES (3, 3, 'approved', 100000);
+INSERT INTO users_game(users_id, game_id, status, balance) VALUES (4, 4, 'pending', 100000);
+INSERT INTO users_game(users_id, game_id, status, balance) VALUES (5, 4, 'pending', 100000);
+INSERT INTO users_game(users_id, game_id, status, balance) VALUES (5, 5, 'approved', 100000);
+INSERT INTO users_game(users_id, game_id, status, balance) VALUES (6, 5, 'approved', 100000);
 
-INSERT INTO users_game(users_id, game_id, status, balance) VALUES (1, 1, 'approved', 100000);
-INSERT INTO users_game(users_id, game_id, status, balance) VALUES (1, 2, 'pending', 100000);
-INSERT INTO users_game(users_id, game_id, status, balance) VALUES (2, 1, 'approved', 100000);
-INSERT INTO users_game(users_id, game_id, status, balance) VALUES (2, 2, 'pending', 100000);
+
+INSERT INTO company(ticker, open_price, high_price, low_price, current_price, previous_close_price, time_updated) VALUES ('HELLO', 432.80, 446.55, 431.57, 437.70, 425.04, 1597241453);
+INSERT INTO company(ticker, open_price, high_price, low_price, current_price, previous_close_price, time_updated) VALUES ('HELLO', 432.80, 446.55, 431.57, 445.70, 425.04, 1597241548);
+INSERT INTO company(ticker, open_price, high_price, low_price, current_price, previous_close_price, time_updated) VALUES ('WRLD', 432.80, 446.55, 431.57, 437.70, 425.04, 1597241453);
+INSERT INTO company(ticker, open_price, high_price, low_price, current_price, previous_close_price, time_updated) VALUES ('WRLD', 432.80, 446.55, 431.57, 420.70, 425.04, 1597241548);
+
+
+
+INSERT INTO buy_table(users_id, stock_at_buy_id, game_id, initial_shares_purchased, shares_currently_owned, amount_per_share, time_purchased) 
+VALUES (5, 1, 5, 50, 25, 437.70, 637326609180000000);
+INSERT INTO buy_table(users_id, stock_at_buy_id, game_id, initial_shares_purchased, shares_currently_owned, amount_per_share, time_purchased) 
+VALUES (6, 1, 5, 50, 0, 437.70, 637326609180000000);
+
+
+
 
 GO

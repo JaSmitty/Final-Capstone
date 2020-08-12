@@ -21,7 +21,7 @@ namespace Capstone.API
             RestClient client = new RestClient(API_URL);
 
 
-            RestRequest request = new RestRequest($"quote?symbol={ticker}&token=bskkcjvrh5rdcdh7faa0", DataFormat.Json);
+            RestRequest request = new RestRequest($"quote?symbol={ticker}&token=bspa7n7rh5r8ktikdj50", DataFormat.Json);
 
 
             IRestResponse<Stock> stockResponse = client.Get<Stock>(request);

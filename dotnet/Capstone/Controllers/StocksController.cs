@@ -73,7 +73,7 @@ namespace Capstone.Controllers
         public void HangfireSetup()
         {
             RecurringJob.AddOrUpdate(recurringJobId: "Dataloop", methodCall: () => DataLoop.Run(), "*/10 * * * *");
-            RecurringJob.AddOrUpdate(recurringJobId: "CheckForEndGame", methodCall: () => CheckForGameEnd.Run(), "0 17 * * *");
+            RecurringJob.AddOrUpdate(recurringJobId: "CheckForEndGame", methodCall: () => CheckForGameEnd.Run(), "0 21 * * *");
         }
 
 
