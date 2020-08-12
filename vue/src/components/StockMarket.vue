@@ -5,13 +5,6 @@
     <label class="search-label" for="stockSearch">Search: </label>
     <input type="text" id="stockSearch" v-model="filter.companyName">
     <ul>
-<<<<<<< HEAD
-      <div class="search-bar">
-      <label class="search-label" for="stockSearch">Search: </label>
-      <input type="text" id="stockSearch" v-model="filter.companyName">
-      </div>
-=======
->>>>>>> 84a7a7f3a8b13390085698240b6f102f6b969398
       <li class="stock-card" v-for="stock in filteredStocks" :key="stock.id">
         <router-link class="card" :to="{name: 'BuyStock', params: {ticker: stock.ticker}}">
           <div class="card-text" @click="setStockToBuy(stock)">

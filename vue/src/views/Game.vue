@@ -5,12 +5,13 @@
         <h1>{{game.name}}</h1>
         <div class="stats">
           <p>Your balance: ${{(game.balance).toFixed(2)}}</p>
+          <p>Your total worth: ${{(thisPlayer.totalWorth).toFixed(2)}}</p>
           <p>Start date: {{game.startDateAsString}}</p>
           <p>End date: {{game.endDateAsString}}</p>
         </div>
       </div>
       <div class="ranking">
-        <game-leaderboard class="leaderboard" />
+        <game-leaderboard class="leaderboard" :players="players"/>
       </div>
     </div>
     <invite-friends class="invite" v-if="!isCompleted" />
@@ -32,7 +33,10 @@ import CurrentInvestments from "@/components/CurrentInvestments";
 import GameLeaderboard from "@/components/GameLeaderboard";
 export default {
   data() {
-    return {};
+    return {
+      players: [],
+      thisPlayer: {}
+    };
   },
   components: {
     InviteFriends,
@@ -59,11 +63,25 @@ export default {
     endDate() {
       return Date.parse(this.game.endDate);
     },
+    // totalWorth() {
+    //   let thisPlayer = this.players.find(player => {
+    //     return player.username === this.$store.state.user.username
+    //   });
+    //   return thisPlayer.totalWorth
+    // }
   },
   created() {
     gamesService.getGameById(this.$route.params.gameId).then((response) => {
       if (response.status === 200) {
         this.$store.commit("SET_CURRENT_GAME", response.data);
+      }
+    });
+    gamesService.getPlayersInGame(this.$route.params.gameId).then((response) => {
+      if (response.status === 200) {
+        this.players = response.data;
+        this.thisPlayer = this.players.find(player => {
+        return player.username === this.$store.state.user.username
+      });
       }
     });
   },

@@ -20,12 +20,15 @@
 </template>
 
 <script>
-import gamesService from "@/services/GamesService";
+// import gamesService from "@/services/GamesService";
 export default {
   data() {
     return {
-      players: [],
+      // players: [],
     };
+  },
+  props: {
+    players: Array
   },
   computed: {
     game() {
@@ -39,11 +42,11 @@ export default {
     }
   },
   created() {
-    gamesService.getPlayersInGame(this.$route.params.gameId).then((response) => {
-      if (response.status === 200) {
-        this.players = response.data;
-      }
-    });
+    // gamesService.getPlayersInGame(this.$route.params.gameId).then((response) => {
+    //   if (response.status === 200) {
+    //     this.players = response.data;
+    //   }
+    // });
   },
 };
 </script>

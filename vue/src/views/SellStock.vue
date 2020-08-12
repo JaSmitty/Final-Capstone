@@ -90,10 +90,10 @@ export default {
       if (response.status === 200) {
         this.$store.commit("SET_INVESTMENT", response.data);
         this.investmentToSell.buyReferenceId = response.data.buyId;
-        this.investmentToSell.stockAtSellId = response.data.stockId;
         stocksService.getCurrentStock(response.data.companyTicker).then(response => {
           if (response.status === 200) {
             this.$store.commit("SET_STOCK", response.data)
+            this.investmentToSell.stockAtSellId = response.data.stockId;
           }
         })
       }

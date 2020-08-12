@@ -95,6 +95,10 @@ namespace Capstone.Controllers
         {
             try
             {
+                if (buyModel.InitialSharesPurchased < 0)
+                {
+                    return Forbid();
+                }
                 int id = this.BuySellDAO.GetUserId(this.Username);
                 buyModel.UsersId = id;
                 BuyModel returnModel = this.BuySellDAO.BuyStock(buyModel);
@@ -112,6 +116,10 @@ namespace Capstone.Controllers
         {
             try
             {
+                if (sellModel.SharesSold < 0)
+                {
+                    return Forbid();
+                }
                 SellModel returnModel = this.BuySellDAO.SellStock(sellModel);
                 return Created($"api/stocks/sell/{returnModel.StockAtSellId}", returnModel);
             }
