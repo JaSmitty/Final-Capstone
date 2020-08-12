@@ -112,13 +112,30 @@ export default {
 
 .final-screen-text{
   color: white;
-  background: radial-gradient(#fcd5b6, 	#f06e04);
+  /* background: radial-gradient(#fcd5b6, 	#f06e04); */
+  background: #f06e04;
   align-self: center;
   justify-self: center;
   width: 600px;
   padding-top: 20px;
   padding-bottom: 20px;
   border-radius: 7px;
+  opacity: 0.92;
+  animation-name: anim;
+  animation-duration: 4s;
+  animation-delay: 2s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: linear;
+}
+
+@keyframes anim {
+  /* from {background: radial-gradient(#fcd5b6, 	#f06e04);}
+  to {background: radial-gradient(#5cadff, #e7f3ff);} */
+  0%   {background-color: #f06e04;}
+  25%  {background-color: #f68e4f;}
+  50%  {background-color: #5cadff;}
+  100% {background-color: #add6ff;}
 }
 
 .stats {
