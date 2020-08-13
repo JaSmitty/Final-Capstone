@@ -22,7 +22,7 @@ namespace Capstone.Controllers
         private readonly StockAPI stockAPI;
         private List<string> stockTickers;
         private FinnHubDataLoop DataLoop;
-        private readonly BuySellSqlDAO BuySellDAO;
+        private readonly BuySellSqlDAO buySellDAO;
         private readonly CheckForGameEnd CheckForGameEnd;
         private string Username
         {
@@ -37,7 +37,7 @@ namespace Capstone.Controllers
             this.stockAPI = stockAPI;
             this.stockTickers = ReadToStocks();
             this.DataLoop = dataLoop;
-            this.BuySellDAO = buySellDAO;
+            this.buySellDAO = buySellDAO;
             this.CheckForGameEnd = checkForGameEnd;
         }
         [HttpGet]
@@ -99,9 +99,13 @@ namespace Capstone.Controllers
                 {
                     return Forbid();
                 }
-                int id = this.BuySellDAO.GetUserId(this.Username);
+                int id = buySellDAO.GetUserId(Username);
                 buyModel.UsersId = id;
-                BuyModel returnModel = this.BuySellDAO.BuyStock(buyModel);
+                BuyModel returnModel = buySellDAO.BuyStock(buyModel);
+                if (returnModel == null)
+                {
+                    return Forbid();
+                }
                 return Created($"api/stocks/buy/{returnModel.CompanyTicker}", returnModel);
             }
             catch (Exception ex)
@@ -120,7 +124,7 @@ namespace Capstone.Controllers
                 {
                     return Forbid();
                 }
-                SellModel returnModel = this.BuySellDAO.SellStock(sellModel);
+                SellModel returnModel = buySellDAO.SellStock(sellModel);
                 return Created($"api/stocks/sell/{returnModel.StockAtSellId}", returnModel);
             }
             catch (Exception ex)

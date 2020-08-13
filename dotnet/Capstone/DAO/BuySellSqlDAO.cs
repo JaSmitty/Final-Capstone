@@ -47,10 +47,8 @@ namespace Capstone.DAO
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    //*******************************************
-                    //May have to change into a transaction later
-                    //*******************************************
                     conn.Open();
+
                     //Get stock info
                     SqlCommand cmd = new SqlCommand("SELECT * FROM company where company.stock_id = @stockId", conn);
                     cmd.Parameters.AddWithValue("@stockId", buyModel.StockId);
@@ -59,14 +57,22 @@ namespace Capstone.DAO
                     stock = HelperStock(rdr);
                     buyModel.AmountPerShare = stock.C;
                     rdr.Close();
-                    //********************************************\\
 
+                    //Check that the balance is enough
+                    cmd = new SqlCommand("SELECT balance FROM users_game WHERE users_id = @userId AND game_id = @gameId", conn);
+                    cmd.Parameters.AddWithValue("@userId", buyModel.UsersId);
+                    cmd.Parameters.AddWithValue("@gameId", buyModel.GameId);
+                    decimal balance = Convert.ToDecimal(cmd.ExecuteScalar());
+                    if (balance < buyModel.AmountPerShare * (decimal)buyModel.InitialSharesPurchased)
+                    {
+                        return null;
+                    }
                     //Store current ticks
                     long timeTicks = DateTime.Now.Ticks;
                     buyModel.BuyTimeTicks = timeTicks;
 
                     //Insert buy into database
-                    SqlCommand cmd2 = new SqlCommand(@"Begin Transaction
+                    cmd = new SqlCommand(@"Begin Transaction
                                                         DECLARE @currentbalance money
                                                         select @currentbalance = balance
                                                         from users_game
@@ -78,14 +84,14 @@ namespace Capstone.DAO
                                                         VALUES (@userId, @stockBuyId, @gameId, @sharesPurchased, @currentlyOwned, @amountPerShare, @timePurchased); 
                                                         SELECT @@IDENTITY
                                                         Commit Transaction", conn);
-                    cmd2.Parameters.AddWithValue("@userId", buyModel.UsersId);
-                    cmd2.Parameters.AddWithValue("@stockBuyId", buyModel.StockId);
-                    cmd2.Parameters.AddWithValue("@gameId", buyModel.GameId);
-                    cmd2.Parameters.AddWithValue("@sharesPurchased", buyModel.InitialSharesPurchased);
-                    cmd2.Parameters.AddWithValue("@currentlyOwned", buyModel.InitialSharesPurchased);
-                    cmd2.Parameters.AddWithValue("@amountPerShare", stock.C);
-                    cmd2.Parameters.AddWithValue("@timePurchased", timeTicks);
-                    int id = Convert.ToInt32(cmd2.ExecuteScalar());
+                    cmd.Parameters.AddWithValue("@userId", buyModel.UsersId);
+                    cmd.Parameters.AddWithValue("@stockBuyId", buyModel.StockId);
+                    cmd.Parameters.AddWithValue("@gameId", buyModel.GameId);
+                    cmd.Parameters.AddWithValue("@sharesPurchased", buyModel.InitialSharesPurchased);
+                    cmd.Parameters.AddWithValue("@currentlyOwned", buyModel.InitialSharesPurchased);
+                    cmd.Parameters.AddWithValue("@amountPerShare", stock.C);
+                    cmd.Parameters.AddWithValue("@timePurchased", timeTicks);
+                    int id = Convert.ToInt32(cmd.ExecuteScalar());
                     buyModel.BuyId = id;
                     buyModel.SharesCurrentlyOwned = buyModel.InitialSharesPurchased;
                 }

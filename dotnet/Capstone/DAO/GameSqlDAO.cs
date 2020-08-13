@@ -17,20 +17,22 @@ namespace Capstone.DAO
         }
 
 
-        public bool InviteUsersToGame(List<UserGame> userGame)
+        public bool InviteUsersToGame(List<UserGame> userGame, string username)
         {
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    conn.Open();
+                    if (!CheckThatUserIsInGame(userGame, username, conn))
+                    {
+                        return false;
+                    }
                     foreach (UserGame user in userGame)
                     {
                         SqlCommand cmd = new SqlCommand("INSERT into users_game(users_id, game_id, balance) VALUES (@userId, @gameId, @balance);", conn);
                         cmd.Parameters.AddWithValue("@userId", user.UserId);
                         cmd.Parameters.AddWithValue("@gameId", user.GameId);
 
-                        /******* Do we have balance be set or hard code it here?*******/
                         cmd.Parameters.AddWithValue("@balance", 0M);
                         cmd.ExecuteNonQuery();
                     }
@@ -43,16 +45,52 @@ namespace Capstone.DAO
             return true;
         }
 
-        public Game CreateGame(Game game)
+        private bool CheckThatUserIsInGame(List<UserGame> userGame, string username, SqlConnection conn)
+        {
+            List<int> gamesIds = new List<int>();
+            conn.Open();
+            string QUERY = @"SELECT id FROM users WHERE username = @username";
+            SqlCommand cmd = new SqlCommand(QUERY, conn);
+            cmd.Parameters.AddWithValue("@username", username);
+            int id = Convert.ToInt32(cmd.ExecuteScalar());
+
+            QUERY = @"SELECT game_id FROM users_game WHERE users_id = @userId";
+            cmd = new SqlCommand(QUERY, conn);
+            cmd.Parameters.AddWithValue("@userId", id);
+            SqlDataReader rdr = cmd.ExecuteReader();
+            while (rdr.Read())
+            {
+                gamesIds.Add(Convert.ToInt32(rdr["game_id"]));
+            }
+            foreach (UserGame user in userGame)
+            {
+                if (!gamesIds.Exists(gameId => gameId == user.GameId))
+                {
+                    return false;
+                }
+            }
+            rdr.Close();
+            return true;
+        }
+
+        public Game CreateGame(Game game, string username)
         {
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    const string QUERY = @"Begin Transaction INSERT into game(organizer_id, name, start_date, end_date) VALUES (@organizer_id, @name, @startDate, @endDate); Select @@identity
-                    INSERT into users_game(users_id, game_id, status, balance) VALUES (@organizer_id, @@identity, 'approved', @balance) Commit Transaction";
+                    string QUERY = @"SELECT id FROM users WHERE username = @username";
                     SqlCommand cmd = new SqlCommand(QUERY, conn);
+                    cmd.Parameters.AddWithValue("@username", username);
+                    int userId = Convert.ToInt32(cmd.ExecuteScalar());
+                    if (userId != game.OrganizerId)
+                    {
+                        return null;
+                    }
+                    QUERY = @"Begin Transaction INSERT into game(organizer_id, name, start_date, end_date) VALUES (@organizer_id, @name, @startDate, @endDate); Select @@identity
+                    INSERT into users_game(users_id, game_id, status, balance) VALUES (@organizer_id, @@identity, 'approved', @balance) Commit Transaction";
+                    cmd = new SqlCommand(QUERY, conn);
                     cmd.Parameters.AddWithValue("@organizer_id", game.OrganizerId);
                     cmd.Parameters.AddWithValue("@name", game.Name);
                     cmd.Parameters.AddWithValue("@startDate", game.StartDate);
@@ -250,17 +288,26 @@ WHERE uPLAY.username = @username AND users_game.status = 'pending'", conn);
             }
             return games;
         }
-        public bool AcceptInvitation(UserGame userGame)
+        public bool AcceptInvitation(UserGame userGame, string username)
         {
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    const string QUERY = @"UPDATE users_game
+                    string QUERY = @"SELECT id FROM users WHERE username = @username";
+                    SqlCommand cmd = new SqlCommand(QUERY, conn);
+                    cmd.Parameters.AddWithValue("@username", username);
+                    int userId = Convert.ToInt32(cmd.ExecuteScalar());
+                    if (userId != userGame.UserId)
+                    {
+                        return false;
+                    }
+
+                    QUERY = @"UPDATE users_game
 SET users_id = @userId, game_id = @gameId, status = 'approved', balance = @balance
 WHERE users_id = @userId AND game_id = @gameId";
-                    SqlCommand cmd = new SqlCommand(QUERY, conn);
+                    cmd = new SqlCommand(QUERY, conn);
                     cmd.Parameters.AddWithValue("@userId", userGame.UserId);
                     cmd.Parameters.AddWithValue("@gameId", userGame.GameId);
                     cmd.Parameters.AddWithValue("@balance", (decimal)100000);
@@ -273,17 +320,25 @@ WHERE users_id = @userId AND game_id = @gameId";
             }
             return true;
         }
-        public bool DeclineInvitation(UserGame userGame)
+        public bool DeclineInvitation(UserGame userGame, string username)
         {
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    const string QUERY = @"UPDATE users_game
+                    string QUERY = @"SELECT id FROM users WHERE username = @username";
+                    SqlCommand cmd = new SqlCommand(QUERY, conn);
+                    cmd.Parameters.AddWithValue("@username", username);
+                    int userId = Convert.ToInt32(cmd.ExecuteScalar());
+                    if (userId != userGame.UserId)
+                    {
+                        return false;
+                    }
+                    QUERY = @"UPDATE users_game
 SET users_id = @userId, game_id = @gameId, status = 'rejected'
 WHERE users_id = @userId AND game_id = @gameId";
-                    SqlCommand cmd = new SqlCommand(QUERY, conn);
+                    cmd = new SqlCommand(QUERY, conn);
                     cmd.Parameters.AddWithValue("@userId", userGame.UserId);
                     cmd.Parameters.AddWithValue("@gameId", userGame.GameId);
                     cmd.ExecuteNonQuery();

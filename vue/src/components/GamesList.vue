@@ -1,7 +1,7 @@
 <template>
   <div id="games-list">
     <div class="active">
-      <h1 class="title">Games</h1>
+      <h1 class="title">Active Games</h1>
       <div class="game-card-display open">
         <active-game-details
           id="game"

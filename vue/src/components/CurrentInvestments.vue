@@ -7,10 +7,10 @@
         <th>Company</th>
         <th>Shares Owned</th>
         <th>Purchase Price</th>
-        <th>Total Initial Value</th>
+        <th>Total Purchase</th>
         <th>Current Price</th>
         <th>Total Current Value</th>
-        <th>Total Profit</th>
+        <th>Total Profit/Loss</th>
       </tr>
 
       <tr v-for="investment in investments" :key="investment.buyId">

@@ -26,10 +26,10 @@ export default {
         return axios.get('/api/games/completed')
     },
     acceptInvitation(userGame) {
-        return axios.put(`/api/games/${userGame.gameId}/accept`, userGame)
+        return axios.put(`/api/games/accept`, userGame)
     },
     declineInvitation(userGame) {
-        return axios.put(`/api/games/${userGame.gameId}/decline`, userGame)
+        return axios.put(`/api/games/decline`, userGame)
     },
     getInvestments(gameId) {
         return axios.get(`api/games/${gameId}/investments`)

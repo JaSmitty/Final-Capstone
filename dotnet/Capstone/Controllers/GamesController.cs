@@ -82,7 +82,15 @@ namespace Capstone.Controllers
         {
             try
             {
-                game = gameSqlDAO.CreateGame(game);
+                //if (game.StartDateAsTicks > game.EndDateAsTicks || game.StartDateAsTicks < DateTime.Now.Ticks)
+                //{
+                //    return Forbid();
+                //}
+                game = gameSqlDAO.CreateGame(game, Username);
+                if (game == null)
+                {
+                    return Forbid();
+                }
                 string location = $"api/games/{game.GameId}";
                 return Created(location, game);
             }
@@ -98,8 +106,15 @@ namespace Capstone.Controllers
         {
             try
             {
-                string location = $"api/games/invite/success";
-                return Created(location, gameSqlDAO.InviteUsersToGame(userGames));
+                if (gameSqlDAO.InviteUsersToGame(userGames, Username))
+                {
+                    string location = $"api/games/invite/success";
+                    return Created(location, true);
+                }
+                else
+                {
+                    return Forbid();
+                }
             }
             catch (Exception ex)
             {
@@ -146,12 +161,19 @@ namespace Capstone.Controllers
             }
         }
         [HttpPut]
-        [Route("{gameId}/accept")]
+        [Route("accept")]
         public ActionResult<bool> AcceptInvitation(UserGame userGame)
         {
             try
             {
-                return Ok(gameSqlDAO.AcceptInvitation(userGame));
+                if (gameSqlDAO.AcceptInvitation(userGame, Username))
+                {
+                    return Ok(true);
+                }
+                else
+                {
+                    return Forbid();
+                }
             }
             catch (Exception ex)
             {
@@ -159,12 +181,19 @@ namespace Capstone.Controllers
             }
         }
         [HttpPut]
-        [Route("{gameId}/decline")]
+        [Route("decline")]
         public ActionResult<bool> DeclineInvitation(UserGame userGame)
         {
             try
             {
-                return Ok(gameSqlDAO.DeclineInvitation(userGame));
+                if (gameSqlDAO.DeclineInvitation(userGame, Username))
+                {
+                    return Ok(true);
+                }
+                else
+                {
+                    return Forbid();
+                }
             }
             catch (Exception ex)
             {

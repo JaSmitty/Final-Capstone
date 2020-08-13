@@ -33,7 +33,6 @@
 </template>
 
 <script>
-// import usersService from "@/services/UsersService.js";
 import gamesService from "@/services/GamesService.js";
 
 export default {
@@ -62,7 +61,7 @@ export default {
             }
           });
           this.usersGames = [];
-          // navigate to the game
+          // window.location.reload()
       }
   },
   computed: {
