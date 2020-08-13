@@ -7,10 +7,10 @@
         <th>Company</th>
         <th>Shares Owned</th>
         <th>Purchase Price</th>
-        <th>Total Purchase</th>
+        <th>Total Initial Value</th>
         <th>Current Price</th>
         <th>Total Current Value</th>
-        <th>Total Profit/Loss</th>
+        <th>Total Profit</th>
       </tr>
 
       <tr v-for="investment in investments" :key="investment.buyId">
@@ -24,7 +24,7 @@
         <td>${{(investment.sharesCurrentlyOwned * investment.amountPerShare).toFixed(2)}}</td>
         <td>${{(currentPrice(investment)).toFixed(2)}}</td>
         <td>${{(totalCurrentValue(investment)).toFixed(2)}}</td>
-        <td>${{(totalCurrentValue(investment) - investment.sharesCurrentlyOwned * investment.amountPerShare).toFixed(2)}}</td>
+        <td class="profits-column">${{(totalCurrentValue(investment) - investment.sharesCurrentlyOwned * investment.amountPerShare).toFixed(2)}}</td>
       </tr>
     </table>
     </div>
@@ -103,14 +103,20 @@ border-collapse: collapse;
   font-size: large;
   border: #add6ff solid 3px;
   padding: 4px;
-  background: rgba(173, 214, 255, 0.7);
+  background: rgba(173, 214, 255, 0.8);
   color:  #003366;
+}
+
+#current-investments td.profits-column{
+  background: rgba(255, 255, 255, 0.9);
+  color: rgb(0, 26, 51);
+  font-weight: bolder;
 }
 
 #current-investments  td{
    border-right: #add6ff solid 1px;
    border-bottom: #add6ff solid 1px;
-   background: rgba(0, 51, 102, 0.7);
+   background: rgba(0, 51, 102, 0.9);
 }
 
 .stock-link{

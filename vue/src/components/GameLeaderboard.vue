@@ -7,7 +7,7 @@
         <th class="balance">Balance Remaining</th>
         <th>Total Worth</th>
       </tr>
-      <tr v-for="player in sortedPlayers" :key="player.id" :class="{green: player.username === $store.state.user.username}">
+      <tr v-for="player in sortedPlayers" :key="player.id" :class="{highlight: player.username === $store.state.user.username}">
         <td>{{player.username}}</td>
         <td class="balance">${{(player.balance).toFixed(2)}}</td>
         <td>${{(player.totalWorth).toFixed(2)}}</td>
@@ -72,6 +72,11 @@ export default {
   display: flex;
   flex-direction: column;
   
+}
+
+.highlight{
+  background: rgba(246, 142, 79, 0.8);  /*opacity */
+  color: white;
 }
 
 </style>
