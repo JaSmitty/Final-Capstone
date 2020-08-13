@@ -10,7 +10,7 @@
     <form @submit.prevent="submitBuy">
       <h2>How much stock do you want to purchase?</h2>
       <h3>Please specify:</h3>
-      <label class="dollars" for="buyDollars">Dollars:</label>
+      <!-- <label class="dollars" for="buyDollars">Dollars:</label>
       <input
         type="number"
         id="buyDollars"
@@ -22,7 +22,7 @@
         @focus="blurShares"
         @blur="showShares"
       />
-      <h4>OR</h4>
+      <h4>OR</h4> -->
       <label class="shares" for="buyShares">Shares:</label>
       <input
         type="number"
@@ -30,9 +30,9 @@
         placeholder="e.g. 1.5"
         min="0.00"
         :max="$store.state.currentGame.balance / stock.c"
+        step="0.01"
         v-model.number="stockToBuy.initialSharesPurchased"
-        @focus="blurDollars"
-        @blur="showDollars"
+        
       />
       <br />
       <br />

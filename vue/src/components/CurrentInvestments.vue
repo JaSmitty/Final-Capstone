@@ -24,7 +24,7 @@
         <td>${{(investment.sharesCurrentlyOwned * investment.amountPerShare).toFixed(2)}}</td>
         <td>${{(currentPrice(investment)).toFixed(2)}}</td>
         <td>${{(totalCurrentValue(investment)).toFixed(2)}}</td>
-        <td class="profits-column">${{(totalCurrentValue(investment) - investment.sharesCurrentlyOwned * investment.amountPerShare).toFixed(2)}}</td>
+        <td :class="{'green': totalProfit(investment) >= 0, 'red': totalProfit(investment) < 0, 'profits-column': true}">${{totalProfit(investment)}}</td>
       </tr>
     </table>
     </div>
@@ -59,6 +59,9 @@ export default {
     totalCurrentValue(investment) {
       let currentStock = this.currentStockMarket.find(stock => stock.ticker === investment.companyTicker);
       return currentStock.c * investment.sharesCurrentlyOwned
+    },
+    totalProfit(investment) {
+      return (this.totalCurrentValue(investment) - investment.sharesCurrentlyOwned * investment.amountPerShare).toFixed(2)
     }
   },
   computed: {
@@ -109,7 +112,7 @@ border-collapse: collapse;
 
 #current-investments td.profits-column{
   background: rgba(255, 255, 255, 0.9);
-  color: rgb(0, 26, 51);
+  /* color: rgb(0, 26, 51); */
   font-weight: bolder;
 }
 
@@ -132,5 +135,8 @@ border-collapse: collapse;
   margin-top: 0;
   padding-bottom: 5px;
   padding-top: 5px;
+}
+.green {
+  color: green;
 }
 </style>
