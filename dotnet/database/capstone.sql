@@ -118,24 +118,42 @@ INSERT INTO game (organizer_id, name, start_date, end_date, is_complete) VALUES 
 INSERT INTO users_game(users_id, game_id, status, balance) VALUES (3, 1, 'approved', 100000);
 INSERT INTO users_game(users_id, game_id, status, balance) VALUES (4, 1, 'pending', 100000);
 INSERT INTO users_game(users_id, game_id, status, balance) VALUES (5, 1, 'approved', 100000);
+
 INSERT INTO users_game(users_id, game_id, status, balance) VALUES (5, 2, 'approved', 100000);
 INSERT INTO users_game(users_id, game_id, status, balance) VALUES (6, 2, 'approved', 100000);
+
 INSERT INTO users_game(users_id, game_id, status, balance) VALUES (3, 3, 'approved', 100000);
+INSERT INTO users_game(users_id, game_id, status, balance) VALUES (4, 3, 'approved', 100000);
+INSERT INTO users_game(users_id, game_id, status, balance) VALUES (5, 3, 'approved', 100000);
+
 INSERT INTO users_game(users_id, game_id, status, balance) VALUES (4, 4, 'pending', 100000);
 INSERT INTO users_game(users_id, game_id, status, balance) VALUES (5, 4, 'pending', 100000);
+
 INSERT INTO users_game(users_id, game_id, status, balance) VALUES (5, 5, 'approved', 100000);
 INSERT INTO users_game(users_id, game_id, status, balance) VALUES (6, 5, 'approved', 100000);
 
+--AAPL Fake
+INSERT INTO company(ticker, open_price, high_price, low_price, current_price, previous_close_price, time_updated) VALUES ('AAPL', 432.80, 446.55, 431.57, 430.00, 425.04, 1597241453);--1
+INSERT INTO company(ticker, open_price, high_price, low_price, current_price, previous_close_price, time_updated) VALUES ('AAPL', 432.80, 446.55, 431.57, 433.00, 425.04, 1597241548);--2
+INSERT INTO company(ticker, open_price, high_price, low_price, current_price, previous_close_price, time_updated) VALUES ('AAPL', 432.80, 446.55, 431.57, 437.00, 425.04, 1597241453);--3
+INSERT INTO company(ticker, open_price, high_price, low_price, current_price, previous_close_price, time_updated) VALUES ('AAPL', 432.80, 446.55, 431.57, 420.70, 425.04, 1597241548);--4
 
-INSERT INTO company(ticker, open_price, high_price, low_price, current_price, previous_close_price, time_updated) VALUES ('HELLO', 432.80, 446.55, 431.57, 437.70, 425.04, 1597241453);
-INSERT INTO company(ticker, open_price, high_price, low_price, current_price, previous_close_price, time_updated) VALUES ('HELLO', 432.80, 446.55, 431.57, 445.70, 425.04, 1597241548);
-INSERT INTO company(ticker, open_price, high_price, low_price, current_price, previous_close_price, time_updated) VALUES ('WRLD', 432.80, 446.55, 431.57, 437.70, 425.04, 1597241453);
-INSERT INTO company(ticker, open_price, high_price, low_price, current_price, previous_close_price, time_updated) VALUES ('WRLD', 432.80, 446.55, 431.57, 420.70, 425.04, 1597241548);
+INSERT INTO company(ticker, open_price, high_price, low_price, current_price, previous_close_price, time_updated) VALUES ('GOOGL', 432.80, 446.55, 431.57, 1040.00, 425.04, 1597241453);--5
+INSERT INTO company(ticker, open_price, high_price, low_price, current_price, previous_close_price, time_updated) VALUES ('GOOGL', 432.80, 446.55, 431.57, 1035.00, 425.04, 1597241548);--6
+INSERT INTO company(ticker, open_price, high_price, low_price, current_price, previous_close_price, time_updated) VALUES ('GOOGL', 432.80, 446.55, 431.57, 1030.00, 425.04, 1597241453);--7
+INSERT INTO company(ticker, open_price, high_price, low_price, current_price, previous_close_price, time_updated) VALUES ('GOOGL', 432.80, 446.55, 431.57, 1045.00, 425.04, 1597241548);--8
 
+INSERT INTO company(ticker, open_price, high_price, low_price, current_price, previous_close_price, time_updated) VALUES ('TSLA', 432.80, 446.55, 431.57, 437.70, 425.04, 1597241453);--9
+INSERT INTO company(ticker, open_price, high_price, low_price, current_price, previous_close_price, time_updated) VALUES ('TSLA', 432.80, 446.55, 431.57, 445.70, 425.04, 1597241548);--10
+INSERT INTO company(ticker, open_price, high_price, low_price, current_price, previous_close_price, time_updated) VALUES ('TSLA', 432.80, 446.55, 431.57, 437.70, 425.04, 1597241453);--11
+INSERT INTO company(ticker, open_price, high_price, low_price, current_price, previous_close_price, time_updated) VALUES ('TSLA', 432.80, 446.55, 431.57, 420.70, 425.04, 1597241548);--12
 
 
 INSERT INTO buy_table(users_id, stock_at_buy_id, game_id, initial_shares_purchased, shares_currently_owned, amount_per_share, time_purchased) 
-VALUES (5, 1, 5, 50, 25, 437.70, 637326609180000000);
+VALUES (4, 1, 5, 50, 25, 430.00, 637326609180000000);
+INSERT INTO sell_table(stock_at_sell_id, buy_reference_id, shares_sold, amount_per_share, profit, time_sold)
+VALUES (3, 1, 25, 437.00, 175.00, 371723469817623);
+
 INSERT INTO buy_table(users_id, stock_at_buy_id, game_id, initial_shares_purchased, shares_currently_owned, amount_per_share, time_purchased) 
 VALUES (6, 1, 5, 50, 0, 437.70, 637326609180000000);
 
