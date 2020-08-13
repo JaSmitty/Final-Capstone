@@ -7,7 +7,7 @@
         <th class="balance">Balance Remaining</th>
         <th>Total Worth</th>
       </tr>
-      <tr v-for="player in sortedPlayers" :key="player.id">
+      <tr v-for="player in sortedPlayers" :key="player.id" :class="{green: player.username === $store.state.user.username}">
         <td>{{player.username}}</td>
         <td class="balance">${{(player.balance).toFixed(2)}}</td>
         <td>${{(player.totalWorth).toFixed(2)}}</td>
@@ -20,13 +20,7 @@
 </template>
 
 <script>
-// import gamesService from "@/services/GamesService";
 export default {
-  data() {
-    return {
-      // players: [],
-    };
-  },
   props: {
     players: Array
   },
@@ -40,14 +34,7 @@ export default {
         return b.totalWorth - a.totalWorth;
       })
     }
-  },
-  created() {
-    // gamesService.getPlayersInGame(this.$route.params.gameId).then((response) => {
-    //   if (response.status === 200) {
-    //     this.players = response.data;
-    //   }
-    // });
-  },
+  }
 };
 </script>
 
