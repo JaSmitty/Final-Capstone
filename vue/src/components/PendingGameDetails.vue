@@ -18,13 +18,20 @@ export default {
   methods: {
       acceptInvitation() {
         let userGame = {userId: this.$store.state.user.userId, gameId: this.game.gameId};
-        gamesService.acceptInvitation(userGame);
-        window.location.reload()
+        gamesService.acceptInvitation(userGame).then(response => {
+          if (response.status === 200) {
+            window.location.reload()
+          }
+        });
+        
       },
       declineInvitation() {
         let userGame = {userId: this.$store.state.user.userId, gameId: this.game.gameId};
-        gamesService.declineInvitation(userGame);
-        window.location.reload()
+        gamesService.declineInvitation(userGame).then(response => {
+          if (response.status === 200) {
+            window.location.reload()
+          }
+        });
       }
   }
 };
